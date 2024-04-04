@@ -1,4 +1,4 @@
-package kz.sicret_santa_jusan
+package kz.secret_santa_jusan
 
 import org.junit.Test
 

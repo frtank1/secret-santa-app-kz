@@ -1,9 +1,10 @@
-package kz.sicret_santa_jusan.ui.theme
+package kz.secret_santa_jusan.ui.theme
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import kz.sicret_santa_jusan.R
+import kz.secret_santa_jusan.R
+
 
 val interFamily = FontFamily(
     Font(R.font.dmsans_thin, FontWeight.Thin),

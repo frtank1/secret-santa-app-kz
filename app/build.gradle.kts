@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "kz.sicret_santa_jusan"
+    namespace = "kz.secret_santa_jusan"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "kz.sicret_santa_jusan"
+        applicationId = "kz.secret_santa_jusan"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

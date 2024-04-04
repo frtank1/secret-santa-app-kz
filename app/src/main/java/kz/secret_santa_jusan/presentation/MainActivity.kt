@@ -1,4 +1,4 @@
-package kz.sicret_santa_jusan.presentation
+package kz.secret_santa_jusan.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import kz.sicret_santa_jusan.ui.theme.SicretsantajusanTheme
+import kz.secret_santa_jusan.ui.theme.SicretsantajusanTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

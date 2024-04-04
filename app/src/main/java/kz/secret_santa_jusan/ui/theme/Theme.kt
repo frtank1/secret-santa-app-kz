@@ -1,4 +1,4 @@
-package kz.sicret_santa_jusan.ui.theme
+package kz.secret_santa_jusan.ui.theme
 
 import android.app.Activity
 import android.os.Build
