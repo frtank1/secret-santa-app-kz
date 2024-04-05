@@ -1,4 +1,4 @@
-package kz.kizirov.template
+package kz.secret_santa_jusan.presentation.example
 
 import android.os.Parcelable
 import androidx.compose.material3.Text

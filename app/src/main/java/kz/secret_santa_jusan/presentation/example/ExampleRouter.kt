@@ -1,4 +1,4 @@
-package kz.kizirov.template
+package kz.secret_santa_jusan.presentation.example
 
 import cafe.adriel.voyager.core.registry.ScreenProvider
 

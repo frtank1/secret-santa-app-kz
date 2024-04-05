@@ -14,9 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import cafe.adriel.voyager.core.lifecycle.ScreenLifecycleStore
 import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.Navigator
-import kz.kizirov.template.ExampleScreen
+
 import kz.secret_santa_jusan.core.base.CoreBaseActivity
 import kz.secret_santa_jusan.core.navigation.ScreenLifecycleOwner
+import kz.secret_santa_jusan.presentation.example.ExampleScreen
 import org.koin.androidx.compose.KoinAndroidContext
 import kz.secret_santa_jusan.ui.theme.SicretsantajusanTheme
 
