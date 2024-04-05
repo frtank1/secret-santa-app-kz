@@ -22,7 +22,7 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<ExampleViewModel>()
+        val viewModel = getScreenModel<RegistrationViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
         when(navigationEvent){

@@ -40,7 +40,7 @@ class RegistrationViewModelPreview : IRegistrationViewModel {
     override fun sendEvent(event: RegistrationEvent) {}
 }
 
-class ExampleViewModel(
+class RegistrationViewModel(
 ): CoreBaseViewModel(), IRegistrationViewModel {
 
     private var _state = MutableStateFlow<RegistrationState>(RegistrationState.Default)
