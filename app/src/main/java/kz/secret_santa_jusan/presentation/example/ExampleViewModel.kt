@@ -1,12 +1,12 @@
 package kz.kizirov.template
 
+
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kz.kizirov.core.base.CoreBaseViewModel
-import kz.kizirov.template.models.DogsModel
+import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 
 interface IExampleViewModel {
     val state: StateFlow<ExampleState>
@@ -32,7 +32,6 @@ sealed class NavigationEvent{
 
 sealed class ExampleState{
     object Default: ExampleState()
-    class Dog(val dog: DogsModel): ExampleState()
 }
 
 class ExampleViewModelPreview : IExampleViewModel {
@@ -42,7 +41,6 @@ class ExampleViewModelPreview : IExampleViewModel {
 }
 
 class ExampleViewModel(
-    private val repository: TemplateApiRepository
 ): CoreBaseViewModel(), IExampleViewModel {
 
     private var _state = MutableStateFlow<ExampleState>(ExampleState.Default)
@@ -54,14 +52,6 @@ class ExampleViewModel(
 
     init {
         screenModelScope.launch {
-            repository.getDog().apply {
-                if(isSuccessful){
-                    _state.value = ExampleState.Dog(body)
-                }
-                if(failed){
-                    createErrorEvent(error.toString())
-                }
-            }
         }
     }
 

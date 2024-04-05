@@ -9,7 +9,7 @@ import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
-import kz.kizirov.core.base.CoreBaseScreen
+import kz.secret_santa_jusan.core.base.CoreBaseScreen
 
 @Parcelize
 class ExampleScreen : CoreBaseScreen(), Parcelable {
@@ -42,10 +42,6 @@ fun ExampleContent(viewModel: IExampleViewModel) {
     when (state) {
         is ExampleState.Default -> {
             Text("ExampleState Default")
-        }
-
-        is ExampleState.Dog -> {
-            Text("ExampleState ${state.dog.toString()}")
         }
     }
 }

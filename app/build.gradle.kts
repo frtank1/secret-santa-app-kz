@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.jetbrainsKotlinSerialization)
+    id(libs.versions.kotlinParcelize.get())
 }
 
 android {
@@ -41,7 +42,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.9.23"
     }
     packaging {
         resources {
@@ -60,6 +61,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.androidx.lifecycle)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -69,16 +71,22 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.screenmodel)
     implementation(libs.voyager.koin)
     implementation(libs.koin.android)
     implementation(libs.koin.androidX.compose)
-    implementation(libs.paperdb)
+
+    implementation(libs.ktor.core)
+    implementation(libs.ktor.android)
+    implementation(libs.ktor.auth)
+    implementation(libs.ktor.logging)
+    implementation(libs.ktor.content)
+    implementation(libs.ktor.serialization)
     implementation(libs.trikita.log)
-
-
-
+    implementation(libs.paperdb)
+    implementation(libs.koin.core)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -86,6 +94,4 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-
 }
