@@ -28,6 +28,8 @@ sealed class AuthEvent{
     class EnterLogin(val text: String): AuthEvent()
     class EnterPassword(val text: String): AuthEvent()
 
+    object GoToRecovery:AuthEvent()
+
     object ClickEnter: AuthEvent()
 }
 
@@ -41,6 +43,7 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
+    object GoToRecovery:NavigationEvent()
 }
 
 sealed class AuthState(val authForm: AuthModel){
@@ -90,6 +93,10 @@ class AuthViewModel(
             }
             is AuthEvent.EnterPassword -> {
                 _state.value = AuthState.Default(state.value.authForm.copy(password = event.text))
+            }
+
+            AuthEvent.GoToRecovery -> {
+                _navigationEvent.value = NavigationEvent.GoToRecovery
             }
         }
     }

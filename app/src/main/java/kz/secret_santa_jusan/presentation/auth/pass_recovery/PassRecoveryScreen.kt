@@ -1,6 +1,7 @@
-package kz.secret_santa_jusan.presentation.auth
+package kz.secret_santa_jusan.presentation.auth.pass_recovery
 
 import android.os.Parcelable
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -13,75 +14,63 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
-import kz.secret_santa_jusan.core.views.AOButton
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
-import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
-import kz.secret_santa_jusan.presentation.registration.AgreeText
-import kz.secret_santa_jusan.presentation.registration.EnterText
-import kz.secret_santa_jusan.presentation.registration.IRegistrationViewModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
-import kz.secret_santa_jusan.presentation.registration.spliterOr
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
-import kz.secret_santa_jusan.ui.theme.LightGrey
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class AuthScreen : CoreBaseScreen(), Parcelable {
+class PassRecoveryScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<AuthViewModel>()
+        val viewModel = getScreenModel<PassRecoveryViewModel>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
-        when(navigationEvent){
+        val navigationEvent =
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+        when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
-            NavigationEvent.GoToRecovery -> {
-                navigator.push(
-                    PassRecoveryScreen()
-                )
-            }
         }
         SubscribeError(viewModel)
-        ExampleContent(viewModel = viewModel)
+        PassRecoveryContent(viewModel = viewModel)
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun ExampleContentPreview() {
-    ExampleContent(AuthViewModelPreview())
+fun PassRecoveryContentPreview() {
+    PassRecoveryContent(PassRecoveryViewModelPreview())
 }
 
 
 @Composable
-fun ExampleContent(viewModel: IAuthViewModel) {
+fun PassRecoveryContent(viewModel: IPassRecoveryViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         TitleBar(onClickBack = {
-            viewModel.sendEvent(AuthEvent.Back)
+            viewModel.sendEvent(PassRecoveryEvent.Back)
         })
         Column(
             modifier = Modifier
@@ -92,60 +81,50 @@ fun ExampleContent(viewModel: IAuthViewModel) {
             //.verticalScroll(rememberScrollState())
         ) {
             when (state) {
-                is AuthState.Default -> {
-                    AuthMenu(viewModel = viewModel)
+                is PassRecoveryState.Default -> {
+                    RecoveryMenu(viewModel)
                 }
+
+                is PassRecoveryState.MessegeSended -> {messegeSended()}
             }
         }
     }
 }
 
+
 @Composable
-fun AuthMenu(viewModel: IAuthViewModel) {
+fun RecoveryMenu(viewModel: IPassRecoveryViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         SsText(
-            text = stringResource(id = R.string.Вход),
+            text = stringResource(id = R.string.Восстановление_доступа),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             fontSize = 40.sp,
         )
         EditText(
-            value = state.authForm.email ?: "-",
-            onValueChange = { login ->
-                viewModel.sendEvent(AuthEvent.EnterLogin(login))
+            value = state.email ?: "-",
+            onValueChange = { mail ->
+                viewModel.sendEvent(PassRecoveryEvent.EnterEmail(mail))
             },
             enabled = true,
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 73.dp),
-            label = stringResource(R.string.Ваш_Логин)
-        )
-        EditText(
-            value = state.authForm.password ?: "-",
-            onValueChange = { pasword ->
-                viewModel.sendEvent(AuthEvent.EnterPassword(pasword))
-            },
-            enabled = true,
-            isError = false,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 12.dp),
-            label = stringResource(R.string.пароль)
+            label = stringResource(R.string.Ваш_mail)
         )
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { viewModel.sendEvent(AuthEvent.GoToRecovery)}
+                .clickable { }
                 .padding(14.dp),
             textAlign = TextAlign.Center,
-            text = stringResource(id = R.string.Забыли_пароль),
+            text = stringResource(id = R.string.Мы_отправим_ссылку_с_временным_паролем),
             color = Gray,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 10.sp,
-            style = TextStyle(textDecoration = TextDecoration.Underline)
         )
         Button(
             modifier = Modifier
@@ -154,18 +133,46 @@ fun AuthMenu(viewModel: IAuthViewModel) {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
-                viewModel.sendEvent(AuthEvent.ClickEnter)
+                viewModel.sendEvent(PassRecoveryEvent.ClickEnter)
             }) {
             Text(
-                stringResource(id = R.string.Войти),
+                stringResource(id = R.string.Восстановить),
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )
         }
         TextWithUnderline(
-            textFirst = stringResource(id = R.string.Регистрируясь_вы_даете_согласие_на),
+            textFirst = stringResource(id = R.string.Продолжая_Вы_даете_согласие_на),
             textSecond = stringResource(id = R.string.обработку_персональных_данных)
+        )
+    }
+}
+
+@Composable
+fun messegeSended(){
+    SsText(
+        modifier = Modifier
+            .padding(top = 25.dp)
+            .fillMaxWidth(),
+        text = stringResource(id = R.string.Письмо_отправлено),
+        color = DarkGray,
+        fontWeight = FontWeight.Bold,
+        textAlign = TextAlign.Center,
+        fontSize = 40.sp,
+    )
+    Column {
+        Image(
+            modifier = Modifier
+                .padding(top = 42.dp)
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.santa02),
+            contentDescription = null,
+        )
+        TextWithUnderline(
+            textFirst = stringResource(id = R.string.Письмо_отправлено_v),
+            textSecond = stringResource(id = R.string.Не_пришло ),
+            color = BrightOrange
         )
     }
 }

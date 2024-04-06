@@ -71,6 +71,7 @@ fun TextWithUnderline(
         .padding(top = 10.dp)
         .fillMaxWidth(),
     onClick: (() -> Unit)? = null,
+    color: Color = Gray,
     textFirst: String?,
     textSecond:String
 ) {
@@ -82,7 +83,7 @@ fun TextWithUnderline(
         textFirst?.let {
             Text(
                 text = textFirst,
-                color = Gray,
+                color = color,
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 10.sp
@@ -93,7 +94,7 @@ fun TextWithUnderline(
                 .padding(horizontal = 2.dp)
                 .clickable { onClick?.invoke() },
             text = textSecond,
-            color = Gray,
+            color = color,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 10.sp,

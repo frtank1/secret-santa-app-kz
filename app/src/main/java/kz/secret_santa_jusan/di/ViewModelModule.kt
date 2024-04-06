@@ -1,6 +1,7 @@
 package kz.secret_santa_jusan.di
 
 import kz.secret_santa_jusan.presentation.auth.AuthViewModel
+import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryViewModel
 import kz.secret_santa_jusan.presentation.example.ExampleViewModel
 import kz.secret_santa_jusan.presentation.main.MainViewModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationViewModel
@@ -20,4 +21,8 @@ val featureMainViewModel = module {
 
 val featureAuthViewModel = module {
     factory { AuthViewModel(get()) }
+}
+
+val featurePassRecoceryViewModel = module {
+    factory { PassRecoveryViewModel(get()) }
 }

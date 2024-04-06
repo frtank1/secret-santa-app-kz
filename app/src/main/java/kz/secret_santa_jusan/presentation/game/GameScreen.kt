@@ -88,7 +88,6 @@ fun GameContent(viewModel: IGameViewModel) {
                 }
             }
         }
-
     }
 }
 
