@@ -236,7 +236,8 @@ fun EnterText(onClick: (() -> Unit)? = null) {
         modifier = Modifier
             .padding(top = 10.dp)
             .fillMaxWidth(),
-         horizontalArrangement = Arrangement.Center
+         horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = stringResource(id = R.string.Уже_есть_аккаунт),
