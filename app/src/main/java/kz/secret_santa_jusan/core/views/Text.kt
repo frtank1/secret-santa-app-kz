@@ -1,17 +1,26 @@
 package kz.secret_santa_jusan.core.views
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.ui.theme.DarkGray
+import kz.secret_santa_jusan.ui.theme.Gray
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Composable
@@ -53,4 +62,42 @@ fun SsTextNormal(
         textAlign = textAlign,
         fontSize = fontSize,
     )
+}
+
+
+@Composable
+fun TextWithUnderline(
+    modifier:Modifier = Modifier
+        .padding(top = 10.dp)
+        .fillMaxWidth(),
+    onClick: (() -> Unit)? = null,
+    textFirst: String,
+    textSecond:String
+) {
+    Row(
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = textFirst,
+            color = Gray,
+            fontFamily = interFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 10.sp
+        )
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 2.dp)
+                .clickable { onClick?.invoke() },
+            text = textSecond,
+            color = Gray,
+            fontFamily = interFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 10.sp,
+            style = TextStyle(textDecoration = TextDecoration.Underline)
+        )
+    }
 }
