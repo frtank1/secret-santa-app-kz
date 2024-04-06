@@ -2,6 +2,7 @@ package kz.secret_santa_jusan.core.storage
 
 import io.paperdb.Paper
 import kz.secret_santa_jusan.core.network.model.TokenModel
+import kz.secret_santa_jusan.data.registration.models.RegModel
 
 
 class GlobalStorage {
@@ -29,6 +30,10 @@ class GlobalStorage {
                 Paper.book().delete(key)
             }
         }
+        fun saveUser(user: RegModel){
+            Paper.book().write("USER", user)
+        }
+
 
         fun saveAuthToken(access_token: String, refresh_token: String){
             _access_token = access_token

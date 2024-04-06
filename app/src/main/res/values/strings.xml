@@ -10,5 +10,6 @@
 	<string name="sign_googe">Sing up with Google</string>
 	<string name="Регистрируясь_вы_даете_согласие_на">Регистрируясь, вы даете согласие на</string>
 	<string name="обработку_персональных_данных">обработку персональных данных</string>
+	<string name="пароль">Ваш пароль</string>
 
 </resources>

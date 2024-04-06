@@ -86,7 +86,7 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
                 }
 
                 else -> {
-                    registrationMenu()
+                    registrationMenu(viewModel)
                 }
             }
         }
@@ -142,7 +142,8 @@ fun mainRegistration(
 }
 
 @Composable
-fun registrationMenu() {
+fun registrationMenu(viewModel: IRegistrationViewModel,) {
+    val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         SsText(
             text = stringResource(id = R.string.Регистрация),
@@ -151,8 +152,9 @@ fun registrationMenu() {
             fontSize = 40.sp,
         )
         EditText(
-            value = "",
+            value = state.regForm.login?:"-",
             onValueChange = { login ->
+                viewModel.sendEvent(RegistrationEvent.EnterLogin(login))
             },
             enabled = true,
             isError = false,
@@ -162,8 +164,9 @@ fun registrationMenu() {
             label = stringResource(R.string.Ваше_Имя)
         )
         EditText(
-            value = "",
-            onValueChange = { login ->
+            value = state.regForm.email?:"-",
+            onValueChange = { email ->
+                viewModel.sendEvent(RegistrationEvent.EnterMail(email))
             },
             enabled = true,
             isError = false,
@@ -171,6 +174,18 @@ fun registrationMenu() {
                 .fillMaxWidth()
                 .padding(top = 12.dp),
             label = stringResource(R.string.Ваш_mail)
+        )
+        EditText(
+            value = state.regForm.password?:"-",
+            onValueChange = { pasword ->
+                viewModel.sendEvent(RegistrationEvent.EnterPassword(pasword))
+            },
+            enabled = true,
+            isError = false,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            label = stringResource(R.string.пароль)
         )
         spliterOr(
             modifier = Modifier
@@ -199,6 +214,7 @@ fun registrationMenu() {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(RegistrationEvent.ClickEnter)
             }) {
             Text(
                 stringResource(id = R.string.Зарегистрироваться),

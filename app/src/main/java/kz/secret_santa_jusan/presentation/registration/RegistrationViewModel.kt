@@ -1,12 +1,14 @@
 package kz.secret_santa_jusan.presentation.registration
 
 
+import android.widget.Toast
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
 import kz.secret_santa_jusan.data.registration.models.RegModel
 import trikita.log.Log
@@ -22,6 +24,10 @@ interface IRegistrationViewModel {
 sealed class RegistrationEvent{
 
     object goToRegistration:RegistrationEvent()
+
+    class EnterLogin(val text: String): RegistrationEvent()
+    class EnterPassword(val text: String): RegistrationEvent()
+    class EnterMail(val text: String): RegistrationEvent()
 
     object ClickEnter: RegistrationEvent()
     object Back: RegistrationEvent()
@@ -80,9 +86,21 @@ class RegistrationViewModel(
                     repository.registration(state.value.regForm).apply {
                         if(isSuccessful) {
                             Log.d("ok", "ok")
+                            GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
+                            GlobalStorage.saveUser(state.value.regForm)
                         }
                     }
                 }
+            }
+
+            is RegistrationEvent.EnterLogin -> {
+                _state.value = RegistrationState.Registrate(state.value.regForm.copy(login = event.text))
+            }
+            is RegistrationEvent.EnterMail -> {
+                _state.value = RegistrationState.Registrate(state.value.regForm.copy(email = event.text))
+            }
+            is RegistrationEvent.EnterPassword -> {
+                _state.value = RegistrationState.Registrate(state.value.regForm.copy(password = event.text))
             }
         }
     }
