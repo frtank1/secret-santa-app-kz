@@ -15,5 +15,6 @@
 	<string name="пароль">Ваш пароль</string>
 	<string name="Мои_игры">Мои игры</string>
 	<string name="Создай">Создать игру</string>
+	<string name="Название">Название Игры\n</string>
 
 </resources>
