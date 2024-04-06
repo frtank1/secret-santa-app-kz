@@ -1,5 +1,6 @@
 package kz.secret_santa_jusan.di
 
+import kz.secret_santa_jusan.data.auth.AuthApiKtor
 import kz.secret_santa_jusan.data.example.ExampleApiKtor
 import kz.secret_santa_jusan.data.example.ExampleApiRepository
 import kz.secret_santa_jusan.data.registration.RegisterApiKtor
@@ -11,4 +12,8 @@ val dataExampleApiRepoModule = module {
 
 val dataRegisterApiRepoModule = module {
     single { RegisterApiKtor(get()) }
+}
+
+val dataAuthApiRepoModule = module {
+    single { AuthApiKtor(get()) }
 }

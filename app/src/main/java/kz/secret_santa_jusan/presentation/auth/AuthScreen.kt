@@ -1,14 +1,17 @@
 package kz.secret_santa_jusan.presentation.auth
 
 import android.os.Parcelable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -28,6 +31,8 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.AOButton
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
+import kz.secret_santa_jusan.core.views.TextWithUnderline
+import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.registration.AgreeText
 import kz.secret_santa_jusan.presentation.registration.EnterText
 import kz.secret_santa_jusan.presentation.registration.IRegistrationViewModel
@@ -37,6 +42,7 @@ import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
 import kz.secret_santa_jusan.ui.theme.LightGrey
+import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
@@ -67,12 +73,22 @@ fun ExampleContentPreview() {
 @Composable
 fun ExampleContent(viewModel: IAuthViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
-    when (state) {
-        is AuthState.Default -> {
-            Button(
-                onClick = {
-            }) {
-                Text("OpenExample")
+    Column {
+        TitleBar(onClickBack = {
+            viewModel.sendEvent(AuthEvent.Back)
+        })
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = PaleBlue)
+                .padding(horizontal = 36.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+            //.verticalScroll(rememberScrollState())
+        ) {
+            when (state) {
+                is AuthState.Default -> {
+                    AuthMenu(viewModel = viewModel)
+                }
             }
         }
     }
@@ -83,27 +99,27 @@ fun AuthMenu(viewModel: IAuthViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         SsText(
-            text = stringResource(id = R.string.Регистрация),
+            text = stringResource(id = R.string.Вход),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
             fontSize = 40.sp,
         )
         EditText(
-            value = state.regForm.login ?: "-",
+            value = state.authForm.email ?: "-",
             onValueChange = { login ->
-                viewModel.sendEvent()
+                viewModel.sendEvent(AuthEvent.EnterLogin(login))
             },
             enabled = true,
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 73.dp),
-            label = stringResource(R.string.Ваше_Имя)
+            label = stringResource(R.string.Ваш_Логин)
         )
         EditText(
-            value = state.regForm.password ?: "-",
+            value = state.authForm.password ?: "-",
             onValueChange = { pasword ->
-                viewModel.sendEvent()
+                viewModel.sendEvent(AuthEvent.EnterPassword(pasword))
             },
             enabled = true,
             isError = false,
@@ -114,8 +130,10 @@ fun AuthMenu(viewModel: IAuthViewModel) {
         )
         Text(
             modifier = Modifier
-                .padding(horizontal = 2.dp)
-                .clickable {  },
+                .fillMaxWidth()
+                .clickable { }
+                .padding(14.dp),
+            textAlign = TextAlign.Center,
             text = stringResource(id = R.string.Забыли_пароль),
             color = Gray,
             fontFamily = interFamily,
@@ -130,15 +148,18 @@ fun AuthMenu(viewModel: IAuthViewModel) {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
-                viewModel.sendEvent(RegistrationEvent.ClickEnter)
+                viewModel.sendEvent(AuthEvent.ClickEnter)
             }) {
             Text(
-                stringResource(id = R.string.Зарегистрироваться),
+                stringResource(id = R.string.Войти),
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )
         }
-
+        TextWithUnderline(
+            textFirst = stringResource(id = R.string.Регистрируясь_вы_даете_согласие_на),
+            textSecond = stringResource(id = R.string.обработку_персональных_данных)
+        )
     }
 }

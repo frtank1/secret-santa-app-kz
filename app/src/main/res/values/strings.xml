@@ -19,5 +19,7 @@
 	<string name="Войти">Войти</string>
 	<string name="Уже_есть_аккаунт">Уже есть аккаунт?</string>
 	<string name="Забыли_пароль">Забыли пароль?</string>
+	<string name="Вход">Вход</string>
+	<string name="Ваш_Логин">Ваш Логин</string>
 
 </resources>

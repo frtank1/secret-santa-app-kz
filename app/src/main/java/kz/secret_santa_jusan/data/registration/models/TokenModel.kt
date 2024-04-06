@@ -1,4 +1,4 @@
-package kz.secret_santa_jusan.data.example.models
+package kz.secret_santa_jusan.data.registration.models
 
 
 import kotlinx.serialization.SerialName

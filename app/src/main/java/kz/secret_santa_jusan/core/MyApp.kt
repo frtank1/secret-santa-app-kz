@@ -4,13 +4,18 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
 import kz.secret_santa_jusan.core.network.httpClientModule
 import kz.secret_santa_jusan.core.storage.GlobalStorage
+import kz.secret_santa_jusan.di.dataAuthApiKtorModule
+import kz.secret_santa_jusan.di.dataAuthApiRepoModule
 import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
 import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
-import kz.secret_santa_jusan.di.featureExample
-import kz.secret_santa_jusan.di.featureMain
-import kz.secret_santa_jusan.di.featureRegister
+import kz.secret_santa_jusan.di.featureAuthViewModel
+import kz.secret_santa_jusan.di.featureExampleViewModel
+import kz.secret_santa_jusan.di.featureMainViewModel
+import kz.secret_santa_jusan.di.featureRegisterViewModel
+import kz.secret_santa_jusan.presentation.auth.AuthRouter
+import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
@@ -33,7 +38,8 @@ class MyApp : CoreApp() {
         ScreenRegistry {
             featureExample()
             featureRegister()
-            featureMain
+            featureMain()
+            featureAuth()
         }
 
         startKoin {
@@ -45,9 +51,12 @@ class MyApp : CoreApp() {
                 dataExampleApiRepoModule,
                 dataRegisterApiKtorModule,
                 dataRegisterApiRepoModule,
-                featureExample,
-                featureRegister,
-                featureMain
+                featureExampleViewModel,
+                featureRegisterViewModel,
+                featureMainViewModel,
+                dataAuthApiRepoModule,
+                dataAuthApiKtorModule,
+                featureAuthViewModel
             )
         }
     }
@@ -68,5 +77,11 @@ val featureRegister = screenModule {
 val featureMain = screenModule {
     register<MainRouter.MainSreen> {
         MainScreen(it.isAuth)
+    }
+}
+
+val featureAuth = screenModule {
+    register<AuthRouter.AuthScreen> {
+        AuthScreen()
     }
 }
