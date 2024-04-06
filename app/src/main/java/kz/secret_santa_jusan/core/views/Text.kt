@@ -71,7 +71,7 @@ fun TextWithUnderline(
         .padding(top = 10.dp)
         .fillMaxWidth(),
     onClick: (() -> Unit)? = null,
-    textFirst: String,
+    textFirst: String?,
     textSecond:String
 ) {
     Row(
@@ -81,13 +81,15 @@ fun TextWithUnderline(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = textFirst,
-            color = Gray,
-            fontFamily = interFamily,
-            fontWeight = FontWeight.Normal,
-            fontSize = 10.sp
-        )
+        textFirst?.let {
+            Text(
+                text = textFirst,
+                color = Gray,
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Normal,
+                fontSize = 10.sp
+            )
+        }
         Text(
             modifier = Modifier
                 .padding(horizontal = 2.dp)
