@@ -47,7 +47,6 @@ sealed class NavigationEvent{
 
 sealed class RegistrationState(val regForm: RegModel){
     class Default(regForm: RegModel): RegistrationState(regForm)
-    class Registrate(regForm: RegModel): RegistrationState(regForm)
 }
 
 class RegistrationViewModelPreview : IRegistrationViewModel {
@@ -78,7 +77,7 @@ class RegistrationViewModel(
             }
 
             RegistrationEvent.goToRegistration ->   {
-            _state.value = RegistrationState.Registrate(state.value.regForm.copy())
+            _state.value = RegistrationState.Default(state.value.regForm.copy())
         }
 
             RegistrationEvent.ClickEnter -> {
@@ -94,13 +93,13 @@ class RegistrationViewModel(
             }
 
             is RegistrationEvent.EnterLogin -> {
-                _state.value = RegistrationState.Registrate(state.value.regForm.copy(login = event.text))
+                _state.value = RegistrationState.Default(state.value.regForm.copy(login = event.text))
             }
             is RegistrationEvent.EnterMail -> {
-                _state.value = RegistrationState.Registrate(state.value.regForm.copy(email = event.text))
+                _state.value = RegistrationState.Default(state.value.regForm.copy(email = event.text))
             }
             is RegistrationEvent.EnterPassword -> {
-                _state.value = RegistrationState.Registrate(state.value.regForm.copy(password = event.text))
+                _state.value = RegistrationState.Default(state.value.regForm.copy(password = event.text))
             }
         }
     }

@@ -84,61 +84,9 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
         ) {
             when (state) {
                 is RegistrationState.Default -> {
-                    mainRegistration(viewModel)
-                }
-
-                else -> {
                     registrationMenu(viewModel)
-                }
+                    }
             }
-        }
-    }
-}
-
-@Composable
-fun mainRegistration(
-    viewModel: IRegistrationViewModel
-) {
-    Column {
-        Image(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 64.dp),
-            painter = painterResource(id = R.drawable.santa03),
-            contentDescription = null,
-        )
-        SsText(
-            modifier = Modifier
-                .padding(top = 27.dp)
-                .fillMaxWidth(),
-            text = stringResource(id = R.string.Тайный_Санта),
-            color = DarkGray,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            fontSize = 40.sp,
-        )
-        SsText(
-            text = stringResource(id = R.string.Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами),
-            color = DarkGray,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            fontSize = 10.sp
-        )
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 27.dp)
-                .padding(horizontal = 25.dp),
-            colors = ButtonDefaults.buttonColors(BrightOrange),
-            onClick = {
-                viewModel.sendEvent(RegistrationEvent.goToRegistration)
-            }) {
-            Text(
-                stringResource(id = R.string.Зарегистрироваться),
-                fontFamily = interFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp
-            )
         }
     }
 }
