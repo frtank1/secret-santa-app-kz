@@ -75,9 +75,7 @@ fun TextWithUnderline(
     textSecond:String
 ) {
     Row(
-        modifier = Modifier
-            .padding(top = 10.dp)
-            .fillMaxWidth(),
+        modifier = modifier,
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
