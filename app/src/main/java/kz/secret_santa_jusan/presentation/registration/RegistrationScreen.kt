@@ -34,6 +34,7 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
@@ -55,6 +56,12 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
             is NavigationEvent.Default -> {
+            }
+
+            NavigationEvent.GoToAuth -> {
+                navigator.push(
+                    AuthScreen()
+                )
             }
         }
         SubscribeError(viewModel)

@@ -23,7 +23,7 @@ interface IRegistrationViewModel {
 
 sealed class RegistrationEvent{
 
-
+    object GoToAuth:RegistrationEvent()
     class EnterLogin(val text: String): RegistrationEvent()
     class EnterPassword(val text: String): RegistrationEvent()
     class EnterMail(val text: String): RegistrationEvent()
@@ -42,6 +42,7 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
+    object GoToAuth:NavigationEvent()
 }
 
 sealed class RegistrationState(val regForm: RegModel){
@@ -65,9 +66,6 @@ class RegistrationViewModel(
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
-    init {
-
-    }
 
     override fun sendEvent(event: RegistrationEvent) {
         when(event){
@@ -95,6 +93,10 @@ class RegistrationViewModel(
             }
             is RegistrationEvent.EnterPassword -> {
                 _state.value = RegistrationState.Default(state.value.regForm.copy(password = event.text))
+            }
+
+            RegistrationEvent.GoToAuth -> {
+               _navigationEvent.value = NavigationEvent.GoToAuth
             }
         }
     }
