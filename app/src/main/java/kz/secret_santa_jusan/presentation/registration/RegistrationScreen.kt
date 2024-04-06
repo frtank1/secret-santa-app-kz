@@ -33,6 +33,7 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
+import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
@@ -165,7 +166,10 @@ fun registrationMenu(viewModel: IRegistrationViewModel) {
                 fontSize = 15.sp
             )
         }
-        AgreeText()
+        TextWithUnderline(
+            textFirst = stringResource(id = R.string.Регистрируясь_вы_даете_согласие_на),
+            textSecond = stringResource(id = R.string.обработку_персональных_данных)
+        )
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -182,7 +186,13 @@ fun registrationMenu(viewModel: IRegistrationViewModel) {
                 fontSize = 15.sp
             )
         }
-        EnterText()
+        TextWithUnderline(
+            textFirst = stringResource(id = R.string.Уже_есть_аккаунт),
+            textSecond = stringResource(id = R.string.Войти),
+            onClick = {
+                viewModel.sendEvent(RegistrationEvent.GoToAuth)
+            }
+        )
     }
 }
 
