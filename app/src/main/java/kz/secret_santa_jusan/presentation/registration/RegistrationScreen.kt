@@ -1,8 +1,9 @@
 package kz.secret_santa_jusan.presentation.registration
 
 import android.os.Parcelable
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -87,14 +87,14 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
             when (state) {
                 is RegistrationState.Default -> {
                     registrationMenu(viewModel)
-                    }
+                }
             }
         }
     }
 }
 
 @Composable
-fun registrationMenu(viewModel: IRegistrationViewModel,) {
+fun registrationMenu(viewModel: IRegistrationViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         SsText(
@@ -104,7 +104,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel,) {
             fontSize = 40.sp,
         )
         EditText(
-            value = state.regForm.login?:"-",
+            value = state.regForm.login ?: "-",
             onValueChange = { login ->
                 viewModel.sendEvent(RegistrationEvent.EnterLogin(login))
             },
@@ -116,7 +116,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel,) {
             label = stringResource(R.string.Ваше_Имя)
         )
         EditText(
-            value = state.regForm.email?:"-",
+            value = state.regForm.email ?: "-",
             onValueChange = { email ->
                 viewModel.sendEvent(RegistrationEvent.EnterMail(email))
             },
@@ -128,7 +128,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel,) {
             label = stringResource(R.string.Ваш_mail)
         )
         EditText(
-            value = state.regForm.password?:"-",
+            value = state.regForm.password ?: "-",
             onValueChange = { pasword ->
                 viewModel.sendEvent(RegistrationEvent.EnterPassword(pasword))
             },
@@ -175,6 +175,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel,) {
                 fontSize = 15.sp
             )
         }
+        EnterText()
     }
 }
 
@@ -201,7 +202,7 @@ fun spliterOr(
 }
 
 @Composable
-fun AgreeText() {
+fun AgreeText(onClick: (() -> Unit)? = null) {
     Row(modifier = Modifier.padding(top = 10.dp)) {
         Text(
             text = stringResource(id = R.string.Регистрируясь_вы_даете_согласие_на),
@@ -213,6 +214,35 @@ fun AgreeText() {
         Text(
             modifier = Modifier.padding(horizontal = 2.dp),
             text = stringResource(id = R.string.обработку_персональных_данных),
+            color = Gray,
+            fontFamily = interFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 10.sp,
+            style = TextStyle(textDecoration = TextDecoration.Underline)
+        )
+    }
+}
+
+@Composable
+fun EnterText(onClick: (() -> Unit)? = null) {
+    Row(
+        modifier = Modifier
+            .padding(top = 10.dp)
+            .fillMaxWidth(),
+         horizontalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = stringResource(id = R.string.Уже_есть_аккаунт),
+            color = Gray,
+            fontFamily = interFamily,
+            fontWeight = FontWeight.Normal,
+            fontSize = 10.sp
+        )
+        Text(
+            modifier = Modifier
+                .padding(horizontal = 2.dp)
+                .clickable { onClick?.invoke() },
+            text = stringResource(id = R.string.Войти),
             color = Gray,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,

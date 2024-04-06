@@ -16,5 +16,7 @@
 	<string name="Мои_игры">Мои игры</string>
 	<string name="Создай">Создать игру</string>
 	<string name="Название">Название Игры\n</string>
+	<string name="Войти">Войти</string>
+	<string name="Уже_есть_аккаунт">Уже есть аккаунт?</string>
 
 </resources>
