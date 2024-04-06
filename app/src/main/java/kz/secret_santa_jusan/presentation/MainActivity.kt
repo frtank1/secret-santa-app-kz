@@ -17,6 +17,8 @@ import cafe.adriel.voyager.navigator.Navigator
 import kz.secret_santa_jusan.core.base.CoreBaseActivity
 import kz.secret_santa_jusan.core.navigation.ScreenLifecycleOwner
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
+import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
+import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.androidx.compose.KoinAndroidContext
 import kz.secret_santa_jusan.ui.theme.SicretsantajusanTheme
 
@@ -32,7 +34,7 @@ class MainActivity : CoreBaseActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         Navigator(
-                            screen = ExampleScreen(),
+                            screen = RegistrationScreen(),
                             content = { navigator ->
                                 remember(navigator.lastItem) {
                                     ScreenLifecycleStore.get(navigator.lastItem) {

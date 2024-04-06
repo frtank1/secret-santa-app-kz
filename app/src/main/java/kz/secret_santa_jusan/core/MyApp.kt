@@ -4,9 +4,12 @@ import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
 import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
-import kz.secret_santa_jusan.di.featureTemplateModule
+import kz.secret_santa_jusan.di.featureExample
+import kz.secret_santa_jusan.di.featureRegister
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
+import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
+import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -23,6 +26,7 @@ class MyApp : CoreApp() {
 
         ScreenRegistry {
             featureExample()
+
         }
 
         startKoin {
@@ -31,7 +35,8 @@ class MyApp : CoreApp() {
             modules(
                 dataExampleApiKtorModule,
                 dataExampleApiRepoModule,
-                featureTemplateModule
+                featureExample,
+                featureRegister
             )
         }
     }
@@ -40,5 +45,11 @@ class MyApp : CoreApp() {
 val featureExample = screenModule {
     register<ExampleRouter.AnyScreen> {
         ExampleScreen()
+    }
+}
+
+val featureRegister = screenModule {
+    register<RegistrationRouter.RegistrationScreen> {
+        RegistrationScreen()
     }
 }

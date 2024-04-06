@@ -1,3 +1,14 @@
 <resources>
 	<string name="app_name">secret-santa-jusan</string>
+	<string name="Зарегистрироваться">Зарегистрироваться</string>
+	<string name="Тайный_Санта">Тайный Санта</string>
+	<string name="Регистрация">Регистрация</string>
+	<string name="Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами">Организуй тайный обмен подарками между друзьями или коллегами</string>
+	<string name="Ваше_Имя">Ваше Имя</string>
+	<string name="Ваш_mail">Ваш E-mail</string>
+	<string name="или">или</string>
+	<string name="sign_googe">Sing up with Google</string>
+	<string name="Регистрируясь_вы_даете_согласие_на">Регистрируясь, вы даете согласие на</string>
+	<string name="обработку_персональных_данных">обработку персональных данных</string>
+
 </resources>
