@@ -34,6 +34,7 @@ import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.AutoCompleteEditText
+import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.ui.theme.BrightOrange
@@ -144,27 +145,27 @@ fun registrationMenu() {
             textAlign = TextAlign.Center,
             fontSize = 40.sp,
         )
-        AutoCompleteEditText(
-            modifier = Modifier
-                .padding(top = 54.dp)
-                .fillMaxWidth(),
-            onSelected = {
-            },
-            onValueChange = {
-            },
-            label = stringResource(R.string.Ваше_Имя),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+        EditText(
+                value = "",
+        onValueChange = {login ->
+        },
+        enabled = true,
+        isError = false,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 54.dp),
+        label = stringResource(R.string.Ваше_Имя)
         )
-        AutoCompleteEditText(
+        EditText(
+            value = "",
+            onValueChange = {login ->
+            },
+            enabled = true,
+            isError = false,
             modifier = Modifier
-                .padding(top = 12.dp)
-                .fillMaxWidth(),
-            onSelected = {
-            },
-            onValueChange = {
-            },
-            label = stringResource(R.string.Ваш_mail),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            label = stringResource(R.string.Ваш_mail)
         )
         spliterOr(
             modifier = Modifier
