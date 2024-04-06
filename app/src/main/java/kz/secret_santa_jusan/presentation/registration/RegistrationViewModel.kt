@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.registration.RegisterApiRepository
+import kz.secret_santa_jusan.data.registration.models.RegModel
+import trikita.log.Log
 
 interface IRegistrationViewModel {
     val state: StateFlow<RegistrationState>
@@ -14,7 +17,13 @@ interface IRegistrationViewModel {
     fun sendEvent(event: RegistrationEvent)
 }
 
+
+
 sealed class RegistrationEvent{
+
+    object goToRegistration:RegistrationEvent()
+
+    object ClickEnter: RegistrationEvent()
     object Back: RegistrationEvent()
 }
 
@@ -30,20 +39,22 @@ sealed class NavigationEvent{
     class Back: NavigationEvent()
 }
 
-sealed class RegistrationState{
-    object Default: RegistrationState()
+sealed class RegistrationState(val regForm: RegModel){
+    class Default(regForm: RegModel): RegistrationState(regForm)
+    class Registrate(regForm: RegModel): RegistrationState(regForm)
 }
 
 class RegistrationViewModelPreview : IRegistrationViewModel {
-    override val state: StateFlow<RegistrationState> = MutableStateFlow(RegistrationState.Default).asStateFlow()
+    override val state: StateFlow<RegistrationState> = MutableStateFlow(RegistrationState.Default(RegModel("","",""))).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: RegistrationEvent) {}
 }
 
 class RegistrationViewModel(
+    private val repository: RegisterApiRepository
 ): CoreBaseViewModel(), IRegistrationViewModel {
 
-    private var _state = MutableStateFlow<RegistrationState>(RegistrationState.Default)
+    private var _state = MutableStateFlow<RegistrationState>(RegistrationState.Default(RegModel("","","")))
     override val state: StateFlow<RegistrationState> = _state.asStateFlow()
 
 
@@ -51,14 +62,27 @@ class RegistrationViewModel(
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
     init {
-        screenModelScope.launch {
-        }
+
     }
 
     override fun sendEvent(event: RegistrationEvent) {
         when(event){
             RegistrationEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
+            }
+
+            RegistrationEvent.goToRegistration ->   {
+            _state.value = RegistrationState.Registrate(state.value.regForm.copy())
+        }
+
+            RegistrationEvent.ClickEnter -> {
+                screenModelScope.launch {
+                    repository.registration(state.value.regForm).apply {
+                        if(isSuccessful) {
+                            Log.d("ok", "ok")
+                        }
+                    }
+                }
             }
         }
     }

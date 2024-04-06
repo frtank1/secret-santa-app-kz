@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -20,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,7 +31,6 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
-import kz.secret_santa_jusan.core.views.AutoCompleteEditText
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
@@ -85,6 +82,10 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
         ) {
             when (state) {
                 is RegistrationState.Default -> {
+                    mainRegistration(viewModel)
+                }
+
+                else -> {
                     registrationMenu()
                 }
             }
@@ -93,7 +94,9 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
 }
 
 @Composable
-fun mainRegistration() {
+fun mainRegistration(
+    viewModel: IRegistrationViewModel
+) {
     Column {
         Image(
             modifier = Modifier
@@ -104,7 +107,8 @@ fun mainRegistration() {
         )
         SsText(
             modifier = Modifier
-                .padding(top = 27.dp),
+                .padding(top = 27.dp)
+                .fillMaxWidth(),
             text = stringResource(id = R.string.Тайный_Санта),
             color = DarkGray,
             fontWeight = FontWeight.Bold,
@@ -125,6 +129,7 @@ fun mainRegistration() {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(RegistrationEvent.goToRegistration)
             }) {
             Text(
                 stringResource(id = R.string.Зарегистрироваться),
@@ -146,19 +151,19 @@ fun registrationMenu() {
             fontSize = 40.sp,
         )
         EditText(
-                value = "",
-        onValueChange = {login ->
-        },
-        enabled = true,
-        isError = false,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 54.dp),
-        label = stringResource(R.string.Ваше_Имя)
+            value = "",
+            onValueChange = { login ->
+            },
+            enabled = true,
+            isError = false,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 54.dp),
+            label = stringResource(R.string.Ваше_Имя)
         )
         EditText(
             value = "",
-            onValueChange = {login ->
+            onValueChange = { login ->
             },
             enabled = true,
             isError = false,
@@ -228,7 +233,7 @@ fun spliterOr(
 }
 
 @Composable
-fun AgreeText(){
+fun AgreeText() {
     Row(modifier = Modifier.padding(top = 10.dp)) {
         Text(
             text = stringResource(id = R.string.Регистрируясь_вы_даете_согласие_на),

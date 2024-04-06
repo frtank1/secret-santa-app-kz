@@ -9,5 +9,5 @@ val featureExample = module {
 }
 
 val featureRegister = module {
-    factory { RegistrationViewModel() }
+    factory { RegistrationViewModel(get()) }
 }

@@ -2,8 +2,12 @@ package kz.secret_santa_jusan.core
 
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
+import kz.secret_santa_jusan.core.network.httpClientModule
+import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
+import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
+import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureExample
 import kz.secret_santa_jusan.di.featureRegister
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
@@ -20,21 +24,23 @@ class MyApp : CoreApp() {
     override fun onCreate() {
         super.onCreate()
 
-        /* GlobalStorage.setBaseUrl(BuildConfig.BASE_URL)
-         GlobalStorage.setFlavor(BuildConfig.FLAVOR)
-         GlobalStorage.applicationId = BuildConfig.APPLICATION_ID*/
+         GlobalStorage.setBaseUrl("http://51.107.14.25:8080")
+
 
         ScreenRegistry {
             featureExample()
-
+            featureRegister()
         }
 
         startKoin {
             androidLogger()
             androidContext(this@MyApp)
             modules(
+                httpClientModule,
                 dataExampleApiKtorModule,
                 dataExampleApiRepoModule,
+                dataRegisterApiKtorModule,
+                dataRegisterApiRepoModule,
                 featureExample,
                 featureRegister
             )
