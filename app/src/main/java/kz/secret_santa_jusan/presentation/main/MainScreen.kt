@@ -17,10 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -28,7 +28,6 @@ import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
-import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.LightBlue
@@ -41,8 +40,9 @@ class MainScreen : CoreBaseScreen(), Parcelable {
     override fun Content() {
         val viewModel = getScreenModel<MainViewModel>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
-        when(navigationEvent){
+        val navigationEvent =
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+        when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
@@ -67,50 +67,67 @@ fun MainContent(viewModel: IMainViewModel) {
             .fillMaxSize()
             .background(color = LightBlue)
         //.verticalScroll(rememberScrollState())
-    ){
+    ) {
+        SsText(
+            modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Мои_игры),
+            color = BrightOrange,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 40.sp,
+        )
         when (state) {
             is MainState.Default -> {
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .padding(top = 64.dp),
-                        painter = painterResource(id = R.drawable.santa03),
-                        contentDescription = null,
-                    )
-                    SsText(
-                        modifier = Modifier
-                            .padding(top = 27.dp)
-                            .fillMaxWidth(),
-                        text = stringResource(id = R.string.Тайный_Санта),
-                        color = DarkGray,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Center,
-                        fontSize = 40.sp,
-                    )
-                    SsText(
-                        text = stringResource(id = R.string.Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами),
-                        color = DarkGray,
-                        fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.Center,
-                        fontSize = 10.sp
-                    )
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 27.dp)
-                            .padding(horizontal = 25.dp),
-                        colors = ButtonDefaults.buttonColors(BrightOrange),
-                        onClick = {
-                        }) {
-                        Text(
-                            stringResource(id = R.string.Зарегистрироваться),
-                            fontFamily = interFamily,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
-                        )
-                    }
-
+                notHaveGame()
             }
+        }
+    }
+}
+
+@Composable
+fun notHaveGame() {
+    Column {
+
+        Image(
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.santa01),
+            contentDescription = null,
+        )
+        SsText(
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Пока_что_Вы_не_участвуете_в_играх),
+            color = DarkGray,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 15.sp,
+        )
+        SsText(
+            modifier = Modifier,
+            text = stringResource(id = R.string.Создайте_или_вступите_в_игру),
+            color = DarkGray,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            fontSize = 10.sp
+        )
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 76.dp)
+                .padding(horizontal = 25.dp),
+            colors = ButtonDefaults.buttonColors(BrightOrange),
+            onClick = {
+            }) {
+            Text(
+                stringResource(id = R.string.Создай),
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
         }
     }
 

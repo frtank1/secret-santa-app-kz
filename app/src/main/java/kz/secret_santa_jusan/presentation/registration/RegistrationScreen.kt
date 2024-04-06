@@ -54,6 +54,8 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
+            is NavigationEvent.Default -> {
+            }
         }
         SubscribeError(viewModel)
         RegistrationContent(viewModel = viewModel)
