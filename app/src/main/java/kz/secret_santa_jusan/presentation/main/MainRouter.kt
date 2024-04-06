@@ -4,5 +4,7 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 
 //Регистрируем в MyApp
 sealed class MainRouter : ScreenProvider {
-    object MainSreen : MainRouter()
+    class MainSreen(
+        val isAuth:Boolean
+    ) : MainRouter()
 }

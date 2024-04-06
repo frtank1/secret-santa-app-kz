@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
 
 interface IMainViewModel {
     val state: StateFlow<MainState>
@@ -16,6 +17,9 @@ interface IMainViewModel {
 
 sealed class MainEvent{
     object Back: MainEvent()
+    class Init(val isAuth: Boolean): MainEvent()
+
+    object GoToRegistration: MainEvent()
 }
 
 sealed class NavigationEvent{
@@ -27,15 +31,20 @@ sealed class NavigationEvent{
         return this
     }
     class Default: NavigationEvent()
+
+    object GoToRegistration: NavigationEvent()
+
     class Back: NavigationEvent()
+
 }
 
-sealed class MainState{
-    object Default: MainState()
+sealed class MainState(val isAuth: Boolean){
+    class Init(isAuth: Boolean): MainState(isAuth)
+
 }
 
 class MainViewModelPreview : IMainViewModel {
-    override val state: StateFlow<MainState> = MutableStateFlow(MainState.Default).asStateFlow()
+    override val state: StateFlow<MainState> = MutableStateFlow(MainState.Init(false)).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: MainEvent) {}
 }
@@ -43,22 +52,26 @@ class MainViewModelPreview : IMainViewModel {
 class MainViewModel(
 ): CoreBaseViewModel(), IMainViewModel {
 
-    private var _state = MutableStateFlow<MainState>(MainState.Default)
+    private var _state = MutableStateFlow<MainState>(MainState.Init(false))
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
 
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
-    init {
-        screenModelScope.launch {
-        }
-    }
 
     override fun sendEvent(event: MainEvent) {
         when(event){
             MainEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
+            }
+
+            is MainEvent.Init -> {
+              _state.value = MainState.Init(event.isAuth)
+            }
+
+            MainEvent.GoToRegistration -> {
+                _navigationEvent.value = NavigationEvent.GoToRegistration
             }
         }
     }

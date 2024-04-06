@@ -1,4 +1,4 @@
-package kz.secret_santa_jusan.presentation.main
+package kz.secret_santa_jusan.presentation.game
 
 import android.os.Parcelable
 import androidx.compose.foundation.Image
@@ -17,10 +17,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -29,47 +29,39 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
-import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
+import kz.secret_santa_jusan.ui.theme.LightBlue
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
+class GameScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
-        val viewModel = getScreenModel<MainViewModel>()
+        val viewModel = getScreenModel<GameViewModel>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent =
-            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
-        when (navigationEvent) {
+        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+        when(navigationEvent){
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
-            NavigationEvent.GoToRegistration -> {
-                navigator.push(
-                    RegistrationScreen(
-                    )
-                )
-            }
         }
         SubscribeError(viewModel)
-        MainContent(viewModel = viewModel)
-        viewModel.sendEvent(MainEvent.Init(isAuth))
+        GameContent(viewModel = viewModel)
     }
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun MainContentPreview() {
-    MainContent(MainViewModelPreview())
+fun GameContentPreview() {
+    GameContent(GameViewModelPreview())
 }
 
 
 @Composable
-fun MainContent(viewModel: IMainViewModel) {
+fun GameContent(viewModel: IGameViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         TitleBar()
@@ -78,47 +70,52 @@ fun MainContent(viewModel: IMainViewModel) {
                 .fillMaxSize()
                 .background(color = PaleBlue)
                 .padding(horizontal = 36.dp),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SsText(
+                modifier = Modifier
+                    .padding(top = 25.dp)
+                    .fillMaxWidth(),
+                text = stringResource(id = R.string.Мои_игры),
+                color = BrightOrange,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                fontSize = 40.sp,
+            )
             when (state) {
-                is MainState.Init -> {
-                    if (!state.isAuth){
-                        notRegistration(viewModel)
-                    }else{
-                        haveRegistration(viewModel)
-                    }
-
+                is GameState.Default -> {
+                    notHaveGame()
                 }
             }
         }
-    }
 
+    }
 }
 
-
 @Composable
-fun notRegistration(
-    viewModel: IMainViewModel
-) {
+fun notHaveGame() {
     Column {
+
         Image(
             modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 64.dp),
-            painter = painterResource(id = R.drawable.santa03),
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.santa01),
             contentDescription = null,
         )
         SsText(
             modifier = Modifier
-                .padding(top = 27.dp)
+                .padding(top = 9.dp)
                 .fillMaxWidth(),
-            text = stringResource(id = R.string.Тайный_Санта),
+            text = stringResource(id = R.string.Пока_что_Вы_не_участвуете_в_играх),
             color = DarkGray,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 15.sp,
         )
         SsText(
-            text = stringResource(id = R.string.Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами),
+            modifier = Modifier
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Создайте_или_вступите_в_игру),
             color = DarkGray,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
@@ -127,55 +124,7 @@ fun notRegistration(
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 27.dp)
-                .padding(horizontal = 25.dp),
-            colors = ButtonDefaults.buttonColors(BrightOrange),
-            onClick = {
-                viewModel.sendEvent(MainEvent.GoToRegistration)
-            }) {
-            Text(
-                stringResource(id = R.string.Зарегистрироваться),
-                fontFamily = interFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp
-            )
-        }
-    }
-}
-
-@Composable
-fun haveRegistration(
-    viewModel: IMainViewModel
-) {
-    Column {
-        Image(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 64.dp),
-            painter = painterResource(id = R.drawable.santa03),
-            contentDescription = null,
-        )
-        SsText(
-            modifier = Modifier
-                .padding(top = 27.dp)
-                .fillMaxWidth(),
-            text = stringResource(id = R.string.Тайный_Санта),
-            color = DarkGray,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            fontSize = 40.sp,
-        )
-        SsText(
-            text = stringResource(id = R.string.Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами),
-            color = DarkGray,
-            fontWeight = FontWeight.Normal,
-            textAlign = TextAlign.Center,
-            fontSize = 10.sp
-        )
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 27.dp)
+                .padding(top = 76.dp)
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
@@ -188,4 +137,5 @@ fun haveRegistration(
             )
         }
     }
+
 }

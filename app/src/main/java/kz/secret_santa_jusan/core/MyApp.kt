@@ -9,9 +9,12 @@ import kz.secret_santa_jusan.di.dataExampleApiRepoModule
 import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureExample
+import kz.secret_santa_jusan.di.featureMain
 import kz.secret_santa_jusan.di.featureRegister
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
+import kz.secret_santa_jusan.presentation.main.MainRouter
+import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.android.ext.koin.androidContext
@@ -24,12 +27,13 @@ class MyApp : CoreApp() {
     override fun onCreate() {
         super.onCreate()
 
-         GlobalStorage.setBaseUrl("http://51.107.14.25:8080/")
+        GlobalStorage.setBaseUrl("http://51.107.14.25:8080/")
 
 
         ScreenRegistry {
             featureExample()
             featureRegister()
+            featureMain
         }
 
         startKoin {
@@ -42,7 +46,8 @@ class MyApp : CoreApp() {
                 dataRegisterApiKtorModule,
                 dataRegisterApiRepoModule,
                 featureExample,
-                featureRegister
+                featureRegister,
+                featureMain
             )
         }
     }
@@ -57,5 +62,11 @@ val featureExample = screenModule {
 val featureRegister = screenModule {
     register<RegistrationRouter.RegistrationScreen> {
         RegistrationScreen()
+    }
+}
+
+val featureMain = screenModule {
+    register<MainRouter.MainSreen> {
+        MainScreen(it.isAuth)
     }
 }

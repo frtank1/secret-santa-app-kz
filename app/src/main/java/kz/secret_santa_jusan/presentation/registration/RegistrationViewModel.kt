@@ -23,7 +23,6 @@ interface IRegistrationViewModel {
 
 sealed class RegistrationEvent{
 
-    object goToRegistration:RegistrationEvent()
 
     class EnterLogin(val text: String): RegistrationEvent()
     class EnterPassword(val text: String): RegistrationEvent()
@@ -75,10 +74,6 @@ class RegistrationViewModel(
             RegistrationEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
-
-            RegistrationEvent.goToRegistration ->   {
-            _state.value = RegistrationState.Default(state.value.regForm.copy())
-        }
 
             RegistrationEvent.ClickEnter -> {
                 screenModelScope.launch {

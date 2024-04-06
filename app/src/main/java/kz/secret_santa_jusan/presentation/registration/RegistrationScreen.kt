@@ -73,7 +73,9 @@ fun RegistrationContentPreview() {
 fun RegistrationContent(viewModel: IRegistrationViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
-        TitleBar(onClickBack = {})
+        TitleBar(onClickBack = {
+            viewModel.sendEvent(RegistrationEvent.Back)
+        })
         Column(
             modifier = Modifier
                 .fillMaxSize()

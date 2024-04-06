@@ -37,14 +37,16 @@ fun TitleBar(
     ) {
         if (onClickBack != null) {
             Icon(
-                painter = painterResource(id = R.drawable.arrow_back),
-                contentDescription = "back",
-                tint = DarkGray,
                 modifier = Modifier
                     .clickable {
                         onClickBack.invoke()
                     }
-                    .padding(10.dp)
+                    .padding(start = 20.dp)
+                    .padding(10.dp),
+                painter = painterResource(id = R.drawable.arrow_back),
+                contentDescription = "back",
+                tint = DarkGray,
+
             )
             Image(
                 painter = painterResource(id = R.drawable.santa_claus),
