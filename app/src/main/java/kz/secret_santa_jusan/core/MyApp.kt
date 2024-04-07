@@ -10,6 +10,8 @@ import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiKtorModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiRepoModule
+import kz.secret_santa_jusan.di.dataProfileApiRepoModule
+import kz.secret_santa_jusan.di.dataProfileyApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureAuthViewModel
@@ -67,7 +69,9 @@ class MyApp : CoreApp() {
                 featurePassRecoceryViewModel,
                 dataPassRecoceryApiRepoModule,
                 dataPassRecoceryApiKtorModule,
-                featureProfileViewModel
+                featureProfileViewModel,
+                dataProfileyApiKtorModule,
+                dataProfileApiRepoModule
             )
         }
     }

@@ -3,6 +3,7 @@ package kz.secret_santa_jusan.di
 import kz.secret_santa_jusan.data.auth.AuthApiRepository
 import kz.secret_santa_jusan.data.example.ExampleApiKtor
 import kz.secret_santa_jusan.data.example.ExampleApiRepository
+import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 import kz.secret_santa_jusan.data.recovery_pass.PassRecoveryApiRepository
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
 import org.koin.dsl.module
@@ -21,4 +22,9 @@ val dataAuthApiKtorModule = module {
 
 val dataPassRecoceryApiKtorModule = module {
     single { PassRecoveryApiRepository(get()) }
+}
+
+
+val dataProfileyApiKtorModule = module {
+    single { ProfileApiRepository(get()) }
 }
