@@ -97,10 +97,13 @@ fun RecoveryMenu(viewModel: IPassRecoveryViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
         SsText(
+            modifier = Modifier
+                .fillMaxWidth()
+            .padding(top = 79.dp),
             text = stringResource(id = R.string.Восстановление_доступа),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 22.sp,
         )
         EditText(
             value = state.email ?: "-",
@@ -111,7 +114,7 @@ fun RecoveryMenu(viewModel: IPassRecoveryViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 73.dp),
+                .padding(top = 100.dp),
             label = stringResource(R.string.Ваш_mail)
         )
         Text(
@@ -124,7 +127,7 @@ fun RecoveryMenu(viewModel: IPassRecoveryViewModel) {
             color = Gray,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 10.sp,
+            fontSize = 8.sp,
         )
         Button(
             modifier = Modifier
