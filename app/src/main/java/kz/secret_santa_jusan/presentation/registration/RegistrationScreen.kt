@@ -226,7 +226,7 @@ fun AgreeText(onClick: (() -> Unit)? = null) {
             color = Gray,
             fontFamily = interFamily,
             fontWeight = FontWeight.Normal,
-            fontSize = 10.sp
+            fontSize = 7.sp
         )
         Text(
             modifier = Modifier.padding(horizontal = 2.dp),
@@ -234,7 +234,7 @@ fun AgreeText(onClick: (() -> Unit)? = null) {
             color = Gray,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 10.sp,
+            fontSize = 7.sp,
             style = TextStyle(textDecoration = TextDecoration.Underline)
         )
     }

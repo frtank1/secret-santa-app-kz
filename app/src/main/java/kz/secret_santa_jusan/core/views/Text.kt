@@ -86,7 +86,7 @@ fun TextWithUnderline(
                 color = color,
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Normal,
-                fontSize = 10.sp
+                fontSize = 7.sp
             )
         }
         Text(
@@ -97,7 +97,7 @@ fun TextWithUnderline(
             color = color,
             fontFamily = interFamily,
             fontWeight = FontWeight.Bold,
-            fontSize = 10.sp,
+            fontSize = 7.sp,
             style = TextStyle(textDecoration = TextDecoration.Underline)
         )
     }
