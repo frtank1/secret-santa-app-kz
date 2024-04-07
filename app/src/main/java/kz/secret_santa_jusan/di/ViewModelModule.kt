@@ -4,6 +4,7 @@ import kz.secret_santa_jusan.presentation.auth.AuthViewModel
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryViewModel
 import kz.secret_santa_jusan.presentation.example.ExampleViewModel
 import kz.secret_santa_jusan.presentation.main.MainViewModel
+import kz.secret_santa_jusan.presentation.profile.ProfileViewModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationViewModel
 import org.koin.dsl.module
 
@@ -25,4 +26,8 @@ val featureAuthViewModel = module {
 
 val featurePassRecoceryViewModel = module {
     factory { PassRecoveryViewModel(get()) }
+}
+
+val featureProfileViewModel = module {
+    factory { ProfileViewModel() }
 }

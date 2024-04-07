@@ -101,7 +101,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             text = stringResource(id = R.string.Личные_Данные),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 20.sp,
         )
         EditText(
             value = state.ressetData.name ?: "-",
@@ -112,7 +112,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 33.dp),
+                .padding(top = 40.dp),
             label = stringResource(R.string.Ваше_Имя)
         )
         EditText(
@@ -124,7 +124,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
+                .padding(top = 25.dp),
             label = stringResource(R.string.Ваш_mail)
         )
         Text(
@@ -157,7 +157,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             isError = state.ressetData.errorPassword,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 33.dp),
+                .padding(top = 40.dp),
             label = stringResource(R.string.Новый_Пароль)
         )
         EditTextPassword(
@@ -169,7 +169,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             isError = state.ressetData.errorPassword,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 33.dp),
+                .padding(top = 25.dp),
             label = stringResource(R.string.Повторите_пароль)
         )
         Text(

@@ -16,6 +16,7 @@ import kz.secret_santa_jusan.di.featureAuthViewModel
 import kz.secret_santa_jusan.di.featureExampleViewModel
 import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
+import kz.secret_santa_jusan.di.featureProfileViewModel
 import kz.secret_santa_jusan.di.featureRegisterViewModel
 import kz.secret_santa_jusan.presentation.auth.AuthRouter
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
@@ -65,7 +66,8 @@ class MyApp : CoreApp() {
                 featureAuthViewModel,
                 featurePassRecoceryViewModel,
                 dataPassRecoceryApiRepoModule,
-                dataPassRecoceryApiKtorModule
+                dataPassRecoceryApiKtorModule,
+                featureProfileViewModel
             )
         }
     }
