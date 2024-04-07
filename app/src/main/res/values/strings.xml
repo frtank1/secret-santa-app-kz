@@ -28,5 +28,10 @@
 	<string name="Письмо_отправлено">Письмо отправлено</string>
 	<string name="Письмо_отправлено_v">Письмо отправлено.</string>
 	<string name="Не_пришло">Не пришло?</string>
+	<string name="Личные_Данные">Личные Данные</string>
+	<string name="Сохранить">Сохранить</string>
+	<string name="Пароль">Пароль</string>
+	<string name="Новый_Пароль">Новый пароль</string>
+	<string name="Повторите_пароль">Повторите пароль</string>
 
 </resources>

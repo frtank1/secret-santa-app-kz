@@ -10,20 +10,31 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
+import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.ui.theme.DarkGray
+import kz.secret_santa_jusan.ui.theme.Gray
+import kz.secret_santa_jusan.ui.theme.Red
 import kz.secret_santa_jusan.ui.theme.White
 
 
@@ -155,6 +166,57 @@ fun EditText(
             errorTrailingIconColor = White,
             focusedTrailingIconColor = White,
             unfocusedTrailingIconColor = White
+        )
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun EditTextPassword(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    label: String,
+    enabled: Boolean = true,
+    isError: Boolean = false,
+    containerColor: Color = White,
+){
+    val passwordVisible = rememberSaveable { mutableStateOf(false) }
+    OutlinedTextField(
+        value = value,
+        onValueChange = onValueChange,
+        label = { SsTextNormal(text = label?: "") },
+        modifier = modifier,
+        isError = isError,
+        enabled = enabled,
+        shape = RoundedCornerShape(32.dp),
+        visualTransformation = if(passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        trailingIcon = {
+            val image = if (passwordVisible.value)
+                R.drawable.open_password
+            else  R.drawable.close_pasword
+
+            // Please provide localized description for accessibility services
+            val description = if (passwordVisible.value) "Hide password" else "Show password"
+
+            IconButton(onClick = {passwordVisible.value = !passwordVisible.value}){
+                Icon(painter = painterResource(id = image), description)
+            }
+        },
+        colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor,
+            disabledContainerColor = containerColor,
+            focusedBorderColor = White,
+            unfocusedBorderColor = White,
+            errorBorderColor = Red,
+            focusedTrailingIconColor = DarkGray,
+            unfocusedTrailingIconColor = Gray,
+            errorTrailingIconColor = Red,
+            focusedLabelColor = DarkGray,
+            unfocusedLabelColor = Gray,
+            errorLabelColor = Red,
         )
     )
 }
