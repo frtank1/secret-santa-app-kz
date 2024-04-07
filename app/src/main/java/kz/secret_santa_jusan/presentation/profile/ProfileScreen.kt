@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,8 +35,12 @@ import kz.secret_santa_jusan.core.views.EditTextPassword
 import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
+import kz.secret_santa_jusan.ui.theme.LightGrey
 import kz.secret_santa_jusan.ui.theme.PaleBlue
+import kz.secret_santa_jusan.ui.theme.Red
+import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
@@ -189,6 +195,21 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             fontWeight = FontWeight.Bold,
             fontSize = 13.sp,
             style = TextStyle(textDecoration = TextDecoration.Underline)
+        )
+    }
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 74.dp),
+        colors = ButtonDefaults.buttonColors(Red),
+        onClick = {
+        }) {
+        Text(
+            stringResource(id = R.string.Удалить_аккаунт),
+            fontFamily = interFamily,
+            color = White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 15.sp
         )
     }
 }

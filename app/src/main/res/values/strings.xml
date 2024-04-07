@@ -33,5 +33,6 @@
 	<string name="Пароль">Пароль</string>
 	<string name="Новый_Пароль">Новый пароль</string>
 	<string name="Повторите_пароль">Повторите пароль</string>
+	<string name="Удалить_аккаунт">Удалить аккаунт</string>
 
 </resources>
