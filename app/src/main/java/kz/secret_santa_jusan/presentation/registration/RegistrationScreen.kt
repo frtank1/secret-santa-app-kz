@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -97,7 +99,8 @@ fun RegistrationContent(viewModel: IRegistrationViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = PaleBlue)
-                .padding(horizontal = 36.dp),
+                .padding(horizontal = 36.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
             //.verticalScroll(rememberScrollState())
         ) {
@@ -118,7 +121,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel) {
             text = stringResource(id = R.string.Регистрация),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 29.sp,
         )
         EditText(
             value = state.regForm.login ?: "-",
@@ -129,7 +132,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 54.dp),
+                .padding(top = 79.dp),
             label = stringResource(R.string.Ваше_Имя)
         )
         EditText(
@@ -153,7 +156,7 @@ fun registrationMenu(viewModel: IRegistrationViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
+                .padding(top = 25.dp),
             label = stringResource(R.string.пароль)
         )
         spliterOr(
