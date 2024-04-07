@@ -164,7 +164,7 @@ fun AuthMenu(viewModel: IAuthViewModel) {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
-                viewModel.sendEvent(AuthEvent.ClickEnter)
+                viewModel.sendEvent(AuthEvent.ClickEnter(state.authForm.password))
             }) {
             Text(
                 stringResource(id = R.string.Войти),

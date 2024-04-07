@@ -29,5 +29,5 @@ val featurePassRecoceryViewModel = module {
 }
 
 val featureProfileViewModel = module {
-    factory { ProfileViewModel() }
+    factory { ProfileViewModel(get()) }
 }

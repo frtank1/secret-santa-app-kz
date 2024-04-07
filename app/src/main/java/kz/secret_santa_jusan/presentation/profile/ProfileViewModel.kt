@@ -7,6 +7,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.core.storage.GlobalStorage
+import kz.secret_santa_jusan.data.profile.ProfileApiRepository
+import kz.secret_santa_jusan.data.profile.models.NewPasswordModel
+import kz.secret_santa_jusan.data.profile.models.ProfileModel
+import kz.secret_santa_jusan.data.registration.RegisterApiRepository
+import trikita.log.Log
 
 data class RessetData(
     val name:String? = "",
@@ -61,6 +67,7 @@ class ProfileViewModelPreview : IProfileViewModel {
 }
 
 class ProfileViewModel(
+    private val repository: ProfileApiRepository
 ): CoreBaseViewModel(), IProfileViewModel {
 
     private var _state = MutableStateFlow<ProfileState>(ProfileState.Default(RessetData()))
@@ -70,10 +77,6 @@ class ProfileViewModel(
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
-    init {
-        screenModelScope.launch {
-        }
-    }
 
     override fun sendEvent(event: ProfileEvent) {
         when(event){
@@ -82,14 +85,40 @@ class ProfileViewModel(
             }
 
             ProfileEvent.Delete -> {
-
+                screenModelScope.launch {
+                    repository.deleteAcaunt().apply {
+                        if(isSuccessful) {
+                            Log.d("ok", "delete")
+                        }
+                    }
+                }
             }
             ProfileEvent.SaveProfile -> {
-
+                screenModelScope.launch {
+                    val profile = ProfileModel(state.value.ressetData.name,state.value.ressetData.email)
+                    repository.updateLoginAndMail(profile).apply {
+                        if(isSuccessful) {
+                            Log.d("ok", "newProfile")
+                        }
+                    }
+                }
             }
 
             ProfileEvent.SavePasword -> {
-
+                if (state.value.ressetData.newPasword?.equals(state.value.ressetData.repeatPasword) == true){
+                    val password = GlobalStorage.getPassword()
+                    val profile = NewPasswordModel(password,state.value.ressetData.newPasword,state.value.ressetData.repeatPasword)
+                    screenModelScope.launch {
+                        repository.changePassword(profile).apply {
+                            if(isSuccessful) {
+                                Log.d("ok", "newPasword")
+                            }
+                        }
+                    }
+                }else
+                {
+                    Log.d("ok", "pasword is not corect")
+                }
             }
 
             is ProfileEvent.EnterLogin -> {

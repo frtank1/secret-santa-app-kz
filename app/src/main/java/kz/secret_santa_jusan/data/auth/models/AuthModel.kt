@@ -8,5 +8,5 @@ data class AuthModel(
     @SerialName("email")
     val email: String? = null,
     @SerialName("password")
-    val password: String? = null
+    val password: String
 )

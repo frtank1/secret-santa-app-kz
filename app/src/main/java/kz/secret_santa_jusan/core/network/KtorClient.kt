@@ -1,8 +1,7 @@
 package kz.secret_santa_jusan.core.network
 
-import org.koin.dsl.module
-import trikita.log.Log
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.auth.Auth
 import io.ktor.client.plugins.auth.providers.BearerTokens
@@ -13,14 +12,23 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.accept
+import io.ktor.client.request.forms.FormDataContent
+import io.ktor.client.request.headers
+import io.ktor.client.request.post
 import io.ktor.http.ContentType
+import io.ktor.http.Parameters
 import io.ktor.http.contentType
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.util.InternalAPI
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
+import kz.secret_santa_jusan.core.CoreApp
+import kz.secret_santa_jusan.core.network.model.TokenModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
+import org.koin.dsl.module
+import trikita.log.Log
 
-@OptIn(ExperimentalSerializationApi::class)
+@OptIn(ExperimentalSerializationApi::class, InternalAPI::class)
 val httpClientModule = module {
     single {
         HttpClient(Android).config {
@@ -53,12 +61,25 @@ val httpClientModule = module {
                             GlobalStorage.refresh_token
                         )
                     }
-                    /*sendWithoutRequest { request ->
-                       // !request.url.toString().contains("")
-                    }*/
-                    /*refreshTokens {
-
-                        запрос на переавторизацию
+                    sendWithoutRequest { request ->
+                        !request.url.toString().contains("/auth/login") &&
+                                !request.url.toString().contains("/auth/forgot-password")
+                    }
+                    refreshTokens {
+                        val response = client.post(GlobalStorage.BASE_URL + "refresh-token") {
+                            headers {
+                                append(
+                                    "Authorization",
+                                    "Bearer " + GlobalStorage.refresh_token
+                                )
+                            }
+                            body = FormDataContent(Parameters.build {
+                                append(
+                                    "refresh_token",
+                                    GlobalStorage.getAuthToken()?.refresh_token ?: ""
+                                )
+                            })
+                        }
                         if (response.status.value >= 200 && response.status.value < 300) {
                             val token = response.body<TokenModel>()
                             GlobalStorage.saveAuthToken(
@@ -73,7 +94,7 @@ val httpClientModule = module {
                             CoreApp.logOut(true)
                             throw RuntimeException("failed to refresh tokens")
                         }
-                    }*/
+                    }
                 }
             }
         }

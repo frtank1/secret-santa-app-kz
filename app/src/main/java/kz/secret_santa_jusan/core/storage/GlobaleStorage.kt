@@ -8,11 +8,13 @@ import kz.secret_santa_jusan.data.registration.models.RegModel
 class GlobalStorage {
     companion object {
         private val TOKEN = "token"
+        private val PASSWORD = "password"
         private val keys = arrayListOf(TOKEN)
 
         var applicationId: String = ""
 
         private var _access_token: String? = null
+        private var _password: String? = null
         val access_token: String get() {
             if(_access_token == null) getAuthToken()
             return _access_token?:""
@@ -41,11 +43,20 @@ class GlobalStorage {
             Paper.book().write(TOKEN, TokenModel(access_token, refresh_token))
         }
 
+        fun savePassword(password: String){
+            _password = access_token
+            Paper.book().write(PASSWORD, password)
+        }
+
         fun getAuthToken(): TokenModel?{
             val token = Paper.book().read<TokenModel>(TOKEN, null)
             _access_token = token?.access_token
             _refresh_token = token?.refresh_token
             return token
+        }
+        fun getPassword(): String?{
+            val password = Paper.book().read<String>(PASSWORD, null)
+            return password
         }
 
         fun setFlavor(flavor: String){

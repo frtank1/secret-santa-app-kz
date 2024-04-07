@@ -3,6 +3,7 @@ package kz.secret_santa_jusan.core
 import cafe.adriel.voyager.core.registry.ScreenRegistry
 import cafe.adriel.voyager.core.registry.screenModule
 import kz.secret_santa_jusan.core.network.httpClientModule
+import kz.secret_santa_jusan.core.network.ktorConfigModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.di.dataAuthApiKtorModule
 import kz.secret_santa_jusan.di.dataAuthApiRepoModule
@@ -42,7 +43,6 @@ class MyApp : CoreApp() {
 
         GlobalStorage.setBaseUrl("http://51.107.14.25:8080/")
 
-
         ScreenRegistry {
             featureExample()
             featureRegister()
@@ -56,6 +56,7 @@ class MyApp : CoreApp() {
             androidContext(this@MyApp)
             modules(
                 httpClientModule,
+                ktorConfigModel,
                 dataExampleApiKtorModule,
                 dataExampleApiRepoModule,
                 dataRegisterApiKtorModule,
