@@ -52,9 +52,10 @@ fun TitleBar(
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(White),
                 modifier = Modifier
+                    .padding(start = 10.dp)
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-                    .padding(start = 10.dp)
+
             )
         } else {
             Image(
@@ -62,9 +63,10 @@ fun TitleBar(
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(White),
                 modifier = Modifier
+                    .padding(start = 22.dp)
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-                    .padding(start = 22.dp)
+
             )
         }
         if (actionButton1ClickListener != null && actionButton1IconResId != null) {
