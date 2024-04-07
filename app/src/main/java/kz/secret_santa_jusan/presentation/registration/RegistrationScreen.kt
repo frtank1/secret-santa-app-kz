@@ -28,6 +28,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import kotlinx.coroutines.MainScope
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
@@ -36,6 +37,7 @@ import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
+import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
@@ -62,6 +64,12 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
             NavigationEvent.GoToAuth -> {
                 navigator.push(
                     AuthScreen()
+                )
+            }
+
+            NavigationEvent.GoToMain -> {
+                navigator.push(
+                    MainScreen(true)
                 )
             }
         }

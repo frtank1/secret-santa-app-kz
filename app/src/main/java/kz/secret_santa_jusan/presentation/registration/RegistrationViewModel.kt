@@ -24,6 +24,7 @@ interface IRegistrationViewModel {
 sealed class RegistrationEvent{
 
     object GoToAuth:RegistrationEvent()
+
     class EnterLogin(val text: String): RegistrationEvent()
     class EnterPassword(val text: String): RegistrationEvent()
     class EnterMail(val text: String): RegistrationEvent()
@@ -43,6 +44,7 @@ sealed class NavigationEvent{
     class Default: NavigationEvent()
     class Back: NavigationEvent()
     object GoToAuth:NavigationEvent()
+    object GoToMain:NavigationEvent()
 }
 
 sealed class RegistrationState(val regForm: RegModel){
@@ -80,6 +82,7 @@ class RegistrationViewModel(
                             Log.d("ok", "ok")
                             GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
                             GlobalStorage.saveUser(state.value.regForm)
+                            _navigationEvent.value = NavigationEvent.GoToMain
                         }
                     }
                 }
