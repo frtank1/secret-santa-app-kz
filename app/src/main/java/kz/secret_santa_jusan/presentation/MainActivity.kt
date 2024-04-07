@@ -31,6 +31,7 @@ import kz.secret_santa_jusan.R
 
 import kz.secret_santa_jusan.core.base.CoreBaseActivity
 import kz.secret_santa_jusan.core.navigation.ScreenLifecycleOwner
+import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.profile.ProfileScreen
@@ -55,12 +56,17 @@ class MainActivity : CoreBaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            val startScreen = if (GlobalStorage.getAuthToken() != null) {
+                MainScreen(true)
+            } else {
+                MainScreen(false)
+            }
             val bottomBarState = bottomBarViewModel.state.collectAsStateWithLifecycle().value
             val nav = bottomBarViewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
             KoinAndroidContext() {
 
                         Navigator(
-                            screen = MainScreen(false),
+                            screen = startScreen,
                             content = { navigator ->
                                 remember(navigator.lastItem) {
                                     ScreenLifecycleStore.get(navigator.lastItem) {
