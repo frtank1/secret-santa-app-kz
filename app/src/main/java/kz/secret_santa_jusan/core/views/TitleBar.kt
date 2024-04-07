@@ -41,8 +41,7 @@ fun TitleBar(
                     .clickable {
                         onClickBack.invoke()
                     }
-                    .padding(start = 20.dp)
-                    .padding(10.dp),
+                    .padding(start = 12.dp),
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = "back",
                 tint = DarkGray,
@@ -55,7 +54,7 @@ fun TitleBar(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-                    .padding(10.dp)
+                    .padding(start = 10.dp)
             )
         } else {
             Image(
@@ -65,7 +64,7 @@ fun TitleBar(
                 modifier = Modifier
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-                    .padding(10.dp)
+                    .padding(start = 22.dp)
             )
         }
         if (actionButton1ClickListener != null && actionButton1IconResId != null) {
