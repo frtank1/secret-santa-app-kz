@@ -33,5 +33,8 @@
 	<string name="Пароль">Пароль</string>
 	<string name="Новый_Пароль">Новый пароль</string>
 	<string name="Повторите_пароль">Повторите пароль</string>
+	<string name="create_a_participant_card">Создать карточку участника</string>
+	<string name="fill_out_the_card">Заполните карточку, чтоб принять участие в игре</string>
+	<string name="invitation">Организатор приглашает Вас в игру</string>
 
 </resources>
