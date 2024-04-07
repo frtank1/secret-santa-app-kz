@@ -34,6 +34,7 @@ import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
+import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.registration.AgreeText
 import kz.secret_santa_jusan.presentation.registration.EnterText
 import kz.secret_santa_jusan.presentation.registration.IRegistrationViewModel
@@ -61,6 +62,12 @@ class AuthScreen : CoreBaseScreen(), Parcelable {
             NavigationEvent.GoToRecovery -> {
                 navigator.push(
                     PassRecoveryScreen()
+                )
+            }
+
+            NavigationEvent.GoToMain -> {
+                navigator.push(
+                    MainScreen(true)
                 )
             }
         }
@@ -137,7 +144,7 @@ fun AuthMenu(viewModel: IAuthViewModel) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { viewModel.sendEvent(AuthEvent.GoToRecovery)}
+                .clickable { viewModel.sendEvent(AuthEvent.GoToRecovery) }
                 .padding(14.dp),
             textAlign = TextAlign.Center,
             text = stringResource(id = R.string.Забыли_пароль),

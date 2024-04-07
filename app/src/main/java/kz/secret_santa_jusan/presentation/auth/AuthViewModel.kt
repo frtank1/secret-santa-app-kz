@@ -31,6 +31,7 @@ sealed class AuthEvent{
     object GoToRecovery:AuthEvent()
 
     object ClickEnter: AuthEvent()
+
 }
 
 sealed class NavigationEvent{
@@ -44,6 +45,8 @@ sealed class NavigationEvent{
     class Default: NavigationEvent()
     class Back: NavigationEvent()
     object GoToRecovery:NavigationEvent()
+
+    object GoToMain:NavigationEvent()
 }
 
 sealed class AuthState(val authForm: AuthModel){
@@ -84,6 +87,7 @@ class AuthViewModel(
                         if(isSuccessful) {
                             Log.d("ok", "ok")
                             GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
+                            _navigationEvent.value = NavigationEvent.GoToMain
                         }
                     }
                 }
