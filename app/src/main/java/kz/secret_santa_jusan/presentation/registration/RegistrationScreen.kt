@@ -50,6 +50,7 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
+        ShowBottomBar()
         val viewModel = getScreenModel<RegistrationViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =

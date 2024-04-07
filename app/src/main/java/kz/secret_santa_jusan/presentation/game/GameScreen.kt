@@ -40,6 +40,7 @@ class GameScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
+
         val viewModel = getScreenModel<GameViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()

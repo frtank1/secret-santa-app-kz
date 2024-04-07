@@ -40,6 +40,7 @@ class ProfileScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
+        ShowBottomBar()
         val viewModel = getScreenModel<ProfileViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =

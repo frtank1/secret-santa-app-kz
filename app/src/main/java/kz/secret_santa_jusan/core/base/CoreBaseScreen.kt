@@ -1,6 +1,7 @@
 package kz.secret_santa_jusan.core.base
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 import cafe.adriel.voyager.core.screen.Screen
@@ -36,5 +37,10 @@ abstract class CoreBaseScreen: Screen {
 
     fun getResultScreen():Any?{
         return ResultNavigation.getValue()
+    }
+
+    @Composable
+    fun ShowBottomBar(){
+        LocalContext.current.getCoreBaseActivity().showBottomBar()
     }
 }

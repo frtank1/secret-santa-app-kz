@@ -40,6 +40,9 @@ class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
+        if(isAuth){
+            ShowBottomBar()
+        }
         val viewModel = getScreenModel<MainViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =
