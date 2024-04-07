@@ -30,7 +30,7 @@ sealed class AuthEvent{
 
     object GoToRecovery:AuthEvent()
 
-    object ClickEnter: AuthEvent()
+    class ClickEnter(password:String): AuthEvent()
 
 }
 
@@ -81,12 +81,13 @@ class AuthViewModel(
                 _navigationEvent.value = NavigationEvent.Back()
             }
 
-            AuthEvent.ClickEnter -> {
+            is AuthEvent.ClickEnter -> {
                 screenModelScope.launch {
                     repository.auth(state.value.authForm).apply {
                         if(isSuccessful) {
                             Log.d("ok", "ok")
                             GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
+                            GlobalStorage.savePassword(state.value.authForm.password)
                             _navigationEvent.value = NavigationEvent.GoToMain
                         }
                     }
