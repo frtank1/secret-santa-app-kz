@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -19,21 +22,22 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
+import kz.secret_santa_jusan.core.views.GameCard
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
-import kz.secret_santa_jusan.ui.theme.LightBlue
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
@@ -45,8 +49,9 @@ class GameScreen : CoreBaseScreen(), Parcelable {
 
         val viewModel = getScreenModel<GameViewModel>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
-        when(navigationEvent){
+        val navigationEvent =
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+        when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
@@ -91,6 +96,21 @@ fun GameContent(viewModel: IGameViewModel) {
                     notHaveGame()
                 }
             }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 76.dp)
+                    .padding(horizontal = 25.dp),
+                colors = ButtonDefaults.buttonColors(BrightOrange),
+                onClick = {
+                }) {
+                Text(
+                    stringResource(id = R.string.Создай),
+                    fontFamily = interFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+            }
         }
     }
 }
@@ -98,7 +118,6 @@ fun GameContent(viewModel: IGameViewModel) {
 @Composable
 fun notHaveGame() {
     Column {
-
         Image(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
@@ -124,21 +143,32 @@ fun notHaveGame() {
             textAlign = TextAlign.Center,
             fontSize = 10.sp
         )
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 76.dp)
-                .padding(horizontal = 25.dp),
-            colors = ButtonDefaults.buttonColors(BrightOrange),
-            onClick = {
-            }) {
-            Text(
-                stringResource(id = R.string.Создай),
-                fontFamily = interFamily,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp
+    }
+}
+
+@Composable
+fun HaveGame(
+    viewModel: IGameViewModel, list: List<GameModel>
+) {
+    val state = viewModel.state.collectAsStateWithLifecycle().value
+    val listState = rememberLazyListState()
+    LazyColumn(
+        state = listState,
+    ) {
+        itemsIndexed(
+            list,
+        ) { id, item ->
+            GameCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 21.dp),
+                onClick = {
+
+                },
+                title = item.name,
+                count = item.participantCount.toString(),
+                own = false
             )
         }
     }
-
 }

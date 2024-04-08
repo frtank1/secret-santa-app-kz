@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -45,7 +46,6 @@ fun TitleBar(
                 painter = painterResource(id = R.drawable.arrow_back),
                 contentDescription = "back",
                 tint = DarkGray,
-
             )
             Image(
                 painter = painterResource(id = R.drawable.santa_claus),
@@ -53,9 +53,9 @@ fun TitleBar(
                 colorFilter = ColorFilter.tint(White),
                 modifier = Modifier
                     .padding(start = 10.dp)
+                    .size(width = 40.dp, height = 40.dp)
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-
             )
         } else {
             Image(
@@ -64,9 +64,9 @@ fun TitleBar(
                 colorFilter = ColorFilter.tint(White),
                 modifier = Modifier
                     .padding(start = 22.dp)
+                    .size(width = 40.dp, height = 40.dp)
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
-
             )
         }
         if (actionButton1ClickListener != null && actionButton1IconResId != null) {

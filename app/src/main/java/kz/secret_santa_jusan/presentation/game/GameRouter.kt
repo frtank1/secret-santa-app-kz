@@ -5,4 +5,5 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 //Регистрируем в MyApp
 sealed class GameRouter : ScreenProvider {
     object GameScreen : GameRouter()
+    object CreateScreen : GameRouter()
 }

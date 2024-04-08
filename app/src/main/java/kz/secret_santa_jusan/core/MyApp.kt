@@ -21,12 +21,16 @@ import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
 import kz.secret_santa_jusan.di.featureProfileViewModel
 import kz.secret_santa_jusan.di.featureRegisterViewModel
+import kz.secret_santa_jusan.presentation.NavigationEvent
 import kz.secret_santa_jusan.presentation.auth.AuthRouter
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryRouter
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
+import kz.secret_santa_jusan.presentation.game.GameRouter
+import kz.secret_santa_jusan.presentation.game.GameScreen
+import kz.secret_santa_jusan.presentation.game.create.CreateScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
@@ -49,6 +53,7 @@ class MyApp : CoreApp() {
             featureMain()
             featureAuth()
             featureRecoveryPass()
+            featureGame()
         }
 
         startKoin {
@@ -105,5 +110,14 @@ val featureAuth = screenModule {
 val featureRecoveryPass = screenModule {
     register<PassRecoveryRouter.PassRecoveryScreen> {
         PassRecoveryScreen()
+    }
+}
+
+val featureGame = screenModule {
+    register<GameRouter.GameScreen> {
+       GameScreen()
+    }
+    register<GameRouter.CreateScreen> {
+        CreateScreen()
     }
 }

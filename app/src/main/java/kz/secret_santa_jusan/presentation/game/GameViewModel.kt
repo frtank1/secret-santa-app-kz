@@ -16,6 +16,8 @@ interface IGameViewModel {
 
 sealed class GameEvent{
     object Back: GameEvent()
+
+
 }
 
 sealed class NavigationEvent{
