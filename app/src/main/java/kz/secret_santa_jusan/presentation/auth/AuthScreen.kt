@@ -32,11 +32,13 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.AOButton
 import kz.secret_santa_jusan.core.views.EditText
+import kz.secret_santa_jusan.core.views.EditTextPassword
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
+import kz.secret_santa_jusan.presentation.profile.ProfileEvent
 import kz.secret_santa_jusan.presentation.registration.AgreeText
 import kz.secret_santa_jusan.presentation.registration.EnterText
 import kz.secret_santa_jusan.presentation.registration.IRegistrationViewModel
@@ -132,10 +134,10 @@ fun AuthMenu(viewModel: IAuthViewModel) {
                 .padding(top = 73.dp),
             label = stringResource(R.string.Ваш_Логин)
         )
-        EditText(
+        EditTextPassword(
             value = state.authForm.password ?: "-",
-            onValueChange = { pasword ->
-                viewModel.sendEvent(AuthEvent.EnterPassword(pasword))
+            onValueChange = { password ->
+                viewModel.sendEvent(AuthEvent.EnterPassword(password))
             },
             enabled = true,
             isError = false,
