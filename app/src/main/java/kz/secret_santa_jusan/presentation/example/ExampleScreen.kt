@@ -43,7 +43,6 @@ fun ExampleContentPreview() {
     ExampleContent(ExampleViewModelPreview())
 }
 
-
 @Composable
 fun ExampleContent(viewModel: IExampleViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
@@ -63,5 +62,4 @@ fun ExampleContent(viewModel: IExampleViewModel) {
             }
         }
     }
-
 }

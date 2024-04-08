@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.data.game.GameApiRepository
 import kz.secret_santa_jusan.data.profile.ProfileApiRepository
+import trikita.log.Log
 
 interface IGameViewModel {
     val state: StateFlow<GameState>
@@ -18,7 +19,6 @@ interface IGameViewModel {
 
 sealed class GameEvent{
     object Back: GameEvent()
-
 
 }
 
@@ -57,6 +57,12 @@ class GameViewModel(
 
     init {
         screenModelScope.launch {
+            repository.myGames().apply {
+                if(isSuccessful) {
+                    Log.d("ok", "delete")
+
+                }
+            }
         }
     }
 
