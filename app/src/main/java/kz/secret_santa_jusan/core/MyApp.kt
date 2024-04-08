@@ -9,6 +9,8 @@ import kz.secret_santa_jusan.di.dataAuthApiKtorModule
 import kz.secret_santa_jusan.di.dataAuthApiRepoModule
 import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
+import kz.secret_santa_jusan.di.dataGameApiKtorModule
+import kz.secret_santa_jusan.di.dataGameApiRepoModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiKtorModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiRepoModule
 import kz.secret_santa_jusan.di.dataProfileApiRepoModule
@@ -17,11 +19,11 @@ import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureAuthViewModel
 import kz.secret_santa_jusan.di.featureExampleViewModel
+import kz.secret_santa_jusan.di.featureGameViewModel
 import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
 import kz.secret_santa_jusan.di.featureProfileViewModel
 import kz.secret_santa_jusan.di.featureRegisterViewModel
-import kz.secret_santa_jusan.presentation.NavigationEvent
 import kz.secret_santa_jusan.presentation.auth.AuthRouter
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryRouter
@@ -77,7 +79,10 @@ class MyApp : CoreApp() {
                 dataPassRecoceryApiKtorModule,
                 featureProfileViewModel,
                 dataProfileyApiKtorModule,
-                dataProfileApiRepoModule
+                dataProfileApiRepoModule,
+                featureGameViewModel,
+                dataGameApiKtorModule,
+                dataGameApiRepoModule
             )
         }
     }
@@ -115,7 +120,7 @@ val featureRecoveryPass = screenModule {
 
 val featureGame = screenModule {
     register<GameRouter.GameScreen> {
-       GameScreen()
+        GameScreen()
     }
     register<GameRouter.CreateScreen> {
         CreateScreen()
