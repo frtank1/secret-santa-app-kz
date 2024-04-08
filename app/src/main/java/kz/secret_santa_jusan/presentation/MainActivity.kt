@@ -57,14 +57,13 @@ class MainActivity : CoreBaseActivity() {
 
         setContent {
             val startScreen = if (GlobalStorage.getAuthToken() != null) {
-                MainScreen(false)
+                MainScreen(true)
             } else {
                 MainScreen(false)
             }
             val bottomBarState = bottomBarViewModel.state.collectAsStateWithLifecycle().value
             val nav = bottomBarViewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
             KoinAndroidContext() {
-
                         Navigator(
                             screen = startScreen,
                             content = { navigator ->
@@ -169,7 +168,6 @@ fun Item(modifier: Modifier, isSelected:Boolean, iconRes: Int, onClick: ()-> Uni
                 modifier = backgroundIcon
                     .fillMaxWidth()
                     .padding(vertical = 4.dp)
-
             )
         }
     }

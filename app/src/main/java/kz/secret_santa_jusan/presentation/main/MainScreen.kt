@@ -31,6 +31,7 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
@@ -56,6 +57,13 @@ class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
             NavigationEvent.GoToRegistration -> {
                 navigator.push(
                     RegistrationScreen(
+                    )
+                )
+            }
+
+            NavigationEvent.GoToCreateGame -> {
+                navigator.push(
+                    GameScreen(
                     )
                 )
             }
@@ -95,7 +103,6 @@ fun MainContent(viewModel: IMainViewModel) {
                     }else{
                         haveRegistration(viewModel)
                     }
-
                 }
             }
         }
@@ -188,6 +195,7 @@ fun haveRegistration(
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(MainEvent.GoToCreateGame)
             }) {
             Text(
                 stringResource(id = R.string.Создай),

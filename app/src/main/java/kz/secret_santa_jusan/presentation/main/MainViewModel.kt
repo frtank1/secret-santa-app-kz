@@ -20,6 +20,8 @@ sealed class MainEvent{
     class Init(val isAuth: Boolean): MainEvent()
 
     object GoToRegistration: MainEvent()
+
+    object GoToCreateGame: MainEvent()
 }
 
 sealed class NavigationEvent{
@@ -33,6 +35,7 @@ sealed class NavigationEvent{
     class Default: NavigationEvent()
 
     object GoToRegistration: NavigationEvent()
+    object GoToCreateGame: NavigationEvent()
 
     class Back: NavigationEvent()
 
@@ -72,6 +75,10 @@ class MainViewModel(
 
             MainEvent.GoToRegistration -> {
                 _navigationEvent.value = NavigationEvent.GoToRegistration
+            }
+
+            MainEvent.GoToCreateGame -> {
+                _navigationEvent.value = NavigationEvent.GoToCreateGame
             }
         }
     }
