@@ -74,17 +74,16 @@ fun ProfileInfoCadr(
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(White),
                 modifier = Modifier
+                    .padding(horizontal = 10.dp, vertical =8.dp)
                     .size(width = 40.dp, height = 40.dp)
-                    .padding(start = 10.dp,top =8.dp)
                     .clip(shape = RoundedCornerShape(100.dp))
                     .background(Red)
             )
-
             Column {
                 Text(
                     modifier = Modifier
-                        .padding(start = 11.dp,top = 4.dp),
-                    text = name?:"-",
+                        .padding(start = 11.dp,top = 10.dp),
+                    text = name?:"Имя Фамилия",
                     color = DarkGray,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
@@ -94,7 +93,7 @@ fun ProfileInfoCadr(
                 Text(
                     modifier = Modifier
                         .padding(start = 11.dp),
-                    text = email?:"-",
+                    text = email?:"example@gmail.com",
                     color = DarkGray,
                     fontWeight = FontWeight.Normal,
                     textAlign = TextAlign.Center,
@@ -102,7 +101,5 @@ fun ProfileInfoCadr(
                 )
             }
         }
-
-
     }
 }

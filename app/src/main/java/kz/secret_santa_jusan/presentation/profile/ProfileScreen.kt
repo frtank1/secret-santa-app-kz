@@ -106,7 +106,9 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
                 .padding(top = 47.dp)
         )
         SsText(
-            modifier = Modifier.padding(top = 21.dp),
+            modifier = Modifier
+                .padding(top = 18.dp)
+                .fillMaxWidth(),
             text = stringResource(id = R.string.Личные_Данные),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
@@ -151,11 +153,13 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
         )
 
         SsText(
-            modifier = Modifier.padding(top = 21.dp),
+            modifier = Modifier
+                .padding(top = 18.dp)
+                .fillMaxWidth(),
             text = stringResource(id = R.string.Пароль),
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 20.sp,
         )
         EditTextPassword(
             value = state.ressetData.newPasword ?: "-",
@@ -203,6 +207,7 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             .padding(top = 74.dp),
         colors = ButtonDefaults.buttonColors(Red),
         onClick = {
+            viewModel.sendEvent(ProfileEvent.Delete)
         }) {
         Text(
             stringResource(id = R.string.Удалить_аккаунт),
