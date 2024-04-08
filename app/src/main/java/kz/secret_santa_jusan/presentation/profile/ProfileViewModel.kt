@@ -19,7 +19,7 @@ data class RessetData(
     val email: String? = "",
     val newPasword: String? = "",
     val repeatPasword: String? = "",
-    val showPassword:Boolean = false,
+    val showPassword:Boolean = true,
     val errorPassword:Boolean = false,
 )
 interface IProfileViewModel {
