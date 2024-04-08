@@ -162,16 +162,28 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             fontSize = 20.sp,
         )
         EditTextPassword(
-            value = state.ressetData.newPasword ?: "-",
+            value = state.ressetData.repeatPasword ?: "-",
             onValueChange = { password ->
-                    viewModel.sendEvent(ProfileEvent.EnterPassword(password))
+                viewModel.sendEvent(ProfileEvent.EnterRepeatPassword(password))
             },
             enabled = state.ressetData.showPassword,
             isError = state.ressetData.errorPassword,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 40.dp),
-            label = stringResource(R.string.Новый_Пароль)
+            label = stringResource(R.string.Повторите_пароль)
+        )
+        EditTextPassword(
+            value = state.ressetData.current ?: "-",
+            onValueChange = { password ->
+                    viewModel.sendEvent(ProfileEvent.EnterCurrent(password))
+            },
+            enabled = state.ressetData.showPassword,
+            isError = state.ressetData.errorPassword,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 25.dp),
+            label = stringResource(R.string.Действующий_пароль)
         )
         EditTextPassword(
             value = state.ressetData.repeatPasword ?: "-",

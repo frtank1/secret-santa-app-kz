@@ -22,7 +22,9 @@ data class RessetData(
     val repeatPasword: String? = "",
     val showPassword:Boolean = true,
     val errorPassword:Boolean = false,
+    val current: String?= "",
 )
+
 interface IProfileViewModel {
     val state: StateFlow<ProfileState>
     val navigationEvent: StateFlow<NavigationEvent>
@@ -35,6 +37,10 @@ sealed class ProfileEvent{
     class EnterPassword(val text: String): ProfileEvent()
     class EnterRepeatPassword(val text: String): ProfileEvent()
     class EnterMail(val text: String): ProfileEvent()
+    class EnterCurrent(val text: String) : ProfileEvent() {
+
+    }
+
     object Delete:ProfileEvent()
     object SaveProfile:ProfileEvent()
 
@@ -115,6 +121,8 @@ class ProfileViewModel(
                             if(isSuccessful) {
                                 Log.d("ok", "newPasword")
                                 CoreApp.logOut(true)
+                            } else {
+                                _state.value = ProfileState.Default(state.value.ressetData.copy(errorPassword = true))
                             }
                         }
                     }
@@ -136,6 +144,8 @@ class ProfileViewModel(
             is ProfileEvent.EnterRepeatPassword -> {
                 _state.value = ProfileState.Default(state.value.ressetData.copy(repeatPasword  = event.text))
             }
+
+            is ProfileEvent.EnterCurrent -> {ProfileState.Default(state.value.ressetData.copy(current  = event.text))}
         }
     }
 }
