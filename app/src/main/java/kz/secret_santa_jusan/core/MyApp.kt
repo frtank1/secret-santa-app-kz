@@ -45,7 +45,7 @@ class MyApp : CoreApp() {
     override fun onCreate() {
         super.onCreate()
 
-        GlobalStorage.setBaseUrl("http://20.106.220.123:80/")
+        GlobalStorage.setBaseUrl("http://51.107.14.25:8080/")
 
         ScreenRegistry {
             featureExample()

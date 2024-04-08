@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.game.GameApiRepository
+import kz.secret_santa_jusan.data.game.create.CreateApiRepository
 import kz.secret_santa_jusan.presentation.profile.ProfileEvent
 import kz.secret_santa_jusan.presentation.profile.ProfileState
 
@@ -53,6 +55,7 @@ class CreateViewModelPreview : ICreateViewModel {
 }
 
 class CreateViewModel(
+    private val repository: CreateApiRepository
 ): CoreBaseViewModel(), ICreateViewModel {
 
     private var _state = MutableStateFlow<CreateState>(CreateState.Default(CreateData()))

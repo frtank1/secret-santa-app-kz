@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.game.GameApiRepository
+import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 
 interface IGameViewModel {
     val state: StateFlow<GameState>
@@ -43,6 +45,7 @@ class GameViewModelPreview : IGameViewModel {
 }
 
 class GameViewModel(
+    private val repository: GameApiRepository
 ): CoreBaseViewModel(), IGameViewModel {
 
     private var _state = MutableStateFlow<GameState>(GameState.Default)
