@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -87,8 +88,10 @@ fun CreateContent(viewModel: ICreateViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = LightBlue)
-            .verticalScroll(rememberScrollState())
+            .background(color = PaleBlue)
+            .padding(horizontal = 36.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally
     ){
         when (state) {
             is CreateState.Default -> {
@@ -161,7 +164,7 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             isError = false,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 28.dp),
+                .padding(top = 20.dp),
             label = stringResource(R.string.Укажите_максимальную_стоимость_подарка),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
         )

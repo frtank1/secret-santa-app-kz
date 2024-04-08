@@ -20,6 +20,8 @@ interface IGameViewModel {
 sealed class GameEvent{
     object Back: GameEvent()
 
+    object GoToCreate: GameEvent()
+
 }
 
 sealed class NavigationEvent{
@@ -32,6 +34,7 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
+    object GoToCreate: NavigationEvent()
 }
 
 sealed class GameState{
@@ -70,6 +73,10 @@ class GameViewModel(
         when(event){
             GameEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
+            }
+
+            GameEvent.GoToCreate -> {
+                _navigationEvent.value = NavigationEvent.GoToCreate
             }
         }
     }

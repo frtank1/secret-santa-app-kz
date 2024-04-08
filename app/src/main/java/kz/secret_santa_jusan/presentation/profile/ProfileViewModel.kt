@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kz.secret_santa_jusan.core.CoreApp
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.data.profile.ProfileApiRepository
@@ -99,6 +100,7 @@ class ProfileViewModel(
                     repository.updateLoginAndMail(profile).apply {
                         if(isSuccessful) {
                             Log.d("ok", "newProfile")
+                            CoreApp.logOut(true)
                         }
                     }
                 }
@@ -112,6 +114,7 @@ class ProfileViewModel(
                         repository.changePassword(profile).apply {
                             if(isSuccessful) {
                                 Log.d("ok", "newPasword")
+                                CoreApp.logOut(true)
                             }
                         }
                     }

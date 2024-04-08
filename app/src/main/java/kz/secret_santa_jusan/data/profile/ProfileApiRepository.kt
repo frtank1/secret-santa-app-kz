@@ -10,7 +10,7 @@ import kz.secret_santa_jusan.data.profile.models.ProfileModel
 
 class ProfileApiRepository (private val api: ProfileApiKtor): BaseApiClient() {
 
-    suspend fun updateLoginAndMail(profileModel: ProfileModel): KtorResponse<ExampleModel> {
+    suspend fun updateLoginAndMail(profileModel: ProfileModel): KtorResponse<Unit> {
         return withContext(Dispatchers.IO) {
             safeApiCall {
                 api.updateLoginAndMail(profileModel)

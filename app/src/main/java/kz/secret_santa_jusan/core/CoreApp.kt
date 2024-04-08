@@ -4,8 +4,10 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.LifecycleObserver
 import io.paperdb.Paper
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 
@@ -22,6 +24,7 @@ abstract class CoreApp: Application() {
         super.onCreate()
 
         Paper.init(applicationContext)
+        registerActivityLifecycleCallbacks(mFTActivityLifecycleCallbacks)
     }
 
     companion object {
@@ -32,9 +35,8 @@ abstract class CoreApp: Application() {
         }
         fun logOut(isAuth: Boolean) {
             GlobalStorage.logOut()
-
-
             val activity = currentActivity()
+            Log.d("activity","${activity != null}")
             if(activity != null) {
                 val intent = activity.intent
                 activity.overridePendingTransition(0, 0)
@@ -48,20 +50,21 @@ abstract class CoreApp: Application() {
     }
 }
 
-class FTActivityLifecycleCallbacks: Application.ActivityLifecycleCallbacks {
 
-    var currentActivity: FragmentActivity? = null
+class FTActivityLifecycleCallbacks : Application.ActivityLifecycleCallbacks, LifecycleObserver {
+
+    var currentActivity: ComponentActivity? = null
 
     override fun onActivityPaused(activity: Activity) {
-        currentActivity = activity as FragmentActivity
+        currentActivity = activity as? ComponentActivity
     }
 
     override fun onActivityResumed(activity: Activity) {
-        currentActivity = activity as FragmentActivity
+        currentActivity = activity as? ComponentActivity
     }
 
     override fun onActivityStarted(activity: Activity) {
-        currentActivity = activity as FragmentActivity
+        currentActivity = activity as? ComponentActivity
     }
 
     override fun onActivityDestroyed(activity: Activity) {
@@ -74,7 +77,16 @@ class FTActivityLifecycleCallbacks: Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-        currentActivity = activity as FragmentActivity
+        currentActivity = activity as? ComponentActivity
+    }
+/*
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    fun onResume() {
+        // Handle onResume event
     }
 
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    fun onPause() {
+        // Handle onPause event
+    }*/
 }
