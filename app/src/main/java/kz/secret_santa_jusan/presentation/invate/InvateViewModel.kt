@@ -8,9 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.data.game.models.GameModel
-import kz.secret_santa_jusan.data.game.models.GameStatus
 import kz.secret_santa_jusan.data.invate.InvateApiRepository
-import kz.secret_santa_jusan.presentation.profile.RessetData
 
 interface IInvateViewModel {
     val state: StateFlow<InvateState>

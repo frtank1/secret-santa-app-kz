@@ -31,14 +31,13 @@ import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.data.game.models.GameModel
-import kz.secret_santa_jusan.data.game.models.GameStatus
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class InvateScreen(val link: String, val gameModel: GameModel?=null) : CoreBaseScreen(), Parcelable {
+class InvateScreen(val link: String?, val gameModel: GameModel?=null) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {

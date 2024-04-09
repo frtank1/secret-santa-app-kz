@@ -38,6 +38,7 @@ import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.game.GameEvent
+import kz.secret_santa_jusan.presentation.invate.InvateScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
@@ -60,6 +61,9 @@ class CreateScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
+            is NavigationEvent.GoToInvate -> {
+                navigator.replace(InvateScreen(null,navigationEvent.gameModel))
+            }
         }
         SubscribeError(viewModel)
         CreateContent(viewModel = viewModel)

@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.data.game.create.CreateApiRepository
 import kz.secret_santa_jusan.data.game.create.model.RequestGameModel
+import kz.secret_santa_jusan.data.game.models.GameModel
 
 data class GameSettings(
     val name: String? = "",
@@ -42,6 +43,8 @@ sealed class NavigationEvent {
         handled = true
         return this
     }
+
+    class GoToInvate(val gameModel: GameModel):NavigationEvent()
 
     class Default : NavigationEvent()
     class Back : NavigationEvent()
@@ -85,12 +88,13 @@ class CreateViewModel(
                     val requestGameModel = RequestGameModel(
                         name = state.value.createData.name,
                         maxPrice = state.value.createData.maxPrice,
-                        uniqueIdentifier = "",
+                        uniqueIdentifier = "sdfsdf",
                         priceLimitChecked = state.value.createData.priceLimitChecked
                     )
                     repository.create(requestGameModel).apply {
                         if (isSuccessful) {
-                            body.id
+                            _navigationEvent.value = NavigationEvent.GoToInvate(body)
+                            body
                         }
                     }
                 }

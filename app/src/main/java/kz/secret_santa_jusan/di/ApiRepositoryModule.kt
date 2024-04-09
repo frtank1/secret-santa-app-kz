@@ -5,6 +5,7 @@ import kz.secret_santa_jusan.data.example.ExampleApiKtor
 import kz.secret_santa_jusan.data.example.ExampleApiRepository
 import kz.secret_santa_jusan.data.game.GameApiRepository
 import kz.secret_santa_jusan.data.game.create.CreateApiRepository
+import kz.secret_santa_jusan.data.invate.InvateApiRepository
 import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 import kz.secret_santa_jusan.data.recovery_pass.PassRecoveryApiRepository
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
@@ -35,4 +36,8 @@ val dataGameApiKtorModule = module {
     single { GameApiRepository(get()) }
 
     single { CreateApiRepository(get()) }
+}
+
+val dataInvateApiKtorModule = module {
+    single { InvateApiRepository(get()) }
 }

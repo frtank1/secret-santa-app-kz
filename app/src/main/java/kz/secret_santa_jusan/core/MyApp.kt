@@ -11,6 +11,8 @@ import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
 import kz.secret_santa_jusan.di.dataGameApiKtorModule
 import kz.secret_santa_jusan.di.dataGameApiRepoModule
+import kz.secret_santa_jusan.di.dataInvateApiKtorModule
+import kz.secret_santa_jusan.di.dataInvateApiRepoModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiKtorModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiRepoModule
 import kz.secret_santa_jusan.di.dataProfileApiRepoModule
@@ -20,6 +22,7 @@ import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureAuthViewModel
 import kz.secret_santa_jusan.di.featureExampleViewModel
 import kz.secret_santa_jusan.di.featureGameViewModel
+import kz.secret_santa_jusan.di.featureInvateViewModel
 import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
 import kz.secret_santa_jusan.di.featureProfileViewModel
@@ -33,6 +36,8 @@ import kz.secret_santa_jusan.presentation.example.ExampleScreen
 import kz.secret_santa_jusan.presentation.game.GameRouter
 import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
+import kz.secret_santa_jusan.presentation.invate.InvateRouter
+import kz.secret_santa_jusan.presentation.invate.InvateScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
@@ -56,6 +61,7 @@ class MyApp : CoreApp() {
             featureAuth()
             featureRecoveryPass()
             featureGame()
+            featureInvate()
         }
 
         startKoin {
@@ -82,7 +88,10 @@ class MyApp : CoreApp() {
                 dataProfileApiRepoModule,
                 featureGameViewModel,
                 dataGameApiKtorModule,
-                dataGameApiRepoModule
+                dataGameApiRepoModule,
+                featureInvateViewModel,
+                dataInvateApiKtorModule,
+                dataInvateApiRepoModule
             )
         }
     }
@@ -124,5 +133,11 @@ val featureGame = screenModule {
     }
     register<GameRouter.CreateScreen> {
         CreateScreen()
+    }
+}
+
+val featureInvate = screenModule {
+    register<InvateRouter.InvateScreen> {
+        InvateScreen(it.link,it.gameModel)
     }
 }

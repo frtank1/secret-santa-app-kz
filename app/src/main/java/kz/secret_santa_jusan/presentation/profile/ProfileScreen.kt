@@ -56,7 +56,6 @@ class ProfileScreen : CoreBaseScreen(), Parcelable {
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
-            //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
         }
         SubscribeError(viewModel)
         ProfileContent(viewModel = viewModel)

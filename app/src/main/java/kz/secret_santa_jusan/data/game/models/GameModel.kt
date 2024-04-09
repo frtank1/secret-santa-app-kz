@@ -23,7 +23,3 @@ data class GameModel(
     @SerialName("status")
     val status: String?
 ) : Parcelable
-
-enum class GameStatus{
-    INPROCESS,MATCHCOMPLETED
-}
