@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +45,7 @@ import kz.secret_santa_jusan.ui.theme.White
 fun GameCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
+    painter: Painter = painterResource(id = R.drawable.santa_r3),
     title:String?=null,
     count:String?=null,
     own:Boolean = false
@@ -77,9 +79,9 @@ fun GameCard(
             Image(
                 modifier = Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top=10.dp)
-                    .size(width = 90.dp, height = 90.dp),
-                painter = painterResource(id = R.drawable.santa_r3),
+                    .padding(top=10.dp),
+                  //  .size(width = 90.dp, height = 90.dp),
+                painter = painter,
                 contentDescription = null,
             )
             SsText(
@@ -88,19 +90,19 @@ fun GameCard(
                     .padding(horizontal = 91.dp)
                     .fillMaxWidth(),
                 text = if(own)stringResource(id = R.string.вы_участников) else stringResource(id = R.string.Вы_Организатор),
-                color = BrightOrange,
-                fontWeight = FontWeight.Normal,
+                color = Gray,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 fontSize = 10.sp,
             )
             SsText(
                 modifier = Modifier
-                    .padding(top = 17.dp)
                     .padding(horizontal = 57.dp)
+                    .padding(bottom = 12.dp)
                     .fillMaxWidth(),
-                text = count?:stringResource(id = R.string.колличество_участников),
+                text = stringResource(id = R.string.участники) + count?:stringResource(id = R.string.колличество_участников) ,
                 color = Gray,
-                fontWeight = FontWeight.Normal,
+                fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
                 fontSize = 10.sp,
             )

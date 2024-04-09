@@ -47,7 +47,7 @@ class GameScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
-
+        ShowBottomBar()
         val viewModel = getScreenModel<GameViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =
@@ -55,7 +55,6 @@ class GameScreen : CoreBaseScreen(), Parcelable {
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
-            //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
             NavigationEvent.GoToCreate -> {
                 navigator.push(
                     CreateScreen()
@@ -83,8 +82,7 @@ fun GameContent(viewModel: IGameViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = PaleBlue)
-                .padding(horizontal = 36.dp)
-                .verticalScroll(rememberScrollState()),
+                .padding(horizontal = 36.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SsText(
@@ -100,6 +98,13 @@ fun GameContent(viewModel: IGameViewModel) {
             when (state) {
                 is GameState.Default -> {
                     notHaveGame()
+                }
+
+                is GameState.Init -> {
+                    HaveGame(
+                        viewModel,
+                        state.list
+                    )
                 }
             }
             Button(

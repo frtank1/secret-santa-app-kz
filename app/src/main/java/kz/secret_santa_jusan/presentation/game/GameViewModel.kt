@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.data.game.GameApiRepository
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 import trikita.log.Log
 
@@ -22,6 +23,8 @@ sealed class GameEvent{
 
     object GoToCreate: GameEvent()
 
+
+
 }
 
 sealed class NavigationEvent{
@@ -33,12 +36,16 @@ sealed class NavigationEvent{
         return this
     }
     class Default: NavigationEvent()
+
+
     class Back: NavigationEvent()
     object GoToCreate: NavigationEvent()
 }
 
 sealed class GameState{
     object Default: GameState()
+
+    class Init(val list: List<GameModel>): GameState()
 }
 
 class GameViewModelPreview : IGameViewModel {
@@ -62,8 +69,10 @@ class GameViewModel(
         screenModelScope.launch {
             repository.myGames().apply {
                 if(isSuccessful) {
-                    Log.d("ok", "delete")
-
+                    if (!body.isNullOrEmpty())
+                    _state.value = GameState.Init(body)
+                    else
+                        _state.value = GameState.Default
                 }
             }
         }

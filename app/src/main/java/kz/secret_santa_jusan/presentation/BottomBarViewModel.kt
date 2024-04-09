@@ -110,7 +110,7 @@ class BottomBarViewModel (
                 _state.value = BottomBarState.Default(
                     state.value.bottomBar.copy(false, true, false, false)
                 )
-                _navigationEvent.value = NavigationEvent.Profile()
+                _navigationEvent.value = NavigationEvent.Game()
             }
         }
     }
