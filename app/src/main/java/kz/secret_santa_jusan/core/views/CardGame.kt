@@ -52,6 +52,7 @@ fun GameCard(
 ) {
     Card(
         modifier = Modifier
+            .padding(vertical = 21.dp)
             .fillMaxWidth()
             .clickable {
                 onClick?.invoke()

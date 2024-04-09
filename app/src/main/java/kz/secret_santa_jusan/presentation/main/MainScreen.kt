@@ -32,6 +32,8 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.game.GameScreen
+import kz.secret_santa_jusan.presentation.game.create.CreateEvent
+import kz.secret_santa_jusan.presentation.game.create.CreateScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
@@ -62,8 +64,7 @@ class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
 
             NavigationEvent.GoToCreateGame -> {
                 navigator.push(
-                    GameScreen(
-                    )
+                    CreateScreen()
                 )
             }
         }

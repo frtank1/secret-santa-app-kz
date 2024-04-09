@@ -32,6 +32,11 @@ class GlobalStorage {
                 Paper.book().delete(key)
             }
         }
+
+        fun getUser():RegModel{
+            val user = Paper.book().read<RegModel>("USER", null)
+            return user?:RegModel("","","")
+        }
         fun saveUser(user: RegModel){
             Paper.book().write("USER", user)
         }

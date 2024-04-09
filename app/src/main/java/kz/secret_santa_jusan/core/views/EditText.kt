@@ -29,6 +29,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupProperties
 import kz.secret_santa_jusan.R
@@ -123,7 +125,9 @@ fun AutoCompleteEditText(
 @Composable
 fun EditText(
     value: String,
+    fontSize: TextUnit = TextUnit.Unspecified,
     onValueChange: (String) -> Unit,
+    textAlign: TextAlign = TextAlign.Center,
     modifier: Modifier = Modifier,
     label: String? = null,
     placeholder: String? = null,
@@ -142,7 +146,7 @@ fun EditText(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { SsTextNormal(text = label?: "") },
+        label = { SsTextNormal(text = label?: "", fontSize = fontSize, textAlign = textAlign) },
         placeholder = { Text(placeholder?: "", color = DarkGray) },
         modifier = modifier,
         isError = isError,

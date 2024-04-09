@@ -13,9 +13,11 @@ import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 import kz.secret_santa_jusan.data.profile.models.NewPasswordModel
 import kz.secret_santa_jusan.data.profile.models.ProfileModel
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
+import kz.secret_santa_jusan.data.registration.models.RegModel
 import trikita.log.Log
 
 data class RessetData(
+    val regModel: RegModel,
     val name:String? = "",
     val email: String? = "",
     val newPasword: String? = "",
@@ -69,7 +71,7 @@ sealed class ProfileState(val ressetData:RessetData){
 }
 
 class ProfileViewModelPreview : IProfileViewModel {
-    override val state: StateFlow<ProfileState> = MutableStateFlow(ProfileState.Default(RessetData())).asStateFlow()
+    override val state: StateFlow<ProfileState> = MutableStateFlow(ProfileState.Default(RessetData(regModel = GlobalStorage.getUser()))).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: ProfileEvent) {}
 }
@@ -78,7 +80,7 @@ class ProfileViewModel(
     private val repository: ProfileApiRepository
 ): CoreBaseViewModel(), IProfileViewModel {
 
-    private var _state = MutableStateFlow<ProfileState>(ProfileState.Default(RessetData()))
+    private var _state = MutableStateFlow<ProfileState>(ProfileState.Default(RessetData(regModel = GlobalStorage.getUser())))
     override val state: StateFlow<ProfileState> = _state.asStateFlow()
 
 

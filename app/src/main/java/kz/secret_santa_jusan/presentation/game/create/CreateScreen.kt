@@ -2,17 +2,14 @@ package kz.secret_santa_jusan.presentation.game.create
 
 import android.os.Parcelable
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -21,20 +18,16 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchColors
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -42,18 +35,13 @@ import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
-import kz.secret_santa_jusan.core.views.EditTextPassword
-import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
-import kz.secret_santa_jusan.presentation.profile.IProfileViewModel
-import kz.secret_santa_jusan.presentation.profile.ProfileEvent
+import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
-import kz.secret_santa_jusan.ui.theme.DeepTeal
 import kz.secret_santa_jusan.ui.theme.Gray
 import kz.secret_santa_jusan.ui.theme.LightBlue
 import kz.secret_santa_jusan.ui.theme.PaleBlue
-import kz.secret_santa_jusan.ui.theme.Red
 import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
@@ -62,10 +50,12 @@ class CreateScreen : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
+        ShowBottomBar()
         val viewModel = getScreenModel<CreateViewModel>()
         val navigator = LocalNavigator.currentOrThrow
-        val navigationEvent = viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
-        when(navigationEvent){
+        val navigationEvent =
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+        when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             //is NavigationEvent.AuthRouter -> navigator.push(ScreenRegistry.get(AuthRouter.ProfileScreen()))
@@ -85,17 +75,19 @@ fun CreateContentPreview() {
 @Composable
 fun CreateContent(viewModel: ICreateViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = PaleBlue)
-            .padding(horizontal = 36.dp)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        when (state) {
-            is CreateState.Default -> {
-                CreateMenu(viewModel)
+    Column {
+        TitleBar()
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = PaleBlue)
+                .padding(horizontal = 36.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            when (state) {
+                is CreateState.Default -> {
+                    CreateMenu(viewModel)
+                }
             }
         }
     }
@@ -116,7 +108,7 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             fontSize = 27.sp,
         )
         EditText(
-            value = state.createData.nameGame ?: "-",
+            value = state.createData.name ?: "-",
             onValueChange = { name ->
                 viewModel.sendEvent(CreateEvent.EnterName(name))
             },
@@ -130,7 +122,7 @@ fun CreateMenu(viewModel: ICreateViewModel) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 3.dp),
+                .padding(top = 6.dp),
             textAlign = TextAlign.Center,
             text = stringResource(id = R.string.Придумайте_уникальный_идентификатор_для_коробки),
             color = Gray,
@@ -139,9 +131,13 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             fontSize = 5.sp,
         )
         MaxSumCard(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(top = 12.dp),
-            onClick = {}
+            onClick = {
+                viewModel.sendEvent(CreateEvent.ShowSum(it))
+            },
+            state.createData.showSum?:false
         )
         Text(
             modifier = Modifier
@@ -154,20 +150,24 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             fontWeight = FontWeight.Bold,
             fontSize = 5.sp,
         )
-
-        EditText(
-            value = state.createData.sum ?: "-",
-            onValueChange = { sum ->
-                viewModel.sendEvent(CreateEvent.EnterSum(sum))
-            },
-            enabled = true,
-            isError = false,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 20.dp),
-            label = stringResource(R.string.Укажите_максимальную_стоимость_подарка),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
-        )
+        if (state.createData.showSum){
+            EditText(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp)
+                    .padding(top = 12.dp),
+                value = state.createData.maxPrice.toString(),
+                textAlign = TextAlign.End,
+                fontSize = 10.sp,
+                onValueChange = { sum ->
+                    viewModel.sendEvent(CreateEvent.EnterSum(sum))
+                },
+                enabled = true,
+                isError = false,
+                label = stringResource(R.string.Укажите_максимальную_стоимость_подарка),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
+            )
+        }
         Button(
             modifier = Modifier
                 .fillMaxWidth()
@@ -186,47 +186,52 @@ fun CreateMenu(viewModel: ICreateViewModel) {
         }
     }
 }
+
 @Composable
 fun MaxSumCard(
-    modifier:Modifier = Modifier
+    modifier: Modifier = Modifier
         .fillMaxWidth(),
     onClick: ((Boolean) -> Unit)? = null,
-){
-    var checkedState = remember { mutableStateOf(false) }
+    boolean: Boolean
+) {
+
     Card(
         modifier = modifier,
-        shape = RoundedCornerShape(32.dp),
-        colors =  CardDefaults.cardColors(
+        shape = RoundedCornerShape(24.dp),
+        colors = CardDefaults.cardColors(
             containerColor = White
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 5.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 modifier = Modifier
-                    .padding(start = 11.dp,top = 10.dp),
+                    .padding(start = 14.dp),
                 text = stringResource(id = R.string.Максимальная_стоимость_подарка),
                 color = DarkGray,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center,
-                fontSize = 15.sp,
+                fontSize = 12.sp,
             )
             Switch(
-                checked = checkedState.value,
+                modifier = Modifier.padding(end = 10.dp),
+                checked = boolean,
                 onCheckedChange = { isChecked ->
-                    checkedState.value = !isChecked
                     onClick?.invoke(isChecked)
                 },
                 colors = SwitchColors(
-                    checkedThumbColor = LightBlue,
-                    checkedTrackColor = PaleBlue,
+                    checkedThumbColor = PaleBlue,
+                    checkedTrackColor = LightBlue,
                     checkedBorderColor = LightBlue,
                     checkedIconColor = LightBlue,
-                    uncheckedThumbColor = DeepTeal,
-                    uncheckedTrackColor = PaleBlue,
-                    uncheckedBorderColor = DeepTeal,
+                    uncheckedThumbColor = PaleBlue,
+                    uncheckedTrackColor = LightBlue,
+                    uncheckedBorderColor = LightBlue,
                     uncheckedIconColor = LightBlue,
                     disabledCheckedThumbColor = DarkGray,
                     disabledCheckedTrackColor = Gray,

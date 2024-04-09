@@ -103,7 +103,9 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
         ProfileInfoCadr(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 47.dp)
+                .padding(top = 47.dp),
+            name = state.ressetData.regModel.login,
+            email = state.ressetData.regModel.email
         )
         SsText(
             modifier = Modifier

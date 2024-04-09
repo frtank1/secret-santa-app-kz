@@ -7,32 +7,34 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
-import kz.secret_santa_jusan.data.game.GameApiRepository
 import kz.secret_santa_jusan.data.game.create.CreateApiRepository
-import kz.secret_santa_jusan.presentation.profile.ProfileEvent
-import kz.secret_santa_jusan.presentation.profile.ProfileState
+import kz.secret_santa_jusan.data.game.create.model.RequestGameModel
 
-data class CreateData(
-    val nameGame:String? = "",
-    val showSum:Boolean = false,
-    val sum: String? = "",
+data class GameSettings(
+    val name: String? = "",
+    val maxPrice: Int? = 1,
+    val uniqueIdentifier: String? = "",
+    val priceLimitChecked: Boolean = false,
+    val showSum: Boolean = false,
+    val erroSum: Boolean = false
 )
+
 interface ICreateViewModel {
     val state: StateFlow<CreateState>
     val navigationEvent: StateFlow<NavigationEvent>
     fun sendEvent(event: CreateEvent)
 }
 
-sealed class CreateEvent{
-    object Back: CreateEvent()
+sealed class CreateEvent {
+    object Back : CreateEvent()
 
-    class EnterName(val text: String): CreateEvent()
-    class EnterSum(val text: String): CreateEvent()
-    class showSum(val boolean: Boolean): CreateEvent()
-    object CreateGame: CreateEvent()
+    class EnterName(val text: String) : CreateEvent()
+    class EnterSum(val text: String) : CreateEvent()
+    class ShowSum(val boolean: Boolean) : CreateEvent()
+    object CreateGame : CreateEvent()
 }
 
-sealed class NavigationEvent{
+sealed class NavigationEvent {
     private var handled: Boolean = false
 
     fun getValue(): NavigationEvent {
@@ -40,25 +42,27 @@ sealed class NavigationEvent{
         handled = true
         return this
     }
-    class Default: NavigationEvent()
-    class Back: NavigationEvent()
+
+    class Default : NavigationEvent()
+    class Back : NavigationEvent()
 }
 
-sealed class CreateState(val createData:CreateData){
-    class Default(createData:CreateData): CreateState(createData)
+sealed class CreateState(val createData: GameSettings) {
+    class Default(createData: GameSettings) : CreateState(createData)
 }
 
 class CreateViewModelPreview : ICreateViewModel {
-    override val state: StateFlow<CreateState> = MutableStateFlow(CreateState.Default(CreateData())).asStateFlow()
+    override val state: StateFlow<CreateState> =
+        MutableStateFlow(CreateState.Default(GameSettings())).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: CreateEvent) {}
 }
 
 class CreateViewModel(
     private val repository: CreateApiRepository
-): CoreBaseViewModel(), ICreateViewModel {
+) : CoreBaseViewModel(), ICreateViewModel {
 
-    private var _state = MutableStateFlow<CreateState>(CreateState.Default(CreateData()))
+    private var _state = MutableStateFlow<CreateState>(CreateState.Default(GameSettings()))
     override val state: StateFlow<CreateState> = _state.asStateFlow()
 
 
@@ -71,25 +75,47 @@ class CreateViewModel(
     }
 
     override fun sendEvent(event: CreateEvent) {
-        when(event){
+        when (event) {
             CreateEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
 
             CreateEvent.CreateGame -> {
+                screenModelScope.launch {
+                    val requestGameModel = RequestGameModel(
+                        name = state.value.createData.name,
+                        maxPrice = state.value.createData.maxPrice,
+                        uniqueIdentifier = "",
+                        priceLimitChecked = state.value.createData.priceLimitChecked
+                    )
+                    repository.create(requestGameModel).apply {
+                        if (isSuccessful) {
+                            body.id
+                        }
+                    }
+                }
+            }
 
-            }
             is CreateEvent.EnterName -> {
-                _state.value = CreateState.Default(state.value.createData.copy(nameGame  = event.text))
+                _state.value = CreateState.Default(state.value.createData.copy(name = event.text))
             }
+
             is CreateEvent.EnterSum -> {
-                _state.value = CreateState.Default(state.value.createData.copy(sum  = event.text))
+                _state.value =
+                    CreateState.Default(state.value.createData.copy(maxPrice = event.text.toInt()))
             }
-            is CreateEvent.showSum -> {
-                if (event.boolean){
-                    _state.value = CreateState.Default(state.value.createData.copy(showSum  = event.boolean))
-                }else{
-                    _state.value = CreateState.Default(state.value.createData.copy(showSum  = event.boolean, sum = ""))
+
+            is CreateEvent.ShowSum -> {
+                if (event.boolean) {
+                    _state.value = CreateState.Default(state.value.createData.copy(showSum = event.boolean, priceLimitChecked = true))
+                } else {
+                    _state.value = CreateState.Default(
+                        state.value.createData.copy(
+                            showSum = event.boolean,
+                            maxPrice = 1,
+                            priceLimitChecked =false
+                        )
+                    )
                 }
             }
         }
