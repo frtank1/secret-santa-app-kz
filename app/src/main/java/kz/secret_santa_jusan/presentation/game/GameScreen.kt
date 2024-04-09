@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -35,6 +37,7 @@ import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
+import kz.secret_santa_jusan.presentation.invate.InvateScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
@@ -56,6 +59,12 @@ class GameScreen : CoreBaseScreen(), Parcelable {
             NavigationEvent.GoToCreate -> {
                 navigator.push(
                     CreateScreen()
+                )
+            }
+
+            is NavigationEvent.GoToCard -> {
+                navigator.push(
+                    InvateScreen(null,navigationEvent.gameModel)
                 )
             }
         }
@@ -97,38 +106,30 @@ fun GameContent(viewModel: IGameViewModel) {
             )
             when (state) {
                 is GameState.Default -> {
-                    notHaveGame()
+                    notHaveGame( {viewModel.sendEvent(GameEvent.GoToCreate)})
                 }
 
                 is GameState.Init -> {
                     HaveGame(
                         viewModel,
-                        state.list
+                        state.list,
+                        {viewModel.sendEvent(GameEvent.GoToCard(it))},
+                        {viewModel.sendEvent(GameEvent.GoToCreate)}
                     )
                 }
             }
-            Button(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 76.dp)
-                    .padding(horizontal = 25.dp),
-                colors = ButtonDefaults.buttonColors(BrightOrange),
-                onClick = {
-                }) {
-                Text(
-                    stringResource(id = R.string.Создай),
-                    fontFamily = interFamily,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 15.sp
-                )
-            }
+
         }
     }
 }
 
 @Composable
-fun notHaveGame() {
-    Column {
+fun notHaveGame(
+    onClick: (() -> Unit)? = null,
+) {
+    Column(
+        Modifier.verticalScroll(rememberScrollState())
+    ) {
         Image(
             modifier = Modifier
                 .align(Alignment.CenterHorizontally),
@@ -154,12 +155,31 @@ fun notHaveGame() {
             textAlign = TextAlign.Center,
             fontSize = 10.sp
         )
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 76.dp)
+                .padding(horizontal = 25.dp),
+            colors = ButtonDefaults.buttonColors(BrightOrange),
+            onClick = {
+                onClick?.invoke()
+            }) {
+            Text(
+                stringResource(id = R.string.Создай),
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
     }
 }
 
 @Composable
 fun HaveGame(
-    viewModel: IGameViewModel, list: List<GameModel>
+    viewModel: IGameViewModel,
+    list: List<GameModel>,
+    onClickCard: ((Int) -> Unit)? = null,
+    onClickNavCard: (() -> Unit)? = null
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val listState = rememberLazyListState()
@@ -174,12 +194,30 @@ fun HaveGame(
                     .fillMaxWidth()
                     .padding(top = 21.dp),
                 onClick = {
-
+                    onClickCard?.invoke(id)
                 },
                 title = item.name,
                 count = item.participantCount.toString(),
                 own = false
             )
+        }
+        item {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp)
+                    .padding(horizontal = 25.dp),
+                colors = ButtonDefaults.buttonColors(BrightOrange),
+                onClick = {
+                    onClickNavCard?.invoke()
+                }) {
+                Text(
+                    stringResource(id = R.string.Создай),
+                    fontFamily = interFamily,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp
+                )
+            }
         }
     }
 }

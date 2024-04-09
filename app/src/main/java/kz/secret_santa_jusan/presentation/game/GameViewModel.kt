@@ -21,7 +21,7 @@ sealed class GameEvent{
 
     object GoToCreate: GameEvent()
 
-
+    class GoToCard(val id:Int): GameEvent()
 
 }
 
@@ -38,16 +38,18 @@ sealed class NavigationEvent{
 
     class Back: NavigationEvent()
     object GoToCreate: NavigationEvent()
+
+    class GoToCard(val gameModel: GameModel): NavigationEvent()
 }
 
-sealed class GameState{
-    object Default: GameState()
+sealed class GameState(val list: List<GameModel>){
+    class Default(list: List<GameModel>): GameState(list)
 
-    class Init(val list: List<GameModel>): GameState()
+    class Init( list: List<GameModel>): GameState(list)
 }
 
 class GameViewModelPreview : IGameViewModel {
-    override val state: StateFlow<GameState> = MutableStateFlow(GameState.Default).asStateFlow()
+    override val state: StateFlow<GameState> = MutableStateFlow(GameState.Default(emptyList())).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: GameEvent) {}
 }
@@ -56,7 +58,7 @@ class GameViewModel(
     private val repository: GameApiRepository
 ): CoreBaseViewModel(), IGameViewModel {
 
-    private var _state = MutableStateFlow<GameState>(GameState.Default)
+    private var _state = MutableStateFlow<GameState>(GameState.Default(emptyList()))
     override val state: StateFlow<GameState> = _state.asStateFlow()
 
 
@@ -70,7 +72,7 @@ class GameViewModel(
                     if (!body.isNullOrEmpty())
                     _state.value = GameState.Init(body)
                     else
-                        _state.value = GameState.Default
+                        _state.value = GameState.Default(emptyList())
                 }
             }
         }
@@ -84,6 +86,10 @@ class GameViewModel(
 
             GameEvent.GoToCreate -> {
                 _navigationEvent.value = NavigationEvent.GoToCreate
+            }
+
+            is GameEvent.GoToCard -> {
+                _navigationEvent.value = NavigationEvent.GoToCard(state.value.list[event.id])
             }
         }
     }
