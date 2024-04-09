@@ -41,7 +41,7 @@ import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class AddingScreen : CoreBaseScreen(), Parcelable {
+class AddingScreen(val id:String) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
