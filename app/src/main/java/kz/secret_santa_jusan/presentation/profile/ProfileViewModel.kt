@@ -22,6 +22,7 @@ data class RessetData(
     val repeatPasword: String? = "",
     val showPassword:Boolean = true,
     val errorPassword:Boolean = false,
+    val errorNewPassword:Boolean = false,
     val current: String?= "",
 )
 
@@ -114,14 +115,13 @@ class ProfileViewModel(
 
             ProfileEvent.SavePasword -> {
                 if (state.value.ressetData.newPasword?.equals(state.value.ressetData.repeatPasword) == true){
-                    val password = GlobalStorage.getPassword()
-                    val profile = NewPasswordModel(password,state.value.ressetData.newPasword,state.value.ressetData.repeatPasword)
+                    val profile = NewPasswordModel(state.value.ressetData.current,state.value.ressetData.newPasword,state.value.ressetData.repeatPasword)
                     screenModelScope.launch {
                         repository.changePassword(profile).apply {
                             if(isSuccessful) {
                                 Log.d("ok", "newPasword")
-                                CoreApp.logOut(true)
-                            } else {
+                            }
+                            if (failed){
                                 _state.value = ProfileState.Default(state.value.ressetData.copy(errorPassword = true))
                             }
                         }
@@ -129,6 +129,7 @@ class ProfileViewModel(
                 }else
                 {
                     Log.d("ok", "pasword is not corect")
+                    _state.value = ProfileState.Default(state.value.ressetData.copy(errorNewPassword = true))
                 }
             }
 
@@ -145,7 +146,8 @@ class ProfileViewModel(
                 _state.value = ProfileState.Default(state.value.ressetData.copy(repeatPasword  = event.text))
             }
 
-            is ProfileEvent.EnterCurrent -> {ProfileState.Default(state.value.ressetData.copy(current  = event.text))}
+            is ProfileEvent.EnterCurrent -> {
+                _state.value =ProfileState.Default(state.value.ressetData.copy(current  = event.text))}
         }
     }
 }

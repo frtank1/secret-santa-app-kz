@@ -162,36 +162,36 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
             fontSize = 20.sp,
         )
         EditTextPassword(
-            value = state.ressetData.repeatPasword ?: "-",
+            value = state.ressetData.current ?: "-",
             onValueChange = { password ->
-                viewModel.sendEvent(ProfileEvent.EnterRepeatPassword(password))
+                viewModel.sendEvent(ProfileEvent.EnterCurrent(password))
             },
-            enabled = state.ressetData.showPassword,
+            enabled = true,
             isError = state.ressetData.errorPassword,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 40.dp),
-            label = stringResource(R.string.Повторите_пароль)
+            label = stringResource(R.string.Действующий_пароль)
         )
         EditTextPassword(
-            value = state.ressetData.current ?: "-",
+            value = state.ressetData.newPasword ?: "-",
             onValueChange = { password ->
-                    viewModel.sendEvent(ProfileEvent.EnterCurrent(password))
+                    viewModel.sendEvent(ProfileEvent.EnterPassword(password))
             },
-            enabled = state.ressetData.showPassword,
-            isError = state.ressetData.errorPassword,
+            enabled = true,
+            isError = state.ressetData.errorNewPassword,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 25.dp),
-            label = stringResource(R.string.Действующий_пароль)
+            label = stringResource(R.string.Новый_Пароль)
         )
         EditTextPassword(
             value = state.ressetData.repeatPasword ?: "-",
             onValueChange = { password ->
                 viewModel.sendEvent(ProfileEvent.EnterRepeatPassword(password))
             },
-            enabled = state.ressetData.showPassword,
-            isError = state.ressetData.errorPassword,
+            enabled = true,
+            isError = state.ressetData.errorNewPassword,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 25.dp),
