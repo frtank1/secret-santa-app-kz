@@ -108,7 +108,7 @@ class BottomBarViewModel (
 
             BottomBarEvent.ClickGame -> {
                 _state.value = BottomBarState.Default(
-                    state.value.bottomBar.copy(false, true, false, false)
+                    state.value.bottomBar.copy(false, true, false, true)
                 )
                 _navigationEvent.value = NavigationEvent.Game()
             }
