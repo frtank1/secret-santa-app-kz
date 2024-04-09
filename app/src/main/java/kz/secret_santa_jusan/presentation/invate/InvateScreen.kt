@@ -30,13 +30,15 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.data.game.models.GameModel
+import kz.secret_santa_jusan.data.game.models.GameStatus
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class InvateScreen(val typeLink: TypeLink, val id:String) : CoreBaseScreen(), Parcelable {
+class InvateScreen(val link: String, val gameModel: GameModel?=null) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -57,7 +59,7 @@ class InvateScreen(val typeLink: TypeLink, val id:String) : CoreBaseScreen(), Pa
             is NavigationEvent.ShowWard -> {
             }
         }
-        viewModel.sendEvent(InvateEvent.Init(typeLink,id))
+        viewModel.sendEvent(InvateEvent.Init(link,gameModel))
         SubscribeError(viewModel)
         InvateContent(viewModel = viewModel)
     }
@@ -84,17 +86,18 @@ fun InvateContent(viewModel: IInvateViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (state) {
-                is InvateState.CreatedScreen -> {
-                    GameCreated(viewModel)
+                is InvateState.ClosedScreen -> {
+                    GameClosed(viewModel,state.name)
+
                 }
                 is InvateState.OrgScreen -> {
-                    GameClosed(viewModel, state.nameGame)
+                    GameCreated(viewModel)
                 }
                 is InvateState.UserScreen -> {
                     InvatedUser(viewModel)
                 }
 
-                InvateState.Default -> {
+                is InvateState.Default -> {
                 }
             }
         }

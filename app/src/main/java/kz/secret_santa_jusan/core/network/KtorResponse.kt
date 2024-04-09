@@ -8,6 +8,7 @@ import kz.secret_santa_jusan.core.network.model.ErrorModel
 data class KtorResponse<T>(
     private val status: Status,
     private val _body: T?,
+    private val statusCode:Int?,
     val error: ErrorModel? = null,
 ){
 
@@ -16,6 +17,7 @@ data class KtorResponse<T>(
             return KtorResponse(
                 status = Status.Success,
                 _body = data.body<T>(),
+                statusCode = data.status.value,
                 error = null,
             )
         }
@@ -24,6 +26,7 @@ data class KtorResponse<T>(
             return KtorResponse(
                 status = Status.Failure,
                 _body = null,
+                statusCode = null,
                 error = generateErrorModel(exception),
             )
         }
@@ -31,6 +34,7 @@ data class KtorResponse<T>(
             return KtorResponse(
                 status = Status.Failure,
                 _body = null,
+                statusCode = null,
                 error = data.body<ErrorModel>(),
             )
         }
@@ -51,6 +55,8 @@ data class KtorResponse<T>(
     val failed: Boolean get() = this.status == Status.Failure
 
     val isSuccessful: Boolean get() = !failed
+
+    val _statusCode get() = statusCode!!
 
     val body get() = _body!!
 
