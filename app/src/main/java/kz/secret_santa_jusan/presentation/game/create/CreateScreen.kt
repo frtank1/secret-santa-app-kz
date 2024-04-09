@@ -37,6 +37,7 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.presentation.game.GameEvent
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
@@ -76,7 +77,9 @@ fun CreateContentPreview() {
 fun CreateContent(viewModel: ICreateViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
-        TitleBar()
+        TitleBar(onClickBack = {
+            viewModel.sendEvent(CreateEvent.Back)
+        })
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -117,7 +120,8 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 28.dp),
-            label = stringResource(R.string.Название_Игры)
+            label = stringResource(R.string.Название_Игры),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         Text(
             modifier = Modifier
@@ -163,7 +167,7 @@ fun CreateMenu(viewModel: ICreateViewModel) {
                     viewModel.sendEvent(CreateEvent.EnterSum(sum))
                 },
                 enabled = true,
-                isError = false,
+                isError = state.createData.erroSum,
                 label = stringResource(R.string.Укажите_максимальную_стоимость_подарка),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
             )

@@ -37,6 +37,7 @@ import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
+import kz.secret_santa_jusan.presentation.profile.ProfileEvent
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
@@ -77,7 +78,9 @@ fun GameContentPreview() {
 fun GameContent(viewModel: IGameViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
-        TitleBar()
+        TitleBar(onClickBack = {
+            viewModel.sendEvent(GameEvent.Back)
+        })
         Column(
             modifier = Modifier
                 .fillMaxSize()
