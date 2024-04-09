@@ -8,14 +8,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 
-interface IFindViewModel {
-    val state: StateFlow<FindState>
+interface ILinkViewModel {
+    val state: StateFlow<LinkState>
     val navigationEvent: StateFlow<NavigationEvent>
-    fun sendEvent(event: FindEvent)
+    fun sendEvent(event: LinkEvent)
 }
 
-sealed class FindEvent{
-    object Back: FindEvent()
+sealed class LinkEvent{
+    object Back: LinkEvent()
 }
 
 sealed class NavigationEvent{
@@ -30,21 +30,21 @@ sealed class NavigationEvent{
     class Back: NavigationEvent()
 }
 
-sealed class FindState{
-    object Default: FindState()
+sealed class LinkState{
+    object Default: LinkState()
 }
 
-class FindViewModelPreview : IFindViewModel {
-    override val state: StateFlow<FindState> = MutableStateFlow(FindState.Default).asStateFlow()
+class LinkViewModelPreview : ILinkViewModel {
+    override val state: StateFlow<LinkState> = MutableStateFlow(LinkState.Default).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
-    override fun sendEvent(event: FindEvent) {}
+    override fun sendEvent(event: LinkEvent) {}
 }
 
-class FindViewModel(
-): CoreBaseViewModel(), IFindViewModel {
+class LinkViewModel(
+): CoreBaseViewModel(), ILinkViewModel {
 
-    private var _state = MutableStateFlow<FindState>(FindState.Default)
-    override val state: StateFlow<FindState> = _state.asStateFlow()
+    private var _state = MutableStateFlow<LinkState>(LinkState.Default)
+    override val state: StateFlow<LinkState> = _state.asStateFlow()
 
 
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
@@ -55,9 +55,9 @@ class FindViewModel(
         }
     }
 
-    override fun sendEvent(event: FindEvent) {
+    override fun sendEvent(event: LinkEvent) {
         when(event){
-            FindEvent.Back -> {
+            LinkEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
         }
