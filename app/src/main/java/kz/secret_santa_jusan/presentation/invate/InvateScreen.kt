@@ -36,7 +36,7 @@ import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class InvateScreen(val typeLink: TypeLink) : CoreBaseScreen(), Parcelable {
+class InvateScreen(val typeLink: TypeLink, val id:String) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -48,8 +48,16 @@ class InvateScreen(val typeLink: TypeLink) : CoreBaseScreen(), Parcelable {
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
+            is NavigationEvent.ContactWhitOrg -> {
+            }
+            is NavigationEvent.CreateCard -> {
+            }
+            is NavigationEvent.GoToAddUser -> {
+            }
+            is NavigationEvent.ShowWard -> {
+            }
         }
-        viewModel.sendEvent(InvateEvent.Init(typeLink))
+        viewModel.sendEvent(InvateEvent.Init(typeLink,id))
         SubscribeError(viewModel)
         InvateContent(viewModel = viewModel)
     }
@@ -76,14 +84,17 @@ fun InvateContent(viewModel: IInvateViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (state) {
-                InvateState.CreatedScreen -> {
-                    GameCreated()
+                is InvateState.CreatedScreen -> {
+                    GameCreated(viewModel)
                 }
-                InvateState.OrgScreen -> {
-                    GameClosed()
+                is InvateState.OrgScreen -> {
+                    GameClosed(viewModel, state.nameGame)
                 }
-                InvateState.UserScreen -> {
-                    InvatedUser()
+                is InvateState.UserScreen -> {
+                    InvatedUser(viewModel)
+                }
+
+                InvateState.Default -> {
                 }
             }
         }
@@ -92,7 +103,7 @@ fun InvateContent(viewModel: IInvateViewModel) {
 
 
 @Composable
-fun GameCreated() {
+fun GameCreated(viewModel: IInvateViewModel) {
     Column {
         SsText(
             modifier = Modifier
@@ -136,6 +147,7 @@ fun GameCreated() {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(InvateEvent.GoToAddUser())
             }) {
             Text(
                 stringResource(id = R.string.Добавить_участников),
@@ -148,7 +160,7 @@ fun GameCreated() {
 }
 
 @Composable
-fun InvatedUser() {
+fun InvatedUser(viewModel: IInvateViewModel) {
     Column {
         SsText(
             modifier = Modifier
@@ -184,6 +196,7 @@ fun InvatedUser() {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(InvateEvent.CreateCard())
             }) {
             Text(
                 stringResource(id = R.string.Создать_карточку_участника),
@@ -197,14 +210,14 @@ fun InvatedUser() {
 
 
 @Composable
-fun GameClosed() {
+fun GameClosed(viewModel: IInvateViewModel,name:String) {
     Column {
         ProfileInfoCadr(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 47.dp),
-            name = "",
-            email = ""
+            name = name,
+            email = stringResource(id = R.string.Связаться_с_Организатором)
         )
         SsText(
             modifier = Modifier
@@ -234,6 +247,7 @@ fun GameClosed() {
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
+                viewModel.sendEvent(InvateEvent.ShowWard())
             }) {
             Text(
                 stringResource(id = R.string.Узнать_Подопечного),

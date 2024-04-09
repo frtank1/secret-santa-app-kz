@@ -58,6 +58,7 @@ fun ProfileInfoCadr(
     modifier:Modifier = Modifier
         .fillMaxWidth(),
     onClick: (() -> Unit)? = null,
+    onClickeText:(()->Unit)? = null,
     painter: Painter = painterResource(id = R.drawable.santa_claus),
     name:String? = null,
     email:String? = null,
@@ -101,7 +102,8 @@ fun ProfileInfoCadr(
 
                 Text(
                     modifier = Modifier
-                        .padding(start = 11.dp),
+                        .padding(start = 11.dp)
+                        .clickable { onClickeText?.invoke() },
                     text = email?:"example@gmail.com",
                     color = DarkGray,
                     fontWeight = FontWeight.Normal,

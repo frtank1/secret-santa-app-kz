@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.registration.RegisterApiRepository
+import trikita.log.Log
 
 interface IInvateViewModel {
     val state: StateFlow<InvateState>
@@ -20,7 +22,7 @@ enum class TypeLink(
 
 sealed class InvateEvent{
     object Back: InvateEvent()
-    class Init(val typeLink:TypeLink): InvateEvent()
+    class Init(val typeLink:TypeLink, val id:String): InvateEvent()
     class ContactWhitOrg:InvateEvent()
     class GoToAddUser:InvateEvent()
 
@@ -55,7 +57,7 @@ sealed class NavigationEvent{
 sealed class InvateState{
     object Default:InvateState()
     object UserScreen: InvateState()
-    object OrgScreen: InvateState()
+    class OrgScreen(val nameGame:String): InvateState()
     object CreatedScreen: InvateState()
 }
 
@@ -66,6 +68,7 @@ class InvateViewModelPreview : IInvateViewModel {
 }
 
 class InvateViewModel(
+    private val repository: RegisterApiRepository
 ): CoreBaseViewModel(), IInvateViewModel {
 
     private var _state = MutableStateFlow<InvateState>(InvateState.Default)
@@ -75,24 +78,26 @@ class InvateViewModel(
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
-    init {
-        screenModelScope.launch {
-        }
-    }
+    private var id:String = ""
 
     override fun sendEvent(event: InvateEvent) {
+
         when(event){
             InvateEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
 
             is InvateEvent.Init -> {
+                id = event.id
                 when(event.typeLink){
                     TypeLink.USER -> {
                         _state.value = InvateState.UserScreen
                     }
                     TypeLink.ORGANIZATOR -> {
-                        _state.value = InvateState.OrgScreen
+                        screenModelScope.launch {
+
+                        }
+                        _state.value = InvateState.OrgScreen()
                     }
                     TypeLink.CREATED -> {
                         _state.value = InvateState.CreatedScreen
