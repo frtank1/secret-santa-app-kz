@@ -46,7 +46,6 @@ sealed class ProfileEvent{
 
     object Delete:ProfileEvent()
     object SaveProfile:ProfileEvent()
-
     object SavePasword:ProfileEvent()
 }
 

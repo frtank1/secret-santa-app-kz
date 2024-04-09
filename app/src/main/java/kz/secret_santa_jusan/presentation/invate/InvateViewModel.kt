@@ -20,6 +20,14 @@ enum class TypeLink(
 
 sealed class InvateEvent{
     object Back: InvateEvent()
+    class Init(val typeLink:TypeLink): InvateEvent()
+    class ContactWhitOrg:InvateEvent()
+    class GoToAddUser:InvateEvent()
+
+    class CreateCard:InvateEvent()
+
+    class ShowWard:InvateEvent()
+
 }
 
 sealed class NavigationEvent{
@@ -32,10 +40,23 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
+
+    class ContactWhitOrg:NavigationEvent()
+
+    class GoToAddUser:NavigationEvent()
+
+    class CreateCard:NavigationEvent()
+
+    class ShowWard:NavigationEvent()
+
+
 }
 
 sealed class InvateState{
-    object Default: InvateState()
+    object Default:InvateState()
+    object UserScreen: InvateState()
+    object OrgScreen: InvateState()
+    object CreatedScreen: InvateState()
 }
 
 class InvateViewModelPreview : IInvateViewModel {
@@ -63,6 +84,29 @@ class InvateViewModel(
         when(event){
             InvateEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
+            }
+
+            is InvateEvent.Init -> {
+                when(event.typeLink){
+                    TypeLink.USER -> {
+                        _state.value = InvateState.UserScreen
+                    }
+                    TypeLink.ORGANIZATOR -> {
+                        _state.value = InvateState.OrgScreen
+                    }
+                    TypeLink.CREATED -> {
+                        _state.value = InvateState.CreatedScreen
+                    }
+                }
+            }
+
+            is InvateEvent.ContactWhitOrg -> {
+            }
+            is InvateEvent.CreateCard -> {
+            }
+            is InvateEvent.GoToAddUser -> {
+            }
+            is InvateEvent.ShowWard -> {
             }
         }
     }

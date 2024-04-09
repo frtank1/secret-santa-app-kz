@@ -27,6 +27,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
+import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.ui.theme.BrightOrange
@@ -48,6 +49,7 @@ class InvateScreen(val typeLink: TypeLink) : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
         }
+        viewModel.sendEvent(InvateEvent.Init(typeLink))
         SubscribeError(viewModel)
         InvateContent(viewModel = viewModel)
     }
@@ -74,7 +76,14 @@ fun InvateContent(viewModel: IInvateViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (state) {
-                is InvateState.Default -> {
+                InvateState.CreatedScreen -> {
+                    GameCreated()
+                }
+                InvateState.OrgScreen -> {
+                    GameClosed()
+                }
+                InvateState.UserScreen -> {
+                    InvatedUser()
                 }
             }
         }
@@ -186,3 +195,52 @@ fun InvatedUser() {
     }
 }
 
+
+@Composable
+fun GameClosed() {
+    Column {
+        ProfileInfoCadr(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 47.dp),
+            name = "",
+            email = ""
+        )
+        SsText(
+            modifier = Modifier
+                .padding(top = 150.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.вопросительный),
+            color = BrightOrange,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 185.sp,
+        )
+
+        SsText(
+            modifier = Modifier
+                .padding(top = 100.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Жеребевка_завершена),
+            color = DarkGray,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            fontSize = 10.sp
+        )
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)
+                .padding(horizontal = 25.dp),
+            colors = ButtonDefaults.buttonColors(BrightOrange),
+            onClick = {
+            }) {
+            Text(
+                stringResource(id = R.string.Узнать_Подопечного),
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
+    }
+}
