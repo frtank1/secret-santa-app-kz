@@ -11,4 +11,8 @@ class InvateApiKtor (private val ktorConfig: KtorConfig) {
         return ktorConfig.httpClient.post("invitations/accept/"+code){
         }
     }
+
+    suspend fun reShufle(code:String): HttpResponse {
+        return ktorConfig.httpClient.post("games/${code}/reshuffle")
+    }
 }

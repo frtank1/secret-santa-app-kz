@@ -32,6 +32,7 @@ import kz.secret_santa_jusan.R
 
 import kz.secret_santa_jusan.core.base.CoreBaseActivity
 import kz.secret_santa_jusan.core.navigation.ScreenLifecycleOwner
+import kz.secret_santa_jusan.core.network.KtorConfig
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
@@ -48,13 +49,17 @@ class MainActivity : CoreBaseActivity() {
     override fun hideBottomBar() {
         bottomBarViewModel.sendEvent(BottomBarEvent.HideBottomBar)
     }
-
+    lateinit var ktor: KtorConfig
     override fun showBottomBar() {
         bottomBarViewModel.sendEvent(BottomBarEvent.ShowBottomBar)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(intent?.hasExtra("LOGOUT") == true) {
+            ktor.logout()
+            val LOGOUT = intent?.getBooleanExtra("LOGOUT", false)
+        }
         setContent {
             val startScreen = if (GlobalStorage.getAuthToken() != null) {
                 MainScreen(true)

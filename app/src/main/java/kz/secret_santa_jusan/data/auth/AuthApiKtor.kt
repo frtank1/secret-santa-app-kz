@@ -14,8 +14,6 @@ class  AuthApiKtor (private val ktorConfig: KtorConfig) {
 
     suspend fun auth(authModel: AuthModel): HttpResponse {
         return ktorConfig.httpClient.post("auth/login") {
-            headers {
-            }
             setBody(authModel)
         }
     }

@@ -16,4 +16,12 @@ class InvateApiRepository (private val api: InvateApiKtor): BaseApiClient() {
             }
         }
     }
+
+    suspend fun reShufle(code:String): KtorResponse<Unit> {
+        return withContext(Dispatchers.IO) {
+            safeApiCall {
+                api.reShufle(code)
+            }
+        }
+    }
 }

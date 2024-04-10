@@ -30,6 +30,8 @@ sealed class InvateEvent{
 
     class ShowWard:InvateEvent()
 
+    object ReShuffle:InvateEvent()
+
 }
 
 sealed class NavigationEvent{
@@ -133,6 +135,16 @@ class InvateViewModel(
                 _navigationEvent.value = NavigationEvent.GoToAddUser(gameModel?.id?:"")
             }
             is InvateEvent.ShowWard -> {
+            }
+
+            InvateEvent.ReShuffle -> {
+                screenModelScope.launch {
+                    repository.reShufle(gameModel!!.id!!).apply {
+                        if(isSuccessful) {
+                            _state.value = InvateState.ClosedScreen(gameModel!!.id!!,gameModel?.name?:"")
+                        }
+                    }
+                }
             }
         }
     }

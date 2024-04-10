@@ -149,7 +149,23 @@ fun GameCreated(viewModel: IInvateViewModel) {
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 76.dp)
+                .padding(top = 66.dp)
+                .padding(horizontal = 25.dp),
+            colors = ButtonDefaults.buttonColors(BrightOrange),
+            onClick = {
+                viewModel.sendEvent(InvateEvent.ReShuffle)
+            }) {
+            Text(
+                stringResource(id = R.string.Жеребевка),
+                fontFamily = interFamily,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
+        }
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 10.dp)
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {

@@ -81,5 +81,6 @@
 	<string name="готово">✔</string>
 	<string name="Карточка_Имя">Карточка *%1$s*</string>
 	<string name="sended">Отправлено</string>
+	<string name="Жеребевка">Жеребевка</string>
 
 </resources>
