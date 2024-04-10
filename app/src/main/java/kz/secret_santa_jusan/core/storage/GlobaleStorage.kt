@@ -31,7 +31,7 @@ class GlobalStorage {
             keys.forEach { key ->
                 Paper.book().delete(key)
             }
-            Paper.book().delete(PASSWORD)
+            Paper.book().delete("USER")
         }
 
         fun getUser():RegModel{

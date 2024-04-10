@@ -40,9 +40,7 @@ sealed class ProfileEvent{
     class EnterPassword(val text: String): ProfileEvent()
     class EnterRepeatPassword(val text: String): ProfileEvent()
     class EnterMail(val text: String): ProfileEvent()
-    class EnterCurrent(val text: String) : ProfileEvent() {
-
-    }
+    class EnterCurrent(val text: String) : ProfileEvent()
 
     object Delete:ProfileEvent()
     object SaveProfile:ProfileEvent()

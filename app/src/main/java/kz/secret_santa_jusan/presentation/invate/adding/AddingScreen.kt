@@ -29,6 +29,7 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.invate.adding.link.LinkScreen
+import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.White
@@ -48,7 +49,7 @@ class AddingScreen(val id:String) : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             is NavigationEvent.GoToAdding -> {
-                navigator.push(AddingScreen(navigationEvent.id))
+                navigator.push(ManualAdditionScreen(navigationEvent.id))
             }
             is NavigationEvent.GoToLink -> {
                 navigator.push(LinkScreen(navigationEvent.id))

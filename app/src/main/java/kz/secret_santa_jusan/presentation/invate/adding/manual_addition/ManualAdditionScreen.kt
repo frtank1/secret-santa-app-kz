@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import cafe.adriel.voyager.koin.getScreenModel
-import cafe.adriel.voyager.navigator.CurrentScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
@@ -43,17 +41,14 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
-import kz.secret_santa_jusan.presentation.invate.IInvateViewModel
-import kz.secret_santa_jusan.presentation.invate.InvateEvent
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
-import kz.secret_santa_jusan.ui.theme.Red
 import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class ManualAdditionScreen(val id:String) : CoreBaseScreen(), Parcelable {
+class ManualAdditionScreen(val id: String) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -111,8 +106,8 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             ) { id, item ->
                                 Item(
                                     id = id,
-                                    name = state.list[id].name?:"",
-                                    email = state.list[id].email?:"",
+                                    name = state.list[id].name ?: "",
+                                    email = state.list[id].email ?: "",
                                     viewModel
                                 )
                             }
@@ -195,7 +190,7 @@ fun Item(
         EditText(
             value = name,
             onValueChange = { name ->
-                viewModel.sendEvent(ManualAdditionEvent.EnterUserName(id,name))
+                viewModel.sendEvent(ManualAdditionEvent.EnterUserName(id, name))
             },
             enabled = true,
             isError = false,
@@ -206,7 +201,7 @@ fun Item(
         EditText(
             value = email,
             onValueChange = { email ->
-                viewModel.sendEvent(ManualAdditionEvent.EnterUserEmail(id,email))
+                viewModel.sendEvent(ManualAdditionEvent.EnterUserEmail(id, email))
             },
             enabled = true,
             isError = false,
@@ -250,4 +245,5 @@ fun InvatedUser() {
             textAlign = TextAlign.Center,
             fontSize = 10.sp
         )
+    }
 }

@@ -67,5 +67,11 @@
 	<string name="Пригласить">Пригласить</string>
 	<string name="Приглашение_отправлены">Приглашения отправлены!</string>
 	<string name="Уведомление_об_уведомление">Вам придет уведомление, как только участники примут Ваше приглашение</string>
+	<string name="my_wishlist">Пожелания к подарку</string>
+	<string name="my_wishlist_desc">Укажите подарки, которые хотели бы получить</string>
+	<string name="my_wishlist_info">Вы сможете обновить пожелания даже после проведения жеребьевки — Ваш Санта получит об этом уведомление</string>
+	<string name="gift_no">Подарок № %1$d</string>
+	<string name="add_another_gift">Добавить еще подарок</string>
+	<string name="next">Далее</string>
 
 </resources>

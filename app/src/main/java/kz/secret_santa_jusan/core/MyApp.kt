@@ -27,6 +27,7 @@ import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
 import kz.secret_santa_jusan.di.featureProfileViewModel
 import kz.secret_santa_jusan.di.featureRegisterViewModel
+import kz.secret_santa_jusan.di.featureWhishListViewModel
 import kz.secret_santa_jusan.presentation.auth.AuthRouter
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryRouter
@@ -44,6 +45,8 @@ import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAd
 import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
+import kz.secret_santa_jusan.presentation.my_wishlist.MyWishlistRouter
+import kz.secret_santa_jusan.presentation.my_wishlist.MyWishlistScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.android.ext.koin.androidContext
@@ -95,7 +98,8 @@ class MyApp : CoreApp() {
                 dataGameApiRepoModule,
                 featureInvateViewModel,
                 dataInvateApiKtorModule,
-                dataInvateApiRepoModule
+                dataInvateApiRepoModule,
+                featureWhishListViewModel
             )
         }
     }
@@ -151,5 +155,11 @@ val featureInvate = screenModule {
 
     register<ManualAdditionRouter.ManualAdditionScreen> {
         ManualAdditionScreen(it.id)
+    }
+}
+
+val featureWhishList = screenModule {
+    register<MyWishlistRouter.MyWishlistScreen> {
+        MyWishlistScreen(it.id)
     }
 }
