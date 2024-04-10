@@ -9,7 +9,7 @@ import kz.secret_santa_jusan.data.invate.manual.model.UserNameModel
 
 class ManualAddApiRepository (private val api: ManualAddApiKtor): BaseApiClient() {
 
-    suspend fun sendUser(deviceId:String,user: UserNameModel): KtorResponse<Unit> {
+    suspend fun sendUser(deviceId:String,user: List<UserNameModel>): KtorResponse<Unit> {
         return withContext(Dispatchers.IO) {
             safeApiCall {
                 api.sendUser(deviceId,user)

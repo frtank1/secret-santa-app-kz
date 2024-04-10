@@ -109,8 +109,8 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             ) { id, item ->
                                 Item(
                                     id = id,
-                                    name = "",
-                                    email = "",
+                                    name = state.list[id].name?:"",
+                                    email = state.list[id].email?:"",
                                     viewModel
                                 )
                             }
@@ -149,6 +149,7 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             .padding(horizontal = 30.dp),
                         colors = ButtonDefaults.buttonColors(BrightOrange),
                         onClick = {
+                            viewModel.sendEvent(ManualAdditionEvent.addNewUSer)
                         }) {
                         Text(
                             stringResource(id = R.string.Пригласить),
@@ -185,8 +186,8 @@ fun Item(
         )
         EditText(
             value = name,
-            onValueChange = { login ->
-
+            onValueChange = { name ->
+                viewModel.sendEvent(ManualAdditionEvent.EnterUserName(id,name))
             },
             enabled = true,
             isError = false,
@@ -196,7 +197,8 @@ fun Item(
         )
         EditText(
             value = email,
-            onValueChange = { login ->
+            onValueChange = { email ->
+                viewModel.sendEvent(ManualAdditionEvent.EnterUserEmail(id,email))
             },
             enabled = true,
             isError = false,
