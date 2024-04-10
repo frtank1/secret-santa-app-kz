@@ -23,7 +23,7 @@ sealed class ManualAdditionEvent {
     class EnterUserName(val id: Int, val name: String) : ManualAdditionEvent()
 
     class EnterUserEmail(val id: Int, val email: String) : ManualAdditionEvent()
-    class SendLink(val id: Int, val email: String) : ManualAdditionEvent()
+    object SendLink : ManualAdditionEvent()
     object addNewUSer : ManualAdditionEvent()
 }
 

@@ -16,5 +16,9 @@ class Utils {
             val clip = ClipData.newPlainText("link", link)
             clipboardManager.setPrimaryClip(clip)
         }
+
+        fun sendToat(text:String, context: Context){
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+        }
     }
 }

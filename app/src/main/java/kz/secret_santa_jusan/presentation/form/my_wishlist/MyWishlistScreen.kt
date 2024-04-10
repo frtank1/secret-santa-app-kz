@@ -99,10 +99,7 @@ fun CreateGameContent(viewModel: IMyWishlistViewModel) {
         ) {
             when(state){
                 is MyWishlistState.Default -> {
-                    MyWishlist(
-                        viewModel,
-                        state.gifts
-                    )
+                    CardCreated()
                 }
                 is MyWishlistState.Done -> {
                     CardCreated()
@@ -232,7 +229,7 @@ fun CardCreated() {
             modifier = Modifier
                 .padding(top = 32.dp)
                 .align(Alignment.CenterHorizontally),
-            painter = painterResource(id = R.drawable.santa02),
+            painter = painterResource(id = R.drawable.santa03),
             contentDescription = null,
         )
 

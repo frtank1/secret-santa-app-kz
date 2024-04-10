@@ -7,11 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
-import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.data.form.FromApiRepository
 import kz.secret_santa_jusan.data.form.module.ContactModule
-import kz.secret_santa_jusan.presentation.registration.RegistrationState
-import trikita.log.Log
 
 
 interface IFormViewModel {
@@ -85,7 +82,7 @@ class FormViewModel(
 
             FormEvent.Next -> {
                 screenModelScope.launch {
-                    repository.putContsct(id,state.value.contact).apply {
+                    repository.putContact(id,state.value.contact).apply {
                         if(isSuccessful) {
                             _navigationEvent.value = NavigationEvent.Next(id)
                         }

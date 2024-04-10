@@ -8,15 +8,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
-import kz.secret_santa_jusan.data.wishlist.WishlistApiRepository
-import kz.secret_santa_jusan.data.wishlist.models.CreateWishlistModel
+import kz.secret_santa_jusan.data.form.wishlist.WishlistApiRepository
+import kz.secret_santa_jusan.data.form.wishlist.models.CreateWishlistModel
+
 import kz.secret_santa_jusan.presentation.profile.RessetData
 import trikita.log.Log
 
 class MyWishlistViewModel(
     private val repository: WishlistApiRepository
 ) : CoreBaseViewModel(), IMyWishlistViewModel {
-    private val _state = MutableStateFlow(MyWishlistState.Default(emptyList()))
+    private val _state = MutableStateFlow<MyWishlistState>(MyWishlistState.Default(emptyList()))
     override val state: StateFlow<MyWishlistState> = _state.asStateFlow()
 
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
@@ -58,12 +59,15 @@ class MyWishlistViewModel(
 
     private fun createWishlist() = with(state.value){
         screenModelScope.launch {
-            repository.createWishlist(CreateWishlistModel(
+            repository.createWishlist(
+                CreateWishlistModel(
                 gameId = id,
                 gifts = gifts
-            )).apply {
+            )
+            ).apply {
                 if(isSuccessful) {
                     Log.d("ok", "ok")
+                    _state.value = MyWishlistState.Done(gifts)
                 }
             }
         }

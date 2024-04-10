@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -37,6 +38,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
+import kz.secret_santa_jusan.core.Utils
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
@@ -74,6 +76,7 @@ fun ManualAdditionContentPreview() {
 @Composable
 fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
+    val context = LocalContext.current
     Column {
         TitleBar(onClickBack = {
             viewModel.sendEvent(ManualAdditionEvent.Back)
@@ -115,7 +118,9 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                                 Row(
                                     modifier = Modifier
                                         .padding(top = 15.dp)
-                                        .clickable { },
+                                        .clickable {
+                                            viewModel.sendEvent(ManualAdditionEvent.addNewUSer)
+                                        },
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -148,7 +153,8 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             .padding(horizontal = 30.dp),
                         colors = ButtonDefaults.buttonColors(BrightOrange),
                         onClick = {
-                            viewModel.sendEvent(ManualAdditionEvent.addNewUSer)
+                            viewModel.sendEvent(ManualAdditionEvent.SendLink)
+                            Utils.sendToat("Отправлено",context)
                         }) {
                         Text(
                             stringResource(id = R.string.Пригласить),

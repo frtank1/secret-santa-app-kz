@@ -54,6 +54,7 @@ class FormScreen(val id:String) : CoreBaseScreen(), Parcelable {
             }
 
         }
+        viewModel.sendEvent(FormEvent.Init(id))
         SubscribeError(viewModel)
         FormContent(viewModel = viewModel)
     }
