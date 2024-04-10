@@ -1,4 +1,4 @@
-package kz.secret_santa_jusan.presentation.my_wishlist
+package kz.secret_santa_jusan.presentation.form.my_wishlist
 
 import android.os.Parcelable
 import androidx.compose.foundation.Image

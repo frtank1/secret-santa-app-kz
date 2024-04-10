@@ -1,4 +1,4 @@
-package kz.secret_santa_jusan.presentation.my_wishlist
+package kz.secret_santa_jusan.presentation.form.my_wishlist
 
 import cafe.adriel.voyager.core.registry.ScreenProvider
 

@@ -1,4 +1,4 @@
-package kz.secret_santa_jusan.presentation.my_wishlist
+package kz.secret_santa_jusan.presentation.form.my_wishlist
 
 import cafe.adriel.voyager.core.model.screenModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -98,7 +98,7 @@ sealed class MyWishlistEvent {
 sealed class MyWishlistState(val gifts: List<String>){
     class Default(  gifts: List<String>): MyWishlistState(gifts)
 
-    class Done(gifts: List<String>):MyWishlistState(gifts)
+    class Done(gifts: List<String>): MyWishlistState(gifts)
 
 }
 

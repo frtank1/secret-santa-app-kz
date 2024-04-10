@@ -2,6 +2,7 @@ package kz.secret_santa_jusan.di
 
 import kz.secret_santa_jusan.data.auth.AuthApiKtor
 import kz.secret_santa_jusan.data.example.ExampleApiKtor
+import kz.secret_santa_jusan.data.form.FormApiKtor
 import kz.secret_santa_jusan.data.game.GameApiKtor
 import kz.secret_santa_jusan.data.game.create.CreateApiKtor
 import kz.secret_santa_jusan.data.invate.InvateApiKtor
@@ -39,4 +40,10 @@ val dataInvateApiRepoModule = module {
     single { InvateApiKtor(get()) }
 
     single { LinkApiKtor(get()) }
+}
+
+val dataFormApiRepoModule = module {
+    single { FormApiKtor(get()) }
+
+    single { FormApiKtor(get()) }
 }

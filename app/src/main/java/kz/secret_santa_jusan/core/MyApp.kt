@@ -9,6 +9,8 @@ import kz.secret_santa_jusan.di.dataAuthApiKtorModule
 import kz.secret_santa_jusan.di.dataAuthApiRepoModule
 import kz.secret_santa_jusan.di.dataExampleApiKtorModule
 import kz.secret_santa_jusan.di.dataExampleApiRepoModule
+import kz.secret_santa_jusan.di.dataFormApiKtorModule
+import kz.secret_santa_jusan.di.dataFormApiRepoModule
 import kz.secret_santa_jusan.di.dataGameApiKtorModule
 import kz.secret_santa_jusan.di.dataGameApiRepoModule
 import kz.secret_santa_jusan.di.dataInvateApiKtorModule
@@ -45,8 +47,8 @@ import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAd
 import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
-import kz.secret_santa_jusan.presentation.my_wishlist.MyWishlistRouter
-import kz.secret_santa_jusan.presentation.my_wishlist.MyWishlistScreen
+import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistRouter
+import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.android.ext.koin.androidContext
@@ -99,7 +101,9 @@ class MyApp : CoreApp() {
                 featureInvateViewModel,
                 dataInvateApiKtorModule,
                 dataInvateApiRepoModule,
-                featureWhishListViewModel
+                featureWhishListViewModel,
+                dataFormApiKtorModule,
+                dataFormApiRepoModule
             )
         }
     }
