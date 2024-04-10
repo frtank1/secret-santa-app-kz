@@ -28,8 +28,10 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.presentation.form.FormScreen
 import kz.secret_santa_jusan.presentation.invate.adding.link.LinkScreen
 import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
+import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.White
@@ -55,6 +57,9 @@ class AddingScreen(val id:String) : CoreBaseScreen(), Parcelable {
                 navigator.push(LinkScreen(navigationEvent.id))
             }
             is NavigationEvent.GoToOwnAdd -> {
+                navigator.push(
+                    FormScreen(navigationEvent.id)
+                )
             }
         }
         viewModel.sendEvent(AddingEvent.Default(id))
@@ -120,6 +125,7 @@ fun AddingMenu(id: String,viewModel: IAddingViewModel) {
             Text(
                 stringResource(id = R.string.Создать_свою_карточку_участника),
                 fontFamily = interFamily,
+                textAlign = TextAlign.Center,
                 color = BrightOrange,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
@@ -138,6 +144,7 @@ fun AddingMenu(id: String,viewModel: IAddingViewModel) {
                 stringResource(id = R.string.Добавить_участников_вручную),
                 fontFamily = interFamily,
                 color = BrightOrange,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )
@@ -155,6 +162,7 @@ fun AddingMenu(id: String,viewModel: IAddingViewModel) {
                 stringResource(id = R.string.Пригласить_по_ссылке),
                 fontFamily = interFamily,
                 color = BrightOrange,
+                textAlign = TextAlign.Center,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp
             )

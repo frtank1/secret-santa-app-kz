@@ -53,6 +53,8 @@ import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistRouter
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
+import kz.secret_santa_jusan.presentation.invate.adding.AddingRouter
+import kz.secret_santa_jusan.presentation.invate.adding.AddingScreen
 import kz.secret_santa_jusan.presentation.recepient.RecepientRouter
 import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
@@ -114,7 +116,8 @@ class MyApp : CoreApp() {
                 dataFormApiRepoModule,
                 featureRecepientViewModel,
                 dataRecepientApiKtorModule,
-                dataRecepientApiRepoModule
+                dataRecepientApiRepoModule,
+
             )
         }
     }
@@ -176,6 +179,10 @@ val featureInvate = screenModule {
 
     register<ManualAdditionRouter.ManualAdditionScreen> {
         ManualAdditionScreen(it.id)
+    }
+
+    register<AddingRouter.AddingScreen> {
+        AddingScreen(it.id)
     }
 }
 

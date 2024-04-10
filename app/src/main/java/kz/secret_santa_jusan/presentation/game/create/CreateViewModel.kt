@@ -88,7 +88,6 @@ class CreateViewModel(
                     val requestGameModel = RequestGameModel(
                         name = state.value.createData.name,
                         maxPrice = state.value.createData.maxPrice,
-                        uniqueIdentifier = "sdfsdf",
                         priceLimitChecked = state.value.createData.priceLimitChecked
                     )
                     repository.create(requestGameModel).apply {

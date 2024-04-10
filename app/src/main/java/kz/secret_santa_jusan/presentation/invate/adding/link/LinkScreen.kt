@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -30,6 +31,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
+import kz.secret_santa_jusan.core.Utils
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
@@ -56,6 +58,7 @@ class LinkScreen(val id:String) : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
         }
+        viewModel.sendEvent(LinkEvent.init(id))
         SubscribeError(viewModel)
         LinkContent(viewModel = viewModel)
     }
@@ -70,6 +73,7 @@ fun LinkContentPreview() {
 @Composable
 fun LinkContent(viewModel: ILinkViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
+    val context = LocalContext.current
     Column {
         TitleBar(onClickBack = {
             viewModel.sendEvent(LinkEvent.Back)
@@ -116,7 +120,7 @@ fun LinkContent(viewModel: ILinkViewModel) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .padding(vertical = 10.dp, horizontal = 17.dp),
-                                text = stringResource(id = R.string.random_link),
+                                text = state.link,
                                 color = DarkGray,
                                 fontWeight = FontWeight.Medium,
                                 textAlign = TextAlign.Center,
@@ -130,6 +134,7 @@ fun LinkContent(viewModel: ILinkViewModel) {
                                 .padding(horizontal = 30.dp),
                             colors = ButtonDefaults.buttonColors(BrightOrange),
                             onClick = {
+                                Utils.copyText(context = context,state?.link?:"")
                             }) {
                             Text(
                                 stringResource(id = R.string.Скопировать_ссылку),

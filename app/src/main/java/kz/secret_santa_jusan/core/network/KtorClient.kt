@@ -70,6 +70,12 @@ val httpClientModule = module {
                     }
                     refreshTokens {
                         val response = client.post(GlobalStorage.BASE_URL + "/refresh-token") {
+                            headers {
+                                append(
+                                    "Authorization",
+                                    "Bearer " + GlobalStorage.refresh_token
+                                )
+                            }
                             body = FormDataContent(Parameters.build {
                                 append(
                                     "refresh_token",

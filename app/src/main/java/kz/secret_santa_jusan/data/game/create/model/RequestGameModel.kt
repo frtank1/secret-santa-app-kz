@@ -10,8 +10,6 @@ data class RequestGameModel(
     val name: String?,
     @SerialName("maxPrice")
     val maxPrice: Int?,
-    @SerialName("uniqueIdentifier")
-    val uniqueIdentifier: String?,
     @SerialName("priceLimitChecked")
     val priceLimitChecked: Boolean?
 )

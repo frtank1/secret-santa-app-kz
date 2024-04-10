@@ -7,6 +7,7 @@ import kz.secret_santa_jusan.data.game.GameApiKtor
 import kz.secret_santa_jusan.data.game.create.CreateApiKtor
 import kz.secret_santa_jusan.data.invate.InvateApiKtor
 import kz.secret_santa_jusan.data.invate.link.LinkApiKtor
+import kz.secret_santa_jusan.data.invate.manual.ManualAddApiKtor
 import kz.secret_santa_jusan.data.profile.ProfileApiKtor
 import kz.secret_santa_jusan.data.recepient.RecepientApiKtor
 import kz.secret_santa_jusan.data.recovery_pass.PassRecoveryApiKtor
@@ -41,6 +42,8 @@ val dataInvateApiRepoModule = module {
     single { InvateApiKtor(get()) }
 
     single { LinkApiKtor(get()) }
+    single { ManualAddApiKtor(get()) }
+
 }
 
 val dataFormApiRepoModule = module {

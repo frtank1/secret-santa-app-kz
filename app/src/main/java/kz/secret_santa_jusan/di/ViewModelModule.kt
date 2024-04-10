@@ -12,6 +12,7 @@ import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAd
 import kz.secret_santa_jusan.presentation.main.MainViewModel
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistViewModel
+import kz.secret_santa_jusan.presentation.invate.adding.AddingViewModel
 import kz.secret_santa_jusan.presentation.profile.ProfileViewModel
 import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.presentation.recepient.RecepientViewModel
@@ -54,7 +55,11 @@ val featureInvateViewModel = module {
     factory { LinkViewModel(get()) }
 
     factory { ManualAdditionViewModel(get()) }
+
+    factory { AddingViewModel() }
 }
+
+
 
 val featureFormViewModel = module {
     factory { FormViewModel(get()) }
