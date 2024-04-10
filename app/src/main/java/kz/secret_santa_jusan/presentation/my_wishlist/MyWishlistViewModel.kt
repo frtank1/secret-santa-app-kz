@@ -43,11 +43,11 @@ class MyWishlistViewModel(
                 }
 
             is MyWishlistEvent.EnterGift -> {
-                val update = state.value.gifts.mapIndexed { index, s ->
+                val update = state.value.gifts.mapIndexed { index, text ->
                     if (index == event.index) {
                        event.text
                     } else {
-                        s
+                        text
                     }
                 }
                 _state.value = MyWishlistState.Default(update)
@@ -97,6 +97,8 @@ sealed class MyWishlistEvent {
 
 sealed class MyWishlistState(val gifts: List<String>){
     class Default(  gifts: List<String>): MyWishlistState(gifts)
+
+    class Done(gifts: List<String>):MyWishlistState(gifts)
 
 }
 

@@ -41,6 +41,7 @@ import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
+import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
@@ -96,10 +97,18 @@ fun CreateGameContent(viewModel: IMyWishlistViewModel) {
                 .padding(horizontal = 36.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            MyWishlist(
-                viewModel,
-                state.gifts
-            )
+            when(state){
+                is MyWishlistState.Default -> {
+                    MyWishlist(
+                        viewModel,
+                        state.gifts
+                    )
+                }
+                is MyWishlistState.Done -> {
+                    CardCreated()
+                }
+            }
+
         }
 
     }
@@ -202,5 +211,40 @@ fun MyWishlist(
             modifier = Modifier.align(Alignment.CenterHorizontally)
         )
         Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+
+@Composable
+fun CardCreated() {
+    Column {
+        SsText(
+            modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Карточка_участника_создана),
+            color = BrightOrange,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 32.dp)
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.santa02),
+            contentDescription = null,
+        )
+
+        SsText(
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Уведомление_об_уведомление),
+            color = DarkGray,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            fontSize = 10.sp
+        )
     }
 }
