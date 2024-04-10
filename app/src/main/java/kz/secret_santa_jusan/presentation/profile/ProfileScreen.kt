@@ -35,6 +35,7 @@ import kz.secret_santa_jusan.core.views.EditTextPassword
 import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.Gray
 import kz.secret_santa_jusan.ui.theme.LightGrey
@@ -218,12 +219,12 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 64.dp),
-        colors = ButtonDefaults.buttonColors(Red),
+        colors = ButtonDefaults.buttonColors(BrightOrange),
         onClick = {
             viewModel.sendEvent(ProfileEvent.Exit)
         }) {
         Text(
-            stringResource(id = R.string.Удалить_аккаунт),
+            stringResource(id = R.string.выйти),
             fontFamily = interFamily,
             color = White,
             fontWeight = FontWeight.Bold,

@@ -3,6 +3,7 @@ package kz.secret_santa_jusan.di
 import kz.secret_santa_jusan.presentation.auth.AuthViewModel
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryViewModel
 import kz.secret_santa_jusan.presentation.example.ExampleViewModel
+import kz.secret_santa_jusan.presentation.form.FormViewModel
 import kz.secret_santa_jusan.presentation.game.GameViewModel
 import kz.secret_santa_jusan.presentation.game.create.CreateViewModel
 import kz.secret_santa_jusan.presentation.invate.InvateViewModel
@@ -10,7 +11,10 @@ import kz.secret_santa_jusan.presentation.invate.adding.link.LinkViewModel
 import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionViewModel
 import kz.secret_santa_jusan.presentation.main.MainViewModel
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
+import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistViewModel
 import kz.secret_santa_jusan.presentation.profile.ProfileViewModel
+import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
+import kz.secret_santa_jusan.presentation.recepient.RecepientViewModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationViewModel
 import org.koin.dsl.module
 
@@ -52,6 +56,11 @@ val featureInvateViewModel = module {
     factory { ManualAdditionViewModel(get()) }
 }
 
-val featureWhishListViewModel = module {
-    factory { MyWishlistScreen(get()) }
+val featureFormViewModel = module {
+    factory { FormViewModel(get()) }
+    factory { MyWishlistViewModel(get()) }
+}
+
+val featureRecepientViewModel = module {
+    factory { RecepientViewModel(get()) }
 }

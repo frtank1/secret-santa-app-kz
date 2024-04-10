@@ -8,6 +8,7 @@ import kz.secret_santa_jusan.data.game.create.CreateApiKtor
 import kz.secret_santa_jusan.data.invate.InvateApiKtor
 import kz.secret_santa_jusan.data.invate.link.LinkApiKtor
 import kz.secret_santa_jusan.data.profile.ProfileApiKtor
+import kz.secret_santa_jusan.data.recepient.RecepientApiKtor
 import kz.secret_santa_jusan.data.recovery_pass.PassRecoveryApiKtor
 import kz.secret_santa_jusan.data.registration.RegisterApiKtor
 import org.koin.dsl.module
@@ -46,4 +47,8 @@ val dataFormApiRepoModule = module {
     single { FormApiKtor(get()) }
 
     single { FormApiKtor(get()) }
+}
+
+val dataRecepientApiRepoModule = module {
+    single { RecepientApiKtor(get()) }
 }

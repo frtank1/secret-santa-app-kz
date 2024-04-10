@@ -97,14 +97,5 @@ val httpClientModule = module {
                 }
             }
         }
-        /* httpClient.plugin(HttpSend).intercept {request ->
-             val originalCall = execute(request)
-             if (originalCall.response.status.value == 400) {
-                 CoreApp.logOut()
-                 originalCall
-             } else {
-                 originalCall
-             }
-         }*/
     }
 }

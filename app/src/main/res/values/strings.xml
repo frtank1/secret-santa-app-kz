@@ -78,5 +78,7 @@
 	<string name="Номер_телефона">Номер телефона</string>
 	<string name="Далее">Далее</string>
 	<string name="выйти">Выйти</string>
+	<string name="готово">✔</string>
+	<string name="Карточка_Имя">Карточка *%1$s*</string>
 
 </resources>

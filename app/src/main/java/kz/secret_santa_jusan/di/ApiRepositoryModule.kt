@@ -10,6 +10,7 @@ import kz.secret_santa_jusan.data.game.create.CreateApiRepository
 import kz.secret_santa_jusan.data.invate.InvateApiRepository
 import kz.secret_santa_jusan.data.invate.link.LinkApiRepository
 import kz.secret_santa_jusan.data.profile.ProfileApiRepository
+import kz.secret_santa_jusan.data.recepient.RecepientApiRepository
 import kz.secret_santa_jusan.data.recovery_pass.PassRecoveryApiRepository
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
 import org.koin.dsl.module
@@ -51,4 +52,8 @@ val dataFormApiKtorModule = module {
     single { FromApiRepository(get()) }
 
     single { WishlistApiRepository(get()) }
+}
+
+val dataRecepientApiKtorModule = module {
+    single { RecepientApiRepository(get()) }
 }

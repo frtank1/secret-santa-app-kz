@@ -9,17 +9,17 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class GameModel(
     @SerialName("id")
-    val id: String?,
+    val id: String?="",
     @SerialName("name")
-    val name: String?,
+    val name: String?="",
     @SerialName("maxPrice")
-    val maxPrice: Int?,
+    val maxPrice: Int?=0,
     @SerialName("participantCount")
-    val participantCount: Int?,
+    val participantCount: Int?=0,
     @SerialName("creatorId")
-    val creatorId: String?,
+    val creatorId: String?="",
     @SerialName("role")
-    val role: String?,
+    val role: String?="",
     @SerialName("status")
-    val status: String?
+    val status: String?=""
 ) : Parcelable

@@ -13,7 +13,6 @@ class WishlistApiKtor(private val httpClient: HttpClient) {
 
     suspend fun createWishlist(model: CreateWishlistModel): HttpResponse {
         return httpClient.post("/wishlist/${model.gameId}/create-wishlist") {
-            header("Authorization", "Bearer ${GlobalStorage.access_token}")
             setBody(model.gifts)
         }
     }

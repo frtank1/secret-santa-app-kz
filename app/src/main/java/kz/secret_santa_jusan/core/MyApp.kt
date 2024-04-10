@@ -19,23 +19,27 @@ import kz.secret_santa_jusan.di.dataPassRecoceryApiKtorModule
 import kz.secret_santa_jusan.di.dataPassRecoceryApiRepoModule
 import kz.secret_santa_jusan.di.dataProfileApiRepoModule
 import kz.secret_santa_jusan.di.dataProfileyApiKtorModule
+import kz.secret_santa_jusan.di.dataRecepientApiKtorModule
+import kz.secret_santa_jusan.di.dataRecepientApiRepoModule
 import kz.secret_santa_jusan.di.dataRegisterApiKtorModule
 import kz.secret_santa_jusan.di.dataRegisterApiRepoModule
 import kz.secret_santa_jusan.di.featureAuthViewModel
 import kz.secret_santa_jusan.di.featureExampleViewModel
+import kz.secret_santa_jusan.di.featureFormViewModel
 import kz.secret_santa_jusan.di.featureGameViewModel
 import kz.secret_santa_jusan.di.featureInvateViewModel
 import kz.secret_santa_jusan.di.featureMainViewModel
 import kz.secret_santa_jusan.di.featurePassRecoceryViewModel
 import kz.secret_santa_jusan.di.featureProfileViewModel
+import kz.secret_santa_jusan.di.featureRecepientViewModel
 import kz.secret_santa_jusan.di.featureRegisterViewModel
-import kz.secret_santa_jusan.di.featureWhishListViewModel
 import kz.secret_santa_jusan.presentation.auth.AuthRouter
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryRouter
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
 import kz.secret_santa_jusan.presentation.example.ExampleRouter
 import kz.secret_santa_jusan.presentation.example.ExampleScreen
+import kz.secret_santa_jusan.presentation.form.FormRouter
 import kz.secret_santa_jusan.presentation.game.GameRouter
 import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
@@ -49,6 +53,8 @@ import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistRouter
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
+import kz.secret_santa_jusan.presentation.recepient.RecepientRouter
+import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import org.koin.android.ext.koin.androidContext
@@ -71,6 +77,8 @@ class MyApp : CoreApp() {
             featureRecoveryPass()
             featureGame()
             featureInvate()
+            featureForm()
+            featureRecepient()
         }
 
         startKoin {
@@ -101,9 +109,12 @@ class MyApp : CoreApp() {
                 featureInvateViewModel,
                 dataInvateApiKtorModule,
                 dataInvateApiRepoModule,
-                featureWhishListViewModel,
+                featureFormViewModel,
                 dataFormApiKtorModule,
-                dataFormApiRepoModule
+                dataFormApiRepoModule,
+                featureRecepientViewModel,
+                dataRecepientApiKtorModule,
+                dataRecepientApiRepoModule
             )
         }
     }
@@ -139,6 +150,12 @@ val featureRecoveryPass = screenModule {
     }
 }
 
+val featureRecepient = screenModule {
+    register<RecepientRouter.RecepientScreen> {
+        RecepientScreen(it.gameModel)
+    }
+}
+
 val featureGame = screenModule {
     register<GameRouter.GameScreen> {
         GameScreen()
@@ -162,8 +179,12 @@ val featureInvate = screenModule {
     }
 }
 
-val featureWhishList = screenModule {
+val featureForm = screenModule {
     register<MyWishlistRouter.MyWishlistScreen> {
+        MyWishlistScreen(it.id)
+    }
+
+    register<FormRouter.FormScreen> {
         MyWishlistScreen(it.id)
     }
 }

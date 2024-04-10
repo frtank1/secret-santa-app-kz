@@ -4,5 +4,5 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 
 //Регистрируем в MyApp
 sealed class FormRouter : ScreenProvider {
-    object FormScreen: FormRouter()
+    class FormScreen(val id: String) : FormRouter()
 }

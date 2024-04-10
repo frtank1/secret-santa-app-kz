@@ -55,7 +55,6 @@ class MainActivity : CoreBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContent {
             val startScreen = if (GlobalStorage.getAuthToken() != null) {
                 MainScreen(true)
@@ -87,8 +86,7 @@ class MainActivity : CoreBaseActivity() {
                                     }
                                 }
                                 when(nav){
-                                    is NavigationEvent.Default -> {
-                                    }
+                                    is NavigationEvent.Default -> {}
                                     is NavigationEvent.Game -> {
                                         navigator.replaceAll(GameScreen())
                                     }

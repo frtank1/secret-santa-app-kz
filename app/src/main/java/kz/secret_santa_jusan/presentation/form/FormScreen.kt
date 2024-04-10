@@ -29,15 +29,9 @@ import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
-import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
-import kz.secret_santa_jusan.presentation.registration.IRegistrationViewModel
-import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
-import kz.secret_santa_jusan.presentation.registration.spliterOr
 import kz.secret_santa_jusan.ui.theme.BrightOrange
-import kz.secret_santa_jusan.ui.theme.DarkGray
-import kz.secret_santa_jusan.ui.theme.LightGrey
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
@@ -158,12 +152,5 @@ fun registrationMenu(viewModel: IFormViewModel) {
                 fontSize = 15.sp
             )
         }
-        TextWithUnderline(
-            textFirst = stringResource(id = R.string.Уже_есть_аккаунт),
-            textSecond = stringResource(id = R.string.Войти),
-            onClick = {
-                viewModel.sendEvent(FormEvent.Next)
-            }
-        )
     }
 }
