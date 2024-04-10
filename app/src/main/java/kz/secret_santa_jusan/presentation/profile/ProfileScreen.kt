@@ -217,7 +217,23 @@ fun ProfileMenu(viewModel: IProfileViewModel) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 74.dp),
+            .padding(top = 64.dp),
+        colors = ButtonDefaults.buttonColors(Red),
+        onClick = {
+            viewModel.sendEvent(ProfileEvent.Exit)
+        }) {
+        Text(
+            stringResource(id = R.string.Удалить_аккаунт),
+            fontFamily = interFamily,
+            color = White,
+            fontWeight = FontWeight.Bold,
+            fontSize = 15.sp
+        )
+    }
+    Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 10.dp),
         colors = ButtonDefaults.buttonColors(Red),
         onClick = {
             viewModel.sendEvent(ProfileEvent.Delete)

@@ -43,6 +43,7 @@ sealed class ProfileEvent{
     class EnterCurrent(val text: String) : ProfileEvent()
 
     object Delete:ProfileEvent()
+    object Exit:ProfileEvent()
     object SaveProfile:ProfileEvent()
     object SavePasword:ProfileEvent()
 }
@@ -147,6 +148,10 @@ class ProfileViewModel(
 
             is ProfileEvent.EnterCurrent -> {
                 _state.value =ProfileState.Default(state.value.ressetData.copy(current  = event.text))}
+
+            ProfileEvent.Exit -> {
+                CoreApp.logOut(true)
+            }
         }
     }
 }

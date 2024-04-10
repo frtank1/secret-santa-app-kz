@@ -77,5 +77,6 @@
 	<string name="Контактные_Данные">Контактные данные</string>
 	<string name="Номер_телефона">Номер телефона</string>
 	<string name="Далее">Далее</string>
+	<string name="выйти">Выйти</string>
 
 </resources>
