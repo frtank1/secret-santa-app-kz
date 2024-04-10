@@ -65,5 +65,7 @@
 	<string name="random_link">random_link</string>
 	<string name="Участник">Участник №</string>
 	<string name="Пригласить">Пригласить</string>
+	<string name="Приглашение_отправлены">Приглашения отправлены!</string>
+	<string name="Уведомление_об_уведомление">Вам придет уведомление, как только участники примут Ваше приглашение</string>
 
 </resources>

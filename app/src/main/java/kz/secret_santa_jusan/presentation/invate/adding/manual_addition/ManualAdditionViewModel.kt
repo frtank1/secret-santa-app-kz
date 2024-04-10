@@ -43,6 +43,8 @@ sealed class NavigationEvent {
 sealed class ManualAdditionState(val list: List<UserNameModel>) {
     class Default(list: List<UserNameModel>) : ManualAdditionState(list)
 
+    class Done(list: List<UserNameModel>):ManualAdditionState(list)
+
 }
 
 class ManualAdditionViewModelPreview : IManualAdditionViewModel {
@@ -100,7 +102,11 @@ class ManualAdditionViewModel(
             is ManualAdditionEvent.SendLink -> {
                 screenModelScope.launch {
                     if (!_state.value.list.isNullOrEmpty()) {
-                        repository.sendUser(id, state.value.list)
+                        repository.sendUser(id, state.value.list).apply {
+                            if(isSuccessful){
+
+                            }
+                        }
                     }
                 }
             }

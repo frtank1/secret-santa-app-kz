@@ -43,6 +43,8 @@ import kz.secret_santa_jusan.core.base.CoreBaseScreen
 import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.presentation.invate.IInvateViewModel
+import kz.secret_santa_jusan.presentation.invate.InvateEvent
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
@@ -116,7 +118,9 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             }
                             item {
                                 Row(
-                                    modifier = Modifier.padding(top = 15.dp).clickable {  },
+                                    modifier = Modifier
+                                        .padding(top = 15.dp)
+                                        .clickable { },
                                     horizontalArrangement = Arrangement.Center,
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
@@ -159,6 +163,10 @@ fun ManualAdditionContent(viewModel: IManualAdditionViewModel) {
                             fontSize = 15.sp
                         )
                     }
+                }
+
+                is ManualAdditionState.Done -> {
+                    InvatedUser()
                 }
             }
         }
@@ -208,5 +216,38 @@ fun Item(
             label = stringResource(R.string.Ваше_Имя)
         )
     }
+}
 
+
+@Composable
+fun InvatedUser() {
+    Column {
+        SsText(
+            modifier = Modifier
+                .padding(top = 25.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Приглашение_отправлены),
+            color = BrightOrange,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            fontSize = 20.sp,
+        )
+        Image(
+            modifier = Modifier
+                .padding(top = 32.dp)
+                .align(Alignment.CenterHorizontally),
+            painter = painterResource(id = R.drawable.santa02),
+            contentDescription = null,
+        )
+
+        SsText(
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.Уведомление_об_уведомление),
+            color = DarkGray,
+            fontWeight = FontWeight.Normal,
+            textAlign = TextAlign.Center,
+            fontSize = 10.sp
+        )
 }
