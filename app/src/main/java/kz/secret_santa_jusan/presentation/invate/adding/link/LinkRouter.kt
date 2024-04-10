@@ -4,5 +4,5 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 
 //Регистрируем в MyApp
 sealed class LinkRouter : ScreenProvider {
-    object LinkScreen : LinkRouter()
+    class LinkScreen(val id:String) : LinkRouter()
 }

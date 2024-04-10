@@ -8,6 +8,10 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 
+data class User(
+    val name:String,
+    val email:String
+)
 interface IManualAdditionViewModel {
     val state: StateFlow<ManualAdditionState>
     val navigationEvent: StateFlow<NavigationEvent>
@@ -30,12 +34,14 @@ sealed class NavigationEvent{
     class Back: NavigationEvent()
 }
 
-sealed class ManualAdditionState{
-    object Default: ManualAdditionState()
+sealed class ManualAdditionState(val list: List<User>){
+    class Default( list: List<User>): ManualAdditionState(list)
 }
 
 class ManualAdditionViewModelPreview : IManualAdditionViewModel {
-    override val state: StateFlow<ManualAdditionState> = MutableStateFlow(ManualAdditionState.Default).asStateFlow()
+    override val state: StateFlow<ManualAdditionState> = MutableStateFlow(ManualAdditionState.Default(
+        emptyList()
+    )).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: ManualAdditionEvent) {}
 }
@@ -43,7 +49,7 @@ class ManualAdditionViewModelPreview : IManualAdditionViewModel {
 class ManualAdditionViewModel(
 ): CoreBaseViewModel(), IManualAdditionViewModel {
 
-    private var _state = MutableStateFlow<ManualAdditionState>(ManualAdditionState.Default)
+    private var _state = MutableStateFlow<ManualAdditionState>(ManualAdditionState.Default(emptyList()))
     override val state: StateFlow<ManualAdditionState> = _state.asStateFlow()
 
 

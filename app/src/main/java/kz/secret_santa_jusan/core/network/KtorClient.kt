@@ -54,8 +54,11 @@ val httpClientModule = module {
                 })
             }
             install(Auth) {
+                Log.d("access_token install Auth", GlobalStorage.access_token)
                 bearer {
+                    Log.d("access_token bearer", GlobalStorage.access_token)
                     loadTokens {
+                        Log.d("access_token loadTokens", GlobalStorage.access_token)
                         BearerTokens(
                             GlobalStorage.access_token,
                             GlobalStorage.refresh_token
@@ -66,13 +69,7 @@ val httpClientModule = module {
                                 !request.url.toString().contains("/auth/forgot-password")
                     }
                     refreshTokens {
-                        val response = client.post(GlobalStorage.BASE_URL + "refresh-token") {
-                            headers {
-                                append(
-                                    "Authorization",
-                                    "Bearer " + GlobalStorage.refresh_token
-                                )
-                            }
+                        val response = client.post(GlobalStorage.BASE_URL + "/refresh-token") {
                             body = FormDataContent(Parameters.build {
                                 append(
                                     "refresh_token",
@@ -80,6 +77,8 @@ val httpClientModule = module {
                                 )
                             })
                         }
+                        Log.d("status refresh", response.status.value )
+
                         if (response.status.value >= 200 && response.status.value < 300) {
                             val token = response.body<TokenModel>()
                             GlobalStorage.saveAuthToken(

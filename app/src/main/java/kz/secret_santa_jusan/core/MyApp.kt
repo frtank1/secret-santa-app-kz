@@ -38,6 +38,10 @@ import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
 import kz.secret_santa_jusan.presentation.invate.InvateRouter
 import kz.secret_santa_jusan.presentation.invate.InvateScreen
+import kz.secret_santa_jusan.presentation.invate.adding.link.LinkRouter
+import kz.secret_santa_jusan.presentation.invate.adding.link.LinkScreen
+import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionRouter
+import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
 import kz.secret_santa_jusan.presentation.main.MainRouter
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.registration.RegistrationRouter
@@ -139,5 +143,13 @@ val featureGame = screenModule {
 val featureInvate = screenModule {
     register<InvateRouter.InvateScreen> {
         InvateScreen(it.link,it.gameModel)
+    }
+
+    register<LinkRouter.LinkScreen> {
+        LinkScreen(it.id)
+    }
+
+    register<ManualAdditionRouter.ManualAdditionScreen> {
+        ManualAdditionScreen(it.id)
     }
 }

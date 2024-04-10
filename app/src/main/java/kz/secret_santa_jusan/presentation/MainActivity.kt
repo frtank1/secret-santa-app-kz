@@ -58,7 +58,7 @@ class MainActivity : CoreBaseActivity() {
 
         setContent {
             val startScreen = if (GlobalStorage.getAuthToken() != null) {
-                MainScreen(true)
+                MainScreen(false)
             } else {
                 MainScreen(false)
             }

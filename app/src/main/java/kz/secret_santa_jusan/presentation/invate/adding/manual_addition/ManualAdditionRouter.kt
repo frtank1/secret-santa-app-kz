@@ -4,5 +4,5 @@ import cafe.adriel.voyager.core.registry.ScreenProvider
 
 //Регистрируем в MyApp
 sealed class ManualAdditionRouter : ScreenProvider {
-    object ManualAdditionScreen : ManualAdditionRouter()
+    class ManualAdditionScreen(val id:String) : ManualAdditionRouter()
 }

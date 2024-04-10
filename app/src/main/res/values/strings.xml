@@ -63,5 +63,7 @@
 	<string name="Пригласить_участников">Пригласить участников</string>
 	<string name="Скопировать_ссылку">Скопировать ссылку</string>
 	<string name="random_link">random_link</string>
+	<string name="Участник">Участник №</string>
+	<string name="Пригласить">Пригласить</string>
 
 </resources>

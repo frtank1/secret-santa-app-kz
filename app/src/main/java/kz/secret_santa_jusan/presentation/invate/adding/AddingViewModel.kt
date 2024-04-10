@@ -16,6 +16,16 @@ interface IAddingViewModel {
 
 sealed class AddingEvent{
     object Back: AddingEvent()
+
+
+    class Default(val id:String):AddingEvent()
+
+    class GoToOwnAdd(val id:String):AddingEvent()
+
+    class GoToLink(val id:String):AddingEvent()
+
+    class GoToAdding(val id:String):AddingEvent()
+
 }
 
 sealed class NavigationEvent{
@@ -28,14 +38,20 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
+    class GoToOwnAdd(val id:String):NavigationEvent()
+
+    class GoToLink(val id:String):NavigationEvent()
+
+    class GoToAdding(val id:String):NavigationEvent()
+
 }
 
 sealed class AddingState{
-    object Default: AddingState()
+    class Default(val id: String): AddingState()
 }
 
 class AddingViewModelPreview : IAddingViewModel {
-    override val state: StateFlow<AddingState> = MutableStateFlow(AddingState.Default).asStateFlow()
+    override val state: StateFlow<AddingState> = MutableStateFlow(AddingState.Default("")).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: AddingEvent) {}
 }
@@ -43,12 +59,14 @@ class AddingViewModelPreview : IAddingViewModel {
 class AddingViewModel(
 ): CoreBaseViewModel(), IAddingViewModel {
 
-    private var _state = MutableStateFlow<AddingState>(AddingState.Default)
+    private var _state = MutableStateFlow<AddingState>(AddingState.Default(""))
     override val state: StateFlow<AddingState> = _state.asStateFlow()
 
 
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
+
+    private val id:String = ""
 
     init {
         screenModelScope.launch {
@@ -59,6 +77,20 @@ class AddingViewModel(
         when(event){
             AddingEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
+            }
+
+            is AddingEvent.GoToAdding -> {
+                _navigationEvent.value = NavigationEvent.GoToAdding(event.id)
+            }
+            is AddingEvent.GoToLink -> {
+                _navigationEvent.value = NavigationEvent.GoToLink(event.id)
+            }
+            is AddingEvent.GoToOwnAdd -> {
+                _navigationEvent.value = NavigationEvent.GoToOwnAdd(event.id)
+            }
+
+            is AddingEvent.Default -> {
+                _state.value = AddingState.Default(event.id)
             }
         }
     }

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -16,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -28,14 +26,10 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import kotlinx.parcelize.Parcelize
 import kz.secret_santa_jusan.R
 import kz.secret_santa_jusan.core.base.CoreBaseScreen
-import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
-import kz.secret_santa_jusan.presentation.game.GameEvent
-import kz.secret_santa_jusan.presentation.game.create.CreateEvent
-import kz.secret_santa_jusan.presentation.game.create.MaxSumCard
+import kz.secret_santa_jusan.presentation.invate.adding.link.LinkScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
-import kz.secret_santa_jusan.ui.theme.Gray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
@@ -53,7 +47,16 @@ class AddingScreen(val id:String) : CoreBaseScreen(), Parcelable {
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
+            is NavigationEvent.GoToAdding -> {
+                navigator.push(AddingScreen(navigationEvent.id))
+            }
+            is NavigationEvent.GoToLink -> {
+                navigator.push(LinkScreen(navigationEvent.id))
+            }
+            is NavigationEvent.GoToOwnAdd -> {
+            }
         }
+        viewModel.sendEvent(AddingEvent.Default(id))
         SubscribeError(viewModel)
         AddingContent(viewModel = viewModel)
     }
@@ -81,7 +84,7 @@ fun AddingContent(viewModel: IAddingViewModel) {
         ) {
             when (state) {
                 is AddingState.Default -> {
-                    AddingMenu(viewModel)
+                    AddingMenu(state.id,viewModel)
                 }
             }
         }
@@ -91,7 +94,7 @@ fun AddingContent(viewModel: IAddingViewModel) {
 
 
 @Composable
-fun AddingMenu(viewModel: IAddingViewModel) {
+fun AddingMenu(id: String,viewModel: IAddingViewModel) {
     Column(
         Modifier.padding(horizontal = 12.dp)
     ) {
@@ -111,6 +114,7 @@ fun AddingMenu(viewModel: IAddingViewModel) {
             colors = ButtonDefaults.buttonColors(White),
             border = BorderStroke(2.dp, BrightOrange),
             onClick = {
+                viewModel.sendEvent(AddingEvent.GoToOwnAdd(id))
             }) {
             Text(
                 stringResource(id = R.string.Создать_свою_карточку_участника),
@@ -127,6 +131,7 @@ fun AddingMenu(viewModel: IAddingViewModel) {
             colors = ButtonDefaults.buttonColors(White),
             border = BorderStroke(2.dp, BrightOrange),
             onClick = {
+                viewModel.sendEvent(AddingEvent.GoToAdding(id))
             }) {
             Text(
                 stringResource(id = R.string.Добавить_участников_вручную),
@@ -143,6 +148,7 @@ fun AddingMenu(viewModel: IAddingViewModel) {
             colors = ButtonDefaults.buttonColors(White),
             border = BorderStroke(2.dp, BrightOrange),
             onClick = {
+                viewModel.sendEvent(AddingEvent.GoToLink(id))
             }) {
             Text(
                 stringResource(id = R.string.Пригласить_по_ссылке),
