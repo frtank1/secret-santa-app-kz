@@ -6,6 +6,8 @@ import kz.secret_santa_jusan.presentation.example.ExampleViewModel
 import kz.secret_santa_jusan.presentation.game.GameViewModel
 import kz.secret_santa_jusan.presentation.game.create.CreateViewModel
 import kz.secret_santa_jusan.presentation.invate.InvateViewModel
+import kz.secret_santa_jusan.presentation.invate.adding.link.LinkViewModel
+import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionViewModel
 import kz.secret_santa_jusan.presentation.main.MainViewModel
 import kz.secret_santa_jusan.presentation.profile.ProfileViewModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationViewModel
@@ -43,4 +45,8 @@ val featureGameViewModel = module {
 
 val featureInvateViewModel = module {
     factory { InvateViewModel(get()) }
+
+    factory { LinkViewModel(get()) }
+
+    factory { ManualAdditionViewModel(get()) }
 }

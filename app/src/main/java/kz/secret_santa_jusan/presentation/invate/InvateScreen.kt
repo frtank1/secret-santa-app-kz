@@ -31,6 +31,7 @@ import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.data.game.models.GameModel
+import kz.secret_santa_jusan.presentation.invate.adding.AddingScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
@@ -54,6 +55,9 @@ class InvateScreen(val link: String?, val gameModel: GameModel?=null) : CoreBase
             is NavigationEvent.CreateCard -> {
             }
             is NavigationEvent.GoToAddUser -> {
+                navigator.push(
+                    AddingScreen(navigationEvent.id)
+                )
             }
             is NavigationEvent.ShowWard -> {
             }

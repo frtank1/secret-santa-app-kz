@@ -45,7 +45,7 @@ sealed class NavigationEvent{
 
     class ContactWhitOrg:NavigationEvent()
 
-    class GoToAddUser:NavigationEvent()
+    class GoToAddUser(val id:String):NavigationEvent()
 
     class CreateCard:NavigationEvent()
 
@@ -130,6 +130,7 @@ class InvateViewModel(
             is InvateEvent.CreateCard -> {
             }
             is InvateEvent.GoToAddUser -> {
+                _navigationEvent.value = NavigationEvent.GoToAddUser(gameModel?.id?:"")
             }
             is InvateEvent.ShowWard -> {
             }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 
 interface ILinkViewModel {
     val state: StateFlow<LinkState>
@@ -41,6 +42,7 @@ class LinkViewModelPreview : ILinkViewModel {
 }
 
 class LinkViewModel(
+    private val repository: LinkViewModel
 ): CoreBaseViewModel(), ILinkViewModel {
 
     private var _state = MutableStateFlow<LinkState>(LinkState.Default)

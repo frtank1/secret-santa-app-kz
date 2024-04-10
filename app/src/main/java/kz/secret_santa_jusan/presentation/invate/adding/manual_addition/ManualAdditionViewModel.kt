@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.data.invate.manual.ManualAddApiRepository
+import kz.secret_santa_jusan.data.profile.ProfileApiRepository
 
 data class User(
     val name:String,
@@ -47,6 +49,7 @@ class ManualAdditionViewModelPreview : IManualAdditionViewModel {
 }
 
 class ManualAdditionViewModel(
+    private val repository: ManualAddApiRepository
 ): CoreBaseViewModel(), IManualAdditionViewModel {
 
     private var _state = MutableStateFlow<ManualAdditionState>(ManualAdditionState.Default(emptyList()))
