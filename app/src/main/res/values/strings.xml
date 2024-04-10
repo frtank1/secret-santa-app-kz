@@ -74,5 +74,8 @@
 	<string name="add_another_gift">Добавить еще подарок</string>
 	<string name="next">Далее</string>
 	<string name="Карточка_участника_создана">Карточка участника создана!</string>
+	<string name="Контактные_Данные">Контактные данные</string>
+	<string name="Номер_телефона">Номер телефона</string>
+	<string name="Далее">Далее</string>
 
 </resources>

@@ -61,13 +61,11 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Back -> navigator.pop()
             is NavigationEvent.Default -> {
             }
-
             NavigationEvent.GoToAuth -> {
                 navigator.push(
                     AuthScreen()
                 )
             }
-
             NavigationEvent.GoToMain -> {
                 navigator.push(
                     MainScreen(true)
