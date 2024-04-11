@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
 import kz.secret_santa_jusan.data.registration.models.RegModel
 import trikita.log.Log
@@ -28,6 +29,7 @@ sealed class RegistrationEvent{
     class EnterLogin(val text: String): RegistrationEvent()
     class EnterPassword(val text: String): RegistrationEvent()
     class EnterMail(val text: String): RegistrationEvent()
+    class Init(val gameModel: GameModel?):RegistrationEvent()
 
     object ClickEnter: RegistrationEvent()
     object Back: RegistrationEvent()
@@ -43,7 +45,8 @@ sealed class NavigationEvent{
     }
     class Default: NavigationEvent()
     class Back: NavigationEvent()
-    object GoToAuth:NavigationEvent()
+    class GoToAuth(val gameModel: GameModel?):NavigationEvent()
+    class GoToForm(val gameModel: GameModel?):NavigationEvent()
     object GoToMain:NavigationEvent()
 }
 
@@ -68,6 +71,7 @@ class RegistrationViewModel(
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
+    private var gameModele:GameModel? = null
 
     override fun sendEvent(event: RegistrationEvent) {
         when(event){
@@ -82,7 +86,12 @@ class RegistrationViewModel(
                             Log.d("ok", "ok")
                             GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
                             GlobalStorage.saveUser(state.value.regForm)
-                            _navigationEvent.value = NavigationEvent.GoToMain
+                            gameModele?.let {
+                                _navigationEvent.value = NavigationEvent.GoToForm(gameModele)
+                            }
+                            if (gameModele == null) {
+                                _navigationEvent.value = NavigationEvent.GoToMain
+                            }
                         }
                     }
                 }
@@ -99,7 +108,11 @@ class RegistrationViewModel(
             }
 
             RegistrationEvent.GoToAuth -> {
-               _navigationEvent.value = NavigationEvent.GoToAuth
+               _navigationEvent.value = NavigationEvent.GoToAuth(gameModele)
+            }
+
+            is RegistrationEvent.Init -> {
+                gameModele = event.gameModel
             }
         }
     }

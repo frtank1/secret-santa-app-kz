@@ -82,5 +82,8 @@
 	<string name="Карточка_Имя">Карточка *%1$s*</string>
 	<string name="sended">Отправлено</string>
 	<string name="Жеребевка">Жеребевка</string>
+	<string name="открыть_карточку">открыть карточку</string>
+	<string name="Ваш_подопечный">Ваш_подопечный *%1$s*</string>
+
 
 </resources>

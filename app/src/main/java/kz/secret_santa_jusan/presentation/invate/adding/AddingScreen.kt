@@ -31,7 +31,6 @@ import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.form.FormScreen
 import kz.secret_santa_jusan.presentation.invate.adding.link.LinkScreen
 import kz.secret_santa_jusan.presentation.invate.adding.manual_addition.ManualAdditionScreen
-import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.White

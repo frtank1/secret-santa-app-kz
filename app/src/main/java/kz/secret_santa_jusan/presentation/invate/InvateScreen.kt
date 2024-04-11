@@ -33,7 +33,10 @@ import kz.secret_santa_jusan.core.views.ProfileInfoCadr
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.data.game.models.GameModel
+import kz.secret_santa_jusan.presentation.form.FormScreen
+import kz.secret_santa_jusan.presentation.game.create.CreateScreen
 import kz.secret_santa_jusan.presentation.invate.adding.AddingScreen
+import kz.secret_santa_jusan.presentation.recepient.RecepientScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
@@ -55,6 +58,9 @@ class InvateScreen(val link: String?, val gameModel: GameModel?=null) : CoreBase
             is NavigationEvent.ContactWhitOrg -> {
             }
             is NavigationEvent.CreateCard -> {
+                navigator.push(
+                   FormScreen(navigationEvent.id)
+                )
             }
             is NavigationEvent.GoToAddUser -> {
                 navigator.push(
@@ -62,6 +68,7 @@ class InvateScreen(val link: String?, val gameModel: GameModel?=null) : CoreBase
                 )
             }
             is NavigationEvent.ShowWard -> {
+                    RecepientScreen(navigationEvent.gameModel)
             }
         }
         viewModel.sendEvent(InvateEvent.Init(link,gameModel))

@@ -38,7 +38,9 @@ import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.presentation.auth.AuthScreen
+import kz.secret_santa_jusan.presentation.form.FormScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
@@ -48,7 +50,7 @@ import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class RegistrationScreen : CoreBaseScreen(), Parcelable {
+class RegistrationScreen(val gameModel: GameModel?=null) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -61,17 +63,24 @@ class RegistrationScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Back -> navigator.pop()
             is NavigationEvent.Default -> {
             }
-            NavigationEvent.GoToAuth -> {
-                navigator.push(
-                    AuthScreen()
-                )
-            }
             NavigationEvent.GoToMain -> {
                 navigator.push(
                     MainScreen(true)
                 )
             }
+
+            is NavigationEvent.GoToAuth -> {
+                navigator.push(
+                    AuthScreen(navigationEvent.gameModel)
+                )
+            }
+            is NavigationEvent.GoToForm -> {
+                navigator.push(
+                    FormScreen(navigationEvent?.gameModel?.id?:"")
+                )
+            }
         }
+        viewModel.sendEvent(RegistrationEvent.Init(gameModel))
         SubscribeError(viewModel)
         RegistrationContent(viewModel = viewModel)
     }

@@ -119,7 +119,7 @@ fun СardRecepient(viewModel: IRecepientViewModel, name: String, nameUser: Strin
             modifier = Modifier
                 .padding(top = 100.dp)
                 .fillMaxWidth(),
-            text = stringResource(id = R.string.Жеребевка_завершена),
+            text = stringResource(id = R.string.Ваш_подопечный,nameUser),
             color = DarkGray,
             fontWeight = FontWeight.Normal,
             textAlign = TextAlign.Center,
@@ -132,10 +132,10 @@ fun СardRecepient(viewModel: IRecepientViewModel, name: String, nameUser: Strin
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
-
+            viewModel.sendEvent(RecepientEvent.ShowGift)
             }) {
             Text(
-                stringResource(id = R.string.Узнать_Подопечного),
+                stringResource(id = R.string.открыть_карточку),
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 15.sp

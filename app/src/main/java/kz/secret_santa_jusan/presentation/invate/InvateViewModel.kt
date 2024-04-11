@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.data.invate.InvateApiRepository
 
@@ -49,9 +50,9 @@ sealed class NavigationEvent{
 
     class GoToAddUser(val id:String):NavigationEvent()
 
-    class CreateCard:NavigationEvent()
+    class CreateCard(val id:String):NavigationEvent()
 
-    class ShowWard:NavigationEvent()
+    class ShowWard(val gameModel: GameModel):NavigationEvent()
 
 
 }
@@ -133,11 +134,15 @@ class InvateViewModel(
             is InvateEvent.ContactWhitOrg -> {
             }
             is InvateEvent.CreateCard -> {
+                if (GlobalStorage.access_token!=null){
+                    _navigationEvent.value = NavigationEvent.CreateCard(gameModel?.id?:"")
+                }
             }
             is InvateEvent.GoToAddUser -> {
                 _navigationEvent.value = NavigationEvent.GoToAddUser(gameModel?.id?:"")
             }
             is InvateEvent.ShowWard -> {
+                _navigationEvent.value = NavigationEvent.ShowWard(gameModel!!)
             }
 
             InvateEvent.ReShuffle -> {
@@ -163,6 +168,5 @@ fun stringParse(text: String): String {
     } else {
         result
     }
-
     return result
 }

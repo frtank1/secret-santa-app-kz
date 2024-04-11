@@ -68,9 +68,10 @@ class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
                 )
             }
         }
+        viewModel.sendEvent(MainEvent.Init(isAuth))
         SubscribeError(viewModel)
         MainContent(viewModel = viewModel)
-        viewModel.sendEvent(MainEvent.Init(isAuth))
+
     }
 }
 
@@ -97,12 +98,12 @@ fun MainContent(viewModel: IMainViewModel) {
 
         ) {
             when (state) {
-                is MainState.Init -> {
-                    if (!state.isAuth){
-                        notRegistration(viewModel)
-                    }else{
+                is MainState.IsAuth -> {
                         haveRegistration(viewModel)
-                    }
+                }
+
+                is MainState.NotAuth -> {
+                    notRegistration(viewModel)
                 }
             }
         }

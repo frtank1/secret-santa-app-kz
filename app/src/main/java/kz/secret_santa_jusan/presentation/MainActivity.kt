@@ -78,7 +78,6 @@ class MainActivity : CoreBaseActivity() {
 
         if(intent?.hasExtra("LOGOUT") == true) {
             ktor.logout()
-            val LOGOUT = intent?.getBooleanExtra("LOGOUT", false)
         }
         setContent {
 

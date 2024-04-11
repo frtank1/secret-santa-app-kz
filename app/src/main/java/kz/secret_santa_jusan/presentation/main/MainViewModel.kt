@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kz.secret_santa_jusan.core.base.CoreBaseViewModel
+import kz.secret_santa_jusan.presentation.invate.adding.AddingEvent
+import kz.secret_santa_jusan.presentation.invate.adding.AddingState
 import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
 
 interface IMainViewModel {
@@ -17,6 +19,8 @@ interface IMainViewModel {
 
 sealed class MainEvent{
     object Back: MainEvent()
+
+    object Default:MainEvent()
     class Init(val isAuth: Boolean): MainEvent()
 
     object GoToRegistration: MainEvent()
@@ -41,13 +45,14 @@ sealed class NavigationEvent{
 
 }
 
-sealed class MainState(val isAuth: Boolean){
-    class Init(isAuth: Boolean): MainState(isAuth)
+sealed class MainState(){
+    object NotAuth: MainState()
+    object IsAuth: MainState()
 
 }
 
 class MainViewModelPreview : IMainViewModel {
-    override val state: StateFlow<MainState> = MutableStateFlow(MainState.Init(false)).asStateFlow()
+    override val state: StateFlow<MainState> = MutableStateFlow(MainState.NotAuth).asStateFlow()
     override val navigationEvent = MutableStateFlow(NavigationEvent.Default()).asStateFlow()
     override fun sendEvent(event: MainEvent) {}
 }
@@ -55,7 +60,7 @@ class MainViewModelPreview : IMainViewModel {
 class MainViewModel(
 ): CoreBaseViewModel(), IMainViewModel {
 
-    private var _state = MutableStateFlow<MainState>(MainState.Init(false))
+    private var _state = MutableStateFlow<MainState>(MainState.NotAuth)
     override val state: StateFlow<MainState> = _state.asStateFlow()
 
 
@@ -65,20 +70,33 @@ class MainViewModel(
 
     override fun sendEvent(event: MainEvent) {
         when(event){
+
+
             MainEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
 
             is MainEvent.Init -> {
-              _state.value = MainState.Init(event.isAuth)
+                if (event.isAuth){
+                    _state.value = MainState.IsAuth
+
+                }else{
+                    _state.value = MainState.NotAuth
+                }
             }
 
             MainEvent.GoToRegistration -> {
                 _navigationEvent.value = NavigationEvent.GoToRegistration
+                sendEvent(MainEvent.Default)
             }
 
             MainEvent.GoToCreateGame -> {
                 _navigationEvent.value = NavigationEvent.GoToCreateGame
+
+            }
+
+            MainEvent.Default -> {
+
             }
         }
     }

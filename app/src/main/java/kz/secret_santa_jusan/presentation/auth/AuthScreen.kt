@@ -36,7 +36,9 @@ import kz.secret_santa_jusan.core.views.EditTextPassword
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TextWithUnderline
 import kz.secret_santa_jusan.core.views.TitleBar
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.presentation.auth.pass_recovery.PassRecoveryScreen
+import kz.secret_santa_jusan.presentation.form.FormScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.profile.ProfileEvent
 import kz.secret_santa_jusan.presentation.registration.AgreeText
@@ -52,7 +54,7 @@ import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class AuthScreen : CoreBaseScreen(), Parcelable {
+class AuthScreen(val gameModel: GameModel?) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -73,7 +75,14 @@ class AuthScreen : CoreBaseScreen(), Parcelable {
                     MainScreen(true)
                 )
             }
+
+            is NavigationEvent.GoToForm -> {
+                navigator.push(
+                    FormScreen(navigationEvent?.gameModel?.id?:"")
+                )
+            }
         }
+        viewModel.sendEvent(AuthEvent.Init(gameModel))
         SubscribeError(viewModel)
         ExampleContent(viewModel = viewModel)
     }

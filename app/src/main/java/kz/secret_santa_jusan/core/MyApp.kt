@@ -131,7 +131,7 @@ val featureExample = screenModule {
 
 val featureRegister = screenModule {
     register<RegistrationRouter.RegistrationScreen> {
-        RegistrationScreen()
+        RegistrationScreen(it.gameModel)
     }
 }
 
@@ -143,7 +143,7 @@ val featureMain = screenModule {
 
 val featureAuth = screenModule {
     register<AuthRouter.AuthScreen> {
-        AuthScreen()
+        AuthScreen(it.gameModel)
     }
 }
 

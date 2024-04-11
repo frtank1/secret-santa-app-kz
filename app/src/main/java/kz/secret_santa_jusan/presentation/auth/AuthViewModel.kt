@@ -10,6 +10,7 @@ import kz.secret_santa_jusan.core.base.CoreBaseViewModel
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.data.auth.AuthApiRepository
 import kz.secret_santa_jusan.data.auth.models.AuthModel
+import kz.secret_santa_jusan.data.game.models.GameModel
 import kz.secret_santa_jusan.data.registration.RegisterApiRepository
 import kz.secret_santa_jusan.data.registration.models.RegModel
 import kz.secret_santa_jusan.presentation.registration.RegistrationEvent
@@ -24,6 +25,8 @@ interface IAuthViewModel {
 
 sealed class AuthEvent{
     object Back: AuthEvent()
+
+    class Init(val gameModel: GameModel?):AuthEvent()
 
     class EnterLogin(val text: String): AuthEvent()
     class EnterPassword(val text: String): AuthEvent()
@@ -45,6 +48,7 @@ sealed class NavigationEvent{
     class Default: NavigationEvent()
     class Back: NavigationEvent()
     object GoToRecovery:NavigationEvent()
+    class GoToForm(val gameModel: GameModel?):NavigationEvent()
 
     object GoToMain:NavigationEvent()
 }
@@ -70,6 +74,7 @@ class AuthViewModel(
     private val _navigationEvent = MutableStateFlow<NavigationEvent>(NavigationEvent.Default())
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
+    private var gameModele:GameModel? = null
     init {
         screenModelScope.launch {
         }
@@ -88,7 +93,12 @@ class AuthViewModel(
                             Log.d("ok", "ok")
                             GlobalStorage.saveAuthToken(body.accessToken, body.refreshToken)
                             GlobalStorage.savePassword(state.value.authForm.password)
-                            _navigationEvent.value = NavigationEvent.GoToMain
+                            gameModele?.let {
+                                _navigationEvent.value = NavigationEvent.GoToForm(gameModele)
+                            }
+                            if (gameModele == null) {
+                                _navigationEvent.value = NavigationEvent.GoToMain
+                            }
                         }
                     }
                 }
@@ -102,6 +112,10 @@ class AuthViewModel(
 
             AuthEvent.GoToRecovery -> {
                 _navigationEvent.value = NavigationEvent.GoToRecovery
+            }
+
+            is AuthEvent.Init -> {
+                gameModele = event.gameModel
             }
         }
     }

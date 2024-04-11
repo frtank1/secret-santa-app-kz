@@ -81,6 +81,7 @@ class AddingViewModel(
 
             is AddingEvent.GoToAdding -> {
                 _navigationEvent.value = NavigationEvent.GoToAdding(event.id)
+
             }
             is AddingEvent.GoToLink -> {
                 _navigationEvent.value = NavigationEvent.GoToLink(event.id)
