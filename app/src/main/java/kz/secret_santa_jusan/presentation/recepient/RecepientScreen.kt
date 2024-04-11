@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -77,7 +79,8 @@ fun RecepientContent(viewModel: IRecepientViewModel) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = PaleBlue)
-                .padding(horizontal = 36.dp),
+                .padding(horizontal = 36.dp)
+                .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             when (state) {
@@ -160,10 +163,10 @@ fun Show(viewModel: IRecepientViewModel, name: String, percepient: PercepientMod
                     .padding(top = 150.dp)
                     .fillMaxWidth(),
                 text = it,
-                color = BrightOrange,
+                color = Gray,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center,
-                fontSize = 185.sp,
+                fontSize = 15.sp,
             )
         }
         for (gift in percepient.wishlistDescriptions!!) {
@@ -179,7 +182,6 @@ fun Show(viewModel: IRecepientViewModel, name: String, percepient: PercepientMod
             )
             Card(
                 modifier = Modifier
-                    .padding(top = 72.dp)
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(32.dp),
                 colors = CardDefaults.cardColors(
