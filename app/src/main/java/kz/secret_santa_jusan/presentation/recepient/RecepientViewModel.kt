@@ -64,7 +64,7 @@ class RecepientViewModel(
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
     private var gameModel: GameModel? = null
-    lateinit var percepientModel: PercepientModel
+  var percepientModel: PercepientModel? = null
     init {
         screenModelScope.launch {
         }
@@ -90,7 +90,10 @@ class RecepientViewModel(
             }
 
             is RecepientEvent.ShowGift -> {
-                _state.value = RecepientState.Show(gameModel?.name?:"",percepientModel)
+                percepientModel?.let {
+                    _state.value = RecepientState.Show(gameModel?.name?:"",it)
+                }
+
             }
         }
     }

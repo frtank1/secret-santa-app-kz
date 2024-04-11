@@ -53,7 +53,7 @@ sealed class NavigationEvent{
     class GoToRegistration( val gameModel: GameModel?):NavigationEvent()
     class CreateCard(val id:String):NavigationEvent()
 
-    class ShowWard(val gameModel: GameModel):NavigationEvent()
+    class ShowWard(val gameModel: GameModel?):NavigationEvent()
 
 
 }
@@ -83,7 +83,7 @@ class InvateViewModel(
     override val navigationEvent: StateFlow<NavigationEvent> = _navigationEvent.asStateFlow()
 
     private var gameModel:GameModel? = null
-
+    private var id:String? = null
 
     override fun sendEvent(event: InvateEvent) {
 
@@ -99,14 +99,18 @@ class InvateViewModel(
                           val code = stringParse(event.link)
                           repository.acceptForInviteLink(code).apply {
                               if(isSuccessful) {
-                                  when(_statusCode){
+                                  id= body?.gameId?:""
+                                  _state.value = InvateState.UserScreen(body.gameId?:"")
+                               /*   when(_statusCode){
                                       202 -> {
+                                          sendEvent(InvateEvent.Init(body.gameId?:"",gameModel))
                                           _state.value = InvateState.ClosedScreen(body.gameId?:"","Secret Santa")
+
                                       }
                                       else -> {
-                                          _state.value = InvateState.UserScreen(body.gameId?:"")
+
                                       }
-                                  }
+                                  }*/
                               }
                               else{
 
@@ -136,7 +140,7 @@ class InvateViewModel(
             }
             is InvateEvent.CreateCard -> {
                 if (GlobalStorage.access_token!=null){
-                    _navigationEvent.value = NavigationEvent.CreateCard(gameModel?.id?:"")
+                    _navigationEvent.value = NavigationEvent.CreateCard(id?:"")
                 }else{
                     _navigationEvent.value = NavigationEvent.GoToRegistration(gameModel)
                 }
@@ -145,7 +149,7 @@ class InvateViewModel(
                 _navigationEvent.value = NavigationEvent.GoToAddUser(gameModel?.id?:"")
             }
             is InvateEvent.ShowWard -> {
-                _navigationEvent.value = NavigationEvent.ShowWard(gameModel!!)
+                _navigationEvent.value = NavigationEvent.ShowWard(gameModel)
             }
 
             InvateEvent.ReShuffle -> {

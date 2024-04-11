@@ -8,7 +8,7 @@ import kz.secret_santa_jusan.core.network.KtorConfig
 class RecepientApiKtor (private val ktorConfig: KtorConfig) {
 
     suspend fun getPercepient( id:String): HttpResponse {
-        return ktorConfig.httpClient.post("/wishlist/${id}/create-wishlist"){
+        return ktorConfig.httpClient.get("wishlist/${id}/my-giftee-wishlist"){
         }
     }
 }

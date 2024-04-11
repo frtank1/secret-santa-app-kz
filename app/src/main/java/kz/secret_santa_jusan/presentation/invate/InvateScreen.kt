@@ -70,7 +70,10 @@ class InvateScreen(val link: String?, val gameModel: GameModel?=null) : CoreBase
                 )
             }
             is NavigationEvent.ShowWard -> {
+                navigator.push(
                     RecepientScreen(navigationEvent.gameModel)
+                )
+
             }
 
             is NavigationEvent.GoToRegistration -> {

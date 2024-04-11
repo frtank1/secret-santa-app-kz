@@ -41,7 +41,7 @@ import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize
-class RecepientScreen(val gameModel: GameModel) : CoreBaseScreen(), Parcelable {
+class RecepientScreen(val gameModel: GameModel?) : CoreBaseScreen(), Parcelable {
 
     @Composable
     override fun Content() {
@@ -154,7 +154,7 @@ fun Show(viewModel: IRecepientViewModel, name: String, percepient: PercepientMod
             name = name,
             email = stringResource(id = R.string.Связаться_с_Организатором)
         )
-        percepient.message?.let { stringResource(id = R.string.Карточка_Имя, it) }?.let {
+        percepient.gifteeEmail?.let { stringResource(id = R.string.Карточка_Имя, it) }?.let {
             SsText(
                 modifier = Modifier
                     .padding(top = 150.dp)
