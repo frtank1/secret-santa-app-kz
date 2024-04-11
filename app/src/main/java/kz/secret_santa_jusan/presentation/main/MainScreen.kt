@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -186,6 +187,9 @@ fun haveRegistration(
             fontSize = 40.sp,
         )
         SsText(
+            modifier = Modifier.clickable {
+                viewModel.sendEvent(MainEvent.GoToCreateGame)
+            },
             text = stringResource(id = R.string.Организуй_тайный_обмен_подарками_между_друзьями_или_коллегами),
             color = DarkGray,
             fontWeight = FontWeight.Normal,
