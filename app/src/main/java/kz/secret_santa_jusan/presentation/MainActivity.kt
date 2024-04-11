@@ -66,13 +66,14 @@ class MainActivity : CoreBaseActivity() {
                     val path: String? = data.path
                    InvateScreen(path,null)
                 }else{
-                    MainScreen(true)
+                    //MainScreen(true)
+                    InvateScreen("https://secret-santa-app.azurewebsites.net/invitations/accept/632726d8-13bc-40bc-8605-541940aae815",null)
                 }
             }else{
-                MainScreen(true)
+                InvateScreen("https://secret-santa-app.azurewebsites.net/invitations/accept/632726d8-13bc-40bc-8605-541940aae815",null)
             }
         } else {
-            MainScreen(false)
+            InvateScreen("https://secret-santa-app.azurewebsites.net/invitations/accept/632726d8-13bc-40bc-8605-541940aae815",null)
         }
 
         if(intent?.hasExtra("LOGOUT") == true) {

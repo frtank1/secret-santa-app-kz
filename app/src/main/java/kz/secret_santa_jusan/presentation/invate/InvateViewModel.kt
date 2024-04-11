@@ -99,10 +99,10 @@ class InvateViewModel(
                               if(isSuccessful) {
                                   when(_statusCode){
                                       202 -> {
-                                          _state.value = InvateState.ClosedScreen(body.gameId?:"",body.gameId?:"")
+                                          _state.value = InvateState.ClosedScreen(body.gameId?:"","Secret Santa")
                                       }
                                       else -> {
-                                          _state.value = InvateState.ClosedScreen(body.gameId?:"",body.gameId?:"")
+                                          _state.value = InvateState.UserScreen(body.gameId?:"")
                                       }
                                   }
                               }
@@ -153,10 +153,10 @@ class InvateViewModel(
 fun stringParse(text: String): String {
     var result = ""
     val startIndex =
-        text.indexOf("code=")
+        text.indexOf("accept/")
     val endIndex = text.length
     if (startIndex != -1) {
-        result = text.substring(startIndex, endIndex)
+        result = text.substring(startIndex+7, endIndex)
     } else {
         result
     }
