@@ -1,6 +1,7 @@
 package kz.secret_santa_jusan.presentation.main
 
 import android.os.Parcelable
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -34,10 +35,12 @@ import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.game.GameScreen
 import kz.secret_santa_jusan.presentation.game.create.CreateEvent
 import kz.secret_santa_jusan.presentation.game.create.CreateScreen
+import kz.secret_santa_jusan.presentation.invate.adding.AddingEvent
 import kz.secret_santa_jusan.presentation.registration.RegistrationScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.DarkGray
 import kz.secret_santa_jusan.ui.theme.PaleBlue
+import kz.secret_santa_jusan.ui.theme.White
 import kz.secret_santa_jusan.ui.theme.interFamily
 
 @Parcelize

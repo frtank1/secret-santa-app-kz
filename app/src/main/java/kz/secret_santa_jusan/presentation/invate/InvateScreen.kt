@@ -200,10 +200,10 @@ fun InvatedUser(viewModel: IInvateViewModel) {
                 .padding(top = 25.dp)
                 .fillMaxWidth(),
             text = stringResource(id = R.string.Организатор_приглашает_Вас_в_игру),
-            color = BrightOrange,
+            color = DarkGray,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
-            fontSize = 40.sp,
+            fontSize = 20.sp,
         )
         Image(
             modifier = Modifier
@@ -226,7 +226,7 @@ fun InvatedUser(viewModel: IInvateViewModel) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 76.dp)
-                .padding(horizontal = 25.dp),
+                .padding(horizontal = 15.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {
                 viewModel.sendEvent(InvateEvent.CreateCard())
@@ -235,7 +235,7 @@ fun InvatedUser(viewModel: IInvateViewModel) {
                 stringResource(id = R.string.Создать_карточку_участника),
                 fontFamily = interFamily,
                 fontWeight = FontWeight.Bold,
-                fontSize = 15.sp
+                fontSize = 10.sp
             )
         }
     }

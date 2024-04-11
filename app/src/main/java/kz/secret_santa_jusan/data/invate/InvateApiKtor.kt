@@ -8,7 +8,7 @@ import kz.secret_santa_jusan.core.network.KtorConfig
 class InvateApiKtor (private val ktorConfig: KtorConfig) {
 
     suspend fun acceptForInviteLink(code:String): HttpResponse {
-        return ktorConfig.httpClient.post("invitations/accept/"+code){
+        return ktorConfig.httpClient.post("invitations/accept/${code}"){
         }
     }
 

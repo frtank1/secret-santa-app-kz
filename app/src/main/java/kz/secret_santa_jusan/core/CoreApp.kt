@@ -47,6 +47,20 @@ abstract class CoreApp: Application() {
                 activity.startActivity(intent)
             }
         }
+
+        fun kostil(){
+            val activity = currentActivity()
+            Log.d("activity","${activity != null}")
+            if(activity != null) {
+                val intent = activity.intent
+                activity.overridePendingTransition(0, 0)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                activity.finish()
+                //intent.putExtra("accessToken", GlobalStorage.getAuthToken()?.accessToken)
+                activity.overridePendingTransition(0, 0)
+                activity.startActivity(intent)
+            }
+        }
     }
 }
 

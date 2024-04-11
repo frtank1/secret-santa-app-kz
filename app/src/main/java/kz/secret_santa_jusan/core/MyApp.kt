@@ -71,17 +71,6 @@ class MyApp : CoreApp() {
 
         GlobalStorage.setBaseUrl("http://51.107.14.25:8080/")
 
-        ScreenRegistry {
-            featureExample()
-            featureRegister()
-            featureMain()
-            featureAuth()
-            featureRecoveryPass()
-            featureGame()
-            featureInvate()
-            featureForm()
-            featureRecepient()
-        }
 
         startKoin {
             androidLogger()
@@ -120,78 +109,5 @@ class MyApp : CoreApp() {
 
             )
         }
-    }
-}
-
-val featureExample = screenModule {
-    register<ExampleRouter.AnyScreen> {
-        ExampleScreen()
-    }
-}
-
-val featureRegister = screenModule {
-    register<RegistrationRouter.RegistrationScreen> {
-        RegistrationScreen(it.gameModel)
-    }
-}
-
-val featureMain = screenModule {
-    register<MainRouter.MainSreen> {
-        MainScreen(it.isAuth)
-    }
-}
-
-val featureAuth = screenModule {
-    register<AuthRouter.AuthScreen> {
-        AuthScreen(it.gameModel)
-    }
-}
-
-val featureRecoveryPass = screenModule {
-    register<PassRecoveryRouter.PassRecoveryScreen> {
-        PassRecoveryScreen()
-    }
-}
-
-val featureRecepient = screenModule {
-    register<RecepientRouter.RecepientScreen> {
-        RecepientScreen(it.gameModel)
-    }
-}
-
-val featureGame = screenModule {
-    register<GameRouter.GameScreen> {
-        GameScreen()
-    }
-    register<GameRouter.CreateScreen> {
-        CreateScreen()
-    }
-}
-
-val featureInvate = screenModule {
-    register<InvateRouter.InvateScreen> {
-        InvateScreen(it.link,it.gameModel)
-    }
-
-    register<LinkRouter.LinkScreen> {
-        LinkScreen(it.id)
-    }
-
-    register<ManualAdditionRouter.ManualAdditionScreen> {
-        ManualAdditionScreen(it.id)
-    }
-
-    register<AddingRouter.AddingScreen> {
-        AddingScreen(it.id)
-    }
-}
-
-val featureForm = screenModule {
-    register<MyWishlistRouter.MyWishlistScreen> {
-        MyWishlistScreen(it.id)
-    }
-
-    register<FormRouter.FormScreen> {
-        MyWishlistScreen(it.id)
     }
 }

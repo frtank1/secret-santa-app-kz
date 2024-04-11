@@ -31,6 +31,7 @@ import kz.secret_santa_jusan.core.views.EditText
 import kz.secret_santa_jusan.core.views.SsText
 import kz.secret_santa_jusan.core.views.TitleBar
 import kz.secret_santa_jusan.presentation.form.my_wishlist.MyWishlistScreen
+import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
 import kz.secret_santa_jusan.ui.theme.PaleBlue
 import kz.secret_santa_jusan.ui.theme.interFamily
@@ -46,7 +47,9 @@ class FormScreen(val id:String) : CoreBaseScreen(), Parcelable {
             viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
-             NavigationEvent.Back -> navigator.pop()
+             NavigationEvent.Back -> navigator.push(
+                 MainScreen(true)
+             )
             is NavigationEvent.Next -> {
                 navigator.replace(
                     MyWishlistScreen(navigationEvent.id)

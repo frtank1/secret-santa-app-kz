@@ -66,11 +66,10 @@ class MainActivity : CoreBaseActivity() {
                     val path: String? = data.path
                    InvateScreen(path,null)
                 }else{
-                    MainScreen(true)
-                    //InvateScreen("https://secret-santa-app.azurewebsites.net/invitations/accept/632726d8-13bc-40bc-8605-541940aae815",null)
+                     MainScreen(true)
                 }
             }else{
-                MainScreen(true)
+              MainScreen(true)
             }
         } else {
             MainScreen(false)
