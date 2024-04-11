@@ -1,5 +1,7 @@
 package kz.secret_santa_jusan.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -35,6 +37,7 @@ import kz.secret_santa_jusan.core.navigation.ScreenLifecycleOwner
 import kz.secret_santa_jusan.core.network.KtorConfig
 import kz.secret_santa_jusan.core.storage.GlobalStorage
 import kz.secret_santa_jusan.presentation.game.GameScreen
+import kz.secret_santa_jusan.presentation.invate.InvateScreen
 import kz.secret_santa_jusan.presentation.main.MainScreen
 import kz.secret_santa_jusan.presentation.profile.ProfileScreen
 import kz.secret_santa_jusan.ui.theme.BrightOrange
@@ -56,16 +59,28 @@ class MainActivity : CoreBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var startScreen = if (GlobalStorage.getAuthToken() != null) {
+            if (intent != null && intent.action == Intent.ACTION_VIEW) {
+                val data: Uri? = intent.data
+                if (data != null) {
+                    val path: String? = data.path
+                   InvateScreen(path,null)
+                }else{
+                    MainScreen(true)
+                }
+            }else{
+                MainScreen(true)
+            }
+        } else {
+            MainScreen(false)
+        }
+
         if(intent?.hasExtra("LOGOUT") == true) {
             ktor.logout()
             val LOGOUT = intent?.getBooleanExtra("LOGOUT", false)
         }
         setContent {
-            val startScreen = if (GlobalStorage.getAuthToken() != null) {
-                MainScreen(true)
-            } else {
-                MainScreen(false)
-            }
+
             val bottomBarState = bottomBarViewModel.state.collectAsStateWithLifecycle().value
             val nav = bottomBarViewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
             KoinAndroidContext() {
@@ -106,7 +121,6 @@ class MainActivity : CoreBaseActivity() {
                         )
             }
         }
-
     }
 }
 
@@ -176,3 +190,6 @@ fun Item(modifier: Modifier, isSelected:Boolean, iconRes: Int, onClick: ()-> Uni
         }
     }
 }
+
+
+

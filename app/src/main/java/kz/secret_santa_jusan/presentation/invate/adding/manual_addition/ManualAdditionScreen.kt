@@ -64,6 +64,7 @@ class ManualAdditionScreen(val id: String) : CoreBaseScreen(), Parcelable {
         }
         SubscribeError(viewModel)
         ManualAdditionContent(viewModel = viewModel)
+        viewModel.sendEvent(ManualAdditionEvent.Init(id))
     }
 }
 

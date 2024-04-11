@@ -11,8 +11,7 @@ import kz.secret_santa_jusan.data.invate.manual.model.UserNameModel
 class ManualAddApiKtor (private val ktorConfig: KtorConfig) {
 
     suspend fun sendUser(deviceId:String, user:List<UserNameModel>): HttpResponse {
-        return ktorConfig.httpClient.post("invitations/send"){
-            parameter("deviceId", deviceId)
+        return ktorConfig.httpClient.post("/gameuser/${deviceId}/add-existing-users"){
             setBody(user)
         }
     }

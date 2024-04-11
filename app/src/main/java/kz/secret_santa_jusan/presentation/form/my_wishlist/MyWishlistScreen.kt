@@ -99,7 +99,7 @@ fun CreateGameContent(viewModel: IMyWishlistViewModel) {
         ) {
             when(state){
                 is MyWishlistState.Default -> {
-                    CardCreated()
+                    MyWishlist(viewModel,state.gifts)
                 }
                 is MyWishlistState.Done -> {
                     CardCreated()
