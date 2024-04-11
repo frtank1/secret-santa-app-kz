@@ -50,6 +50,7 @@ sealed class NavigationEvent{
 
     class GoToAddUser(val id:String):NavigationEvent()
 
+    class GoToRegistration( val gameModel: GameModel?):NavigationEvent()
     class CreateCard(val id:String):NavigationEvent()
 
     class ShowWard(val gameModel: GameModel):NavigationEvent()
@@ -136,6 +137,8 @@ class InvateViewModel(
             is InvateEvent.CreateCard -> {
                 if (GlobalStorage.access_token!=null){
                     _navigationEvent.value = NavigationEvent.CreateCard(gameModel?.id?:"")
+                }else{
+                    _navigationEvent.value = NavigationEvent.GoToRegistration(gameModel)
                 }
             }
             is InvateEvent.GoToAddUser -> {
