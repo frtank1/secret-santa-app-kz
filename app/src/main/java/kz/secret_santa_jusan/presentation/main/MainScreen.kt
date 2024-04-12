@@ -25,6 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import cafe.adriel.voyager.core.model.rememberNavigatorScreenModel
 import cafe.adriel.voyager.koin.getScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -55,19 +56,18 @@ class MainScreen(val isAuth:Boolean) : CoreBaseScreen(), Parcelable {
         val viewModel = getScreenModel<MainViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =
-            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             NavigationEvent.GoToRegistration -> {
-                navigator.push(
+                navigator.replace(
                     RegistrationScreen(
                     )
                 )
             }
-
             NavigationEvent.GoToCreateGame -> {
-                navigator.push(
+                navigator.replace(
                     CreateScreen()
                 )
             }
@@ -99,7 +99,6 @@ fun MainContent(viewModel: IMainViewModel) {
                 .verticalScroll(rememberScrollState())
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
-
         ) {
             when (state) {
                 is MainState.IsAuth -> {

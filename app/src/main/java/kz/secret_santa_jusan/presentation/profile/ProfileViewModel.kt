@@ -97,6 +97,7 @@ class ProfileViewModel(
                     repository.deleteAcaunt().apply {
                         if(isSuccessful) {
                             Log.d("ok", "delete")
+                            CoreApp.logOut(true)
                         }
                     }
                 }

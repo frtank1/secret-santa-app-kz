@@ -52,7 +52,7 @@ class GameScreen : CoreBaseScreen(), Parcelable {
         val viewModel = getScreenModel<GameViewModel>()
         val navigator = LocalNavigator.currentOrThrow
         val navigationEvent =
-            viewModel.navigationEvent.collectAsStateWithLifecycle().value.getValue()
+            viewModel.navigationEvent.collectAsStateWithLifecycle().value
         when (navigationEvent) {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()

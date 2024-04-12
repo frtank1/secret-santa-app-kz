@@ -131,7 +131,7 @@ fun СardRecepient(viewModel: IRecepientViewModel, name: String, nameUser: Strin
         Button(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 30.dp)
+                .padding(top = 20.dp)
                 .padding(horizontal = 25.dp),
             colors = ButtonDefaults.buttonColors(BrightOrange),
             onClick = {

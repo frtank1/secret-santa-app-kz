@@ -70,8 +70,6 @@ class MainViewModel(
 
     override fun sendEvent(event: MainEvent) {
         when(event){
-
-
             MainEvent.Back -> {
                 _navigationEvent.value = NavigationEvent.Back()
             }
