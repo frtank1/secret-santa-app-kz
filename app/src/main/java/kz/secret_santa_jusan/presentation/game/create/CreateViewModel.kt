@@ -104,8 +104,14 @@ class CreateViewModel(
             }
 
             is CreateEvent.EnterSum -> {
-                _state.value =
-                    CreateState.Default(state.value.createData.copy(maxPrice = event.text.toInt()))
+                if (event.text.length<9) {
+                    if (!event.text.isNullOrEmpty()) {
+                        _state.value =
+                            CreateState.Default(state.value.createData.copy(maxPrice = event.text.toInt()))
+                    } else {
+                        CreateState.Default(state.value.createData.copy(maxPrice = 0))
+                    }
+                }
             }
 
             is CreateEvent.ShowSum -> {

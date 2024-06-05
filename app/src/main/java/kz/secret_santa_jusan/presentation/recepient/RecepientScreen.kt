@@ -176,7 +176,7 @@ fun Show(viewModel: IRecepientViewModel, name: String, percepient: PercepientMod
                     .padding(vertical = 2.dp),
                 text = stringResource(id = R.string.gift_no),
                 color = DarkGray,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Center,
                 fontSize = 15.sp
             )

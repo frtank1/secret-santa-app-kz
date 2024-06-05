@@ -81,9 +81,7 @@ fun CreateContentPreview() {
 fun CreateContent(viewModel: ICreateViewModel) {
     val state = viewModel.state.collectAsStateWithLifecycle().value
     Column {
-        TitleBar(onClickBack = {
-            viewModel.sendEvent(CreateEvent.Back)
-        })
+        TitleBar()
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -147,24 +145,13 @@ fun CreateMenu(viewModel: ICreateViewModel) {
             },
             state.createData.showSum?:false
         )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 3.dp),
-            textAlign = TextAlign.Center,
-            text = stringResource(id = R.string.При_включенной_опции_участникам_будет_показано_ограничении),
-            color = Gray,
-            fontFamily = interFamily,
-            fontWeight = FontWeight.Bold,
-            fontSize = 5.sp,
-        )
         if (state.createData.showSum){
             EditText(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp)
                     .padding(top = 12.dp),
-                value = state.createData.maxPrice.toString(),
+                value = if(state.createData.maxPrice!! >=1)state.createData.maxPrice.toString()else "",
                 textAlign = TextAlign.End,
                 fontSize = 10.sp,
                 onValueChange = { sum ->

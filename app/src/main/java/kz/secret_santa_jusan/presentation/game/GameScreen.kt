@@ -57,7 +57,7 @@ class GameScreen : CoreBaseScreen(), Parcelable {
             is NavigationEvent.Default -> {}
             is NavigationEvent.Back -> navigator.pop()
             NavigationEvent.GoToCreate -> {
-                navigator.push(
+                navigator.replace(
                     CreateScreen()
                 )
             }
